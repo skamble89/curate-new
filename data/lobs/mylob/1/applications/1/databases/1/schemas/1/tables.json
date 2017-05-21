@@ -1,0 +1,45 @@
+[
+    {
+        "_id": 1,
+        "name": "PARTY",
+        "bulb": true,        
+        "recommendation": 38
+    },
+    {
+        "_id": 2,
+        "name": "PARTY_SALES",
+        "bulb": false
+    },
+    {
+        "_id": 3,
+        "name": "INVENTORY_DETAILS",
+        "bulb": true,        
+        "recommendation": 25
+    },
+    {
+        "_id": 4,
+        "name": "REVENUE_SALES",
+        "bulb": false
+    },
+    {
+        "_id": 5,
+        "name": "ACCOUNT_CONTACT",
+        "bulb": false
+    },
+    {
+        "_id": 6,
+        "name": "ISO_CNTRY",
+        "bulb": true,        
+        "recommendation": 35
+    },
+    {
+        "_id": 7,
+        "name": "MASTER_CUST_CATEGORY",
+        "bulb": false
+    },
+    {
+        "_id": 8,
+        "name": "SERVICE_XREF",
+        "bulb": false
+    }
+]

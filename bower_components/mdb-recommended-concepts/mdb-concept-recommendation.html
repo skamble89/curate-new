@@ -1,0 +1,100 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+
+<!--
+`mdb-concept-recommendation`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-concept-recommendation">
+    <template>
+        <style>
+             :host {
+                display: block;
+                padding-left: var(--standard-padding, 20px);
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            
+             :host mdb-radio-list {
+                display: inline-block;
+            }
+            
+             :host paper-radio-button {
+                width: 50px;
+                text-align: center;
+            }
+            
+             :host #recommendationContainer {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+            }
+            
+             :host #recommendationFactor {
+                display: inline-block;
+                width: 30px;
+                margin-left: 1.2em;
+                margin-right: 1.2em;
+            }
+            
+             :host #recommendationContainer #property {
+                display: inline-block;
+                width: 25%;
+                word-wrap: break-word;
+                @apply(--mdb-recommended-concepts-property-name)
+            }
+        </style>
+        <div id="recommendationContainer">
+            <span id="property">[[property]]</span>
+            <mdb-radio-list size="small" selected="{{recommended}}" on-paper-radio-group-changed="_checkConceptIdentified">
+                <paper-radio-button name="yes">YES</paper-radio-button>
+                <paper-radio-button name="no">NO</paper-radio-button>
+                <paper-radio-button name="maybe">MAYBE</paper-radio-button>
+            </mdb-radio-list>
+            <span id="recommendationFactor">[[recommendation-factor]]%</span>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'mdb-concept-recommendation',
+
+            properties: {
+                name: {
+                    type: String,
+                    value: 'mdb-concept-recommendation',
+                },
+
+                property: {
+                    type: String
+                },
+
+                recommendationFactor: {
+                    type: Number,
+                    value: 0,
+                    readOnly: true
+                },
+
+                recommended: {
+                    type: String,
+                    value: 'maybe',
+                    notify: true,
+                    reflectToAttribute: true
+                }
+            },
+
+            _checkConceptIdentified: function () {
+                if (this.recommended === 'yes') {
+                    this.fire('concept-identified', this.property.trim());
+                }
+            }
+
+        });
+    </script>
+</dom-module>

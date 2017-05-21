@@ -1,0 +1,116 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../paper-radio-group/paper-radio-group.html">
+
+<!--
+`mdb-radio-list`
+pill box selection component
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-radio-list">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+      
+       :host ::content paper-radio-button {
+        border: 1px solid;
+        border-color: #e0e8ed;
+      }
+      
+       :host[size="small"] ::content paper-radio-button {
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+      
+       :host ::content paper-radio-button[aria-checked="true"] {
+        -webkit-box-shadow: 0 0 15px #71b3e1;
+        -moz-box-shadow: 0 0 15px #71b3e1;
+        box-shadow: 0 0 15px #71b3e1;
+        border-color: #71b3e1;
+      }
+      
+       :host ::content paper-radio-button[aria-checked="true"]+paper-radio-button {
+        border-left: 1px solid transparent;
+      }
+    </style>
+    <paper-radio-group selected="{{selected}}">
+      <content select="paper-radio-button"></content>
+    </paper-radio-group>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-radio-list',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-radio-list',
+          readOnly: true
+        },
+
+        selected: {
+          type: String,
+          reflectToAttribute: true,
+          notify: true
+        },
+
+        size: {
+          type: String,
+          reflectToAttribute: true,
+          value: 'large',
+          reflectToAttribute: true,
+          observer: '_enumSize'
+        },
+      },
+
+      _enumSize: function (newValue, oldValue) {
+        var validColors = ['small', 'large'];
+        if (validColors.indexOf(newValue) === -1) {
+          // Put the size back, and maybe throw in a line to throw an error
+          this.size = oldValue;
+        }
+      },
+
+      attached: function () {
+        var customStyles = {
+          '--paper-radio-button-checked-color': 'transparent',
+          '--paper-radio-button-unchecked-color': 'transparent',
+          '--paper-radio-button-checked-ink-color': 'transparent',
+          '--paper-radio-button-unchecked-ink-color': 'transparent',
+          '--paper-radio-button-label-color': '#bbb',
+          '--paper-radio-button-size': '0',
+          '--paper-radio-button-label-spacing': '0'
+        };
+        var buttons = this.querySelectorAll('paper-radio-button');
+        for (i = 0; i < buttons.length; i++) {
+          var button = buttons[i];
+          (function (e) {
+            e.addEventListener('checked-changed', function () {
+              e.noink = true;
+
+              if (this.checked) {
+                this.customStyle['--paper-radio-button-label-color'] = '#464646'
+              } else {
+                this.customStyle['--paper-radio-button-label-color'] = customStyles['--paper-radio-button-label-color'];
+              }
+              this.updateStyles();
+            });
+
+            //paper-radio-button style customizations
+            for (var i in customStyles) {
+              e.customStyle[i] = customStyles[i];
+            }
+            e.updateStyles();
+          })(button);
+        }
+      }
+
+    });
+  </script>
+</dom-module>

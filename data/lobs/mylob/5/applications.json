@@ -1,0 +1,42 @@
+[
+    {
+        "_id": 1,
+        "name": "Account Activity Notification AAN"
+    },
+    {
+        "_id": 2,
+        "name": "Automated Bill Audit"
+    },
+    {
+        "_id": 3,
+        "name": "Customer Information System"
+    },
+    {
+        "_id": 4,
+        "name": "Advance Payment and Deposit"
+    },
+    {
+        "_id": 5,
+        "name": "Customer Information Revenue Management System"
+    },
+    {
+        "_id": 6,
+        "name": "Adjustments"
+    },
+    {
+        "_id": 7,
+        "name": "Mail Automation and Control"
+    },
+    {
+        "_id": 8,
+        "name": "Library Management System"
+    },
+    {
+        "_id": 9,
+        "name": "Payroll System"
+    },
+    {
+        "_id": 10,
+        "name": "Employee Referral Management"
+    }
+]

@@ -1,0 +1,70 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+
+<!--
+`mdb-search-box`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-search-box">
+  <template>
+    <style>
+       :host {
+        display: block;
+        --paper-input-container-color: #bbb;
+        --paper-input-container-focus-color: #bbb;
+        --paper-input-container-underline: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container-underline-focus: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container-underline-disabled: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container: {
+          padding-top: 0;
+          padding-bottom: 0;
+          border: 0;
+        }
+        --paper-input-container-input: {
+          border: 1px solid #e8edf1;
+          padding: 5px;
+          box-sizing: border-box;
+        }
+      }
+    </style>
+    <paper-input placeholder="{{placeholder}}"></paper-input>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-search-box',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-search-box',
+          readOnly: true
+        },
+
+        placeholder: {
+          type: String,
+          value: 'Search',
+          reflectToAttribute: true,
+          notify: true
+        },        
+      },
+
+    });
+  </script>
+</dom-module>

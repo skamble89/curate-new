@@ -1,0 +1,37 @@
+[
+    {
+        "property": "Person Age",
+        "recommendationFactor": 80,
+        "recommended": "maybe"
+    },
+    {
+        "property": "Anniversary",
+        "recommendationFactor": 65,
+        "recommended": "maybe"
+    },
+    {
+        "property": "Due Date",
+        "recommendationFactor": 0,
+        "recommended": "maybe"
+    },
+    {
+        "property": "Issue Date",
+        "recommendationFactor": 0,
+        "recommended": "maybe"
+    },
+    {
+        "property": "Net Credit Service Date",
+        "recommendationFactor": 0,
+        "recommended": "maybe"
+    },
+    {
+        "property": "Order Date",
+        "recommendationFactor": 0,
+        "recommended": "maybe"
+    },
+    {
+        "property": "Tracking Date",
+        "recommendationFactor": 0,
+        "recommended": "maybe"
+    }
+]

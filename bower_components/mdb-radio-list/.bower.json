@@ -1,0 +1,26 @@
+{
+  "name": "mdb-radio-list",
+  "description": "pill box selection component",
+  "main": "mdb-radio-list.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "paper-radio-group": "PolymerElements/paper-radio-group#^1.2.1"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/skamble89/mdb-radio-list",
+  "version": "0.0.3",
+  "_release": "0.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.3",
+    "commit": "5a16da06c3187df04c3a74060dac7d72164d9ed0"
+  },
+  "_source": "git://github.com/skamble89/mdb-radio-list.git",
+  "_target": "*",
+  "_originalSource": "git://github.com/skamble89/mdb-radio-list.git"
+}

@@ -1,0 +1,60 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../font-roboto/roboto.html">
+
+
+
+</head><body><dom-module id="mdb-metric-display">
+  <template>
+    <style>
+       :host {
+        font-family: 'Roboto', 'Noto', sans-serif;
+        flex: 1;
+        flex-basis: 0.000000001px;        
+        border: 1px solid #e1e6ed;
+        border-right: 0;
+        height: 135px;
+      }
+      
+      section {        
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+      }
+      
+      .stat-value {
+        font-size: 2em;
+      }
+      
+      .stat-description {
+        font-size: 1.3em;
+        font-weight: 100;
+        margin: 0;
+      }
+    </style>
+    <section class="stat">
+      <span class="stat-value">[[statValue]]</span>
+      <p class="stat-description">[[statDescription]]</p>
+    </section>
+  </template>
+
+  <script>Polymer({is:"mdb-metric-display",properties:{name:{type:String,value:"mdb-metric-display"}}});</script>
+</dom-module>
+
+<dom-module id="mdb-metric-display-container">
+  <template>
+    <style>
+       :host {
+        -webkit-display: flex;
+        display: flex;
+        line-height: 1.5;        
+      }
+      
+       ::content mdb-metric-display:last-of-type {
+        border-right: 1px solid #e1e6ed;
+      }
+    </style>
+    <content></content>
+  </template>
+  <script>Polymer({is:"mdb-metric-display-container",properties:{name:{type:String,value:"mdb-metric-display-container"}}});</script>
+</dom-module>
+</body></html>

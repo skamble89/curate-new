@@ -1,0 +1,32 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-menu-behavior/iron-menu-behavior.html">
+<link rel="import" href="../paper-styles/default-theme.html">
+<link rel="import" href="side-menu-shared-styles.html">
+
+
+
+</head><body><dom-module id="side-menu">
+  <template>
+    <style include="side-menu-shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+
+        background: var(--side-menu-background-color, transparent);
+        color: var(--side-menu-color, --primary-text-color);
+        margin: 0;
+        padding: 0;
+        outline: 0;
+        @apply(--side-menu);
+      }
+      
+    </style>
+
+    <div class="selectable-content">
+      <content></content>
+    </div>
+  </template>
+
+  <script>!function(){Polymer({is:"side-menu",behaviors:[Polymer.IronMenuBehavior]})}();</script>
+</dom-module>
+</body></html>

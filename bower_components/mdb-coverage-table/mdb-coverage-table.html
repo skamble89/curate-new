@@ -1,0 +1,172 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../mdb-title/mdb-title.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="./mdb-vaadin-grid-column-selector.html">
+
+<!--
+`mdb-coverage-table`
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-coverage-table-options-padding` | Top and bottom padding applied to coverage table options sections | `10px`
+`--mdb-coverage-table-options` | Mixin applied to coverage table options section | `{}`
+`--mdb-coverage-table-cell` | Mixin applied to coverage table cells | `{}`
+`--mdb-coverage-table-body-cell` | Mixin applied to coverage table cells | `{}`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-coverage-table">
+  <template>
+    <style>
+       :host {
+        display: block;
+        --vaadin-grid-cell: {
+          padding: 0;          
+        }
+        --vaadin-grid-body-cell: {
+          background-color: #fcfdff;
+          @apply(--mdb-coverage-table-body-cell);
+        }
+        --vaadin-grid-body-row-odd-cell: {
+          background-color: #fff;
+        }
+      }
+      /*:host vaadin-grid-sorter {
+        --vaadin-grid-sorter-arrow: {
+          display: none !important;
+        }
+        ;
+      }*/
+      
+       :host mdb-radio-list {
+        display: inline-block;
+      }
+      
+       :host vaadin-grid {
+        border: 0;
+        @apply(--mdb-coverage-table);
+      }
+      
+       :host .table-options {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: space-between;
+        border-top: 1px solid #ebeff4;
+        border-bottom: 1px solid #ebeff4;
+        padding-top: var(--mdb-coverage-table-options-padding, 10px);
+        padding-bottom: var(--mdb-coverage-table-options-padding, 10px);
+        @apply(--mdb-coverage-table-options)
+      }
+      
+       :host mdb-vaadin-grid-column-selector {
+        padding: 8px;
+      }
+      
+       :host .mdb-cell {
+        padding: 8px;
+        width: 100%;
+        height: 100%;
+        @apply(--mdb-coverage-table-cell);
+      }
+      
+       :host .selected {
+        background-color: #f3f6fb;
+      }
+    </style>
+    <mdb-title help-text="{{helpText}}" level="2">{{titleText}}</mdb-title>
+    <div class="table-options">
+      <div class="column-options">
+        Show Columns
+        <mdb-radio-list size="small" selected="all">
+          <paper-radio-button name="all">ALL</paper-radio-button>
+          <paper-radio-button name="recommended">RECOMMENDED</paper-radio-button>
+        </mdb-radio-list>
+      </div>
+      <div class="sorting-options">
+        Sorted By
+        <mdb-radio-list size="small" selected="relevance">
+          <paper-radio-button name="relevance">RELEVANCE</paper-radio-button>
+          <paper-radio-button name="recency">RECENCY</paper-radio-button>
+          <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
+          <paper-radio-button name="none">NONE</paper-radio-button>
+        </mdb-radio-list>
+      </div>
+    </div>
+    <vaadin-grid items="{{items}}">
+      <template is="dom-repeat" items="{{columns}}" as="column">
+        <vaadin-grid-column width="[[column.width]]px">
+          <template class="header">
+            <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.property)]] mdb-cell" path="[[column.property]]">
+              [[column.name]]
+            </mdb-vaadin-grid-column-selector>
+          </template>
+          <template>
+            <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.property)]] mdb-cell" path="[[column.property]]">
+              [[_getPropertyValue(item, column.property)]]
+            </mdb-vaadin-grid-column-selector>
+          </template>
+        </vaadin-grid-column>
+      </template>
+    </vaadin-grid>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-coverage-table',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-coverage-table',
+        },
+
+        titleText: String,
+
+        helpText: String,
+
+        columns: {
+          type: Array,
+          value: []
+        },
+
+        items: {
+          type: Array,
+          value: []
+        },
+
+        selectedColumn: {
+          type: String,
+          notify: true,
+          reflectToAttribute: true
+        }
+      },
+
+      listeners: {
+        'select-column': '_selectedChanged'
+      },
+
+      _getPropertyValue: function (item, prop) {
+        return item ? item[prop] : '';
+      },
+
+      _selectedChanged: function (e, args) {
+        this.selectedColumn = args.path;
+      },
+
+      _isSelected: function (selected, current) {
+        return (selected === current ? 'selected' : '');
+      }
+
+    });
+  </script>
+</dom-module>

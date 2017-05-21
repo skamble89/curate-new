@@ -1,0 +1,125 @@
+<html><head><link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="styling-elements/class-elements.html">
+<link rel="import" href="../bower_components/mdb-metric-display/mdb-metric-display.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+
+</head><body><dom-module id="concept-coverage">
+  <template>
+    <style include="class-elements"></style>
+    <style include="shared-styles">
+       :host {
+        display: block;
+        height: 100%;
+      }
+      
+      [slot='body'] {
+        background: #fff;
+      }
+      /* styles for paper-tabs*/
+      
+      paper-tab {
+        color: #5da9dd;
+        --paper-tab-content-unselected: {
+          color: #b3b3b3;
+        }
+        --layout-flex-auto: {
+          flex: 0.06;
+        }
+      }
+      
+      paper-tabs {
+        --paper-tabs-selection-bar-color: #5da9dd
+      }
+      /*Styles for fields paper-listbox*/
+      
+      paper-listbox.field-list paper-item {
+        display: inline;
+        min-height: 15px;
+        margin: 10px;
+        font-weight: 100;
+        --paper-item-focused-before: {
+          border-radius: 25px;
+        }
+        --paper-item-focused: {
+          border-radius: 25px;
+        }
+        --paper-item-selected-before: {
+          border-radius: 25px;
+        }
+        --paper-item-selected: {
+          border-radius: 25px;
+          color: #fff;
+          background: #5caadb;
+        }
+      }
+      
+      paper-listbox.field-list {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        border: 1px solid #e1e6ed;
+        background: #fcfdff;
+        height: 288px;
+        padding-top: 20px;
+        padding-bottom: 0px;
+      }
+    </style>
+
+    <page-layout heading="Concept Coverage">
+      <div slot="body">
+        <mdb-metric-display-container>
+          <mdb-metric-display stat-value="0.2%" stat-description="Coverage across 1 application"></mdb-metric-display>
+          <mdb-metric-display stat-value="279 days" stat-description="ETA(based on yesterday)"></mdb-metric-display>
+          <mdb-metric-display stat-value="25" stat-description="Concepts significantly impacted"></mdb-metric-display>
+        </mdb-metric-display-container>
+
+        <paper-tabs selected="{{tab}}">
+          <paper-tab>GLOBAL</paper-tab>
+          <paper-tab>MY LOB</paper-tab>
+          <paper-tab>LOB1</paper-tab>
+          <paper-tab>LOB2</paper-tab>
+          <paper-tab>LOB3</paper-tab>
+        </paper-tabs>
+
+        <iron-pages selected="{{tab}}">
+          <iron-page></iron-page>
+          <iron-page>
+            <paper-listbox class="field-list">
+              <paper-item>FICO-Score</paper-item>
+              <paper-item>Account-Number</paper-item>
+              <paper-item>Customer-Code</paper-item>
+              <paper-item>Customer-Type</paper-item>
+              <paper-item>Product-Code</paper-item>
+              <paper-item>Product-Name</paper-item>
+              <paper-item>Market-Segment</paper-item>
+              <paper-item>CUSIP</paper-item>
+              <paper-item>Instrument-ID</paper-item>
+              <paper-item>Holding-ID</paper-item>
+              <paper-item>Published-Price</paper-item>
+              <paper-item>Agreement-ID</paper-item>
+              <paper-item>Contract-ID</paper-item>
+              <paper-item>Organization-ID</paper-item>
+              <paper-item>Date of Birth</paper-item>
+              <paper-item>Organization-Name</paper-item>
+              <paper-item>Activity-ID</paper-item>
+              <paper-item>Notional-ID</paper-item>
+              <paper-item>Agent-ID</paper-item>
+              <paper-item>Agency-Name</paper-item>
+              <paper-item>Asset-ID</paper-item>
+              <paper-item>Asset-Type</paper-item>
+            </paper-listbox>
+          </iron-page>
+          <iron-page></iron-page>
+          <iron-page></iron-page>
+          <iron-page></iron-page>
+        </iron-pages>
+      </div>
+    </page-layout>
+
+  </template>
+
+  <script>Polymer({is:"concept-coverage",properties:{tab:{type:Number,value:0}}});</script>
+</dom-module></body></html>

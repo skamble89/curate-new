@@ -1,0 +1,126 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head><meta charset="UTF-8"><link rel="import" href="my-app.html"></head><body><div hidden="" by-vulcanize=""><dom-module id="class-elements" assetpath="styling-elements/">
+    <template>
+        <style>
+        /*styled-blocks styles*/
+        
+        .styled-blocks {
+            @apply(--layout-horizontal);
+        }
+        
+        .styled-blocks > * {
+            border: 1px solid var(--styled-blocks-border-color, --app-border-color);
+            /*opacity: 0.6;*/
+            text-align: center;
+            box-sizing: border-box;
+            padding: 10px;
+            vertical-align: middle;
+            color: var(--dark-text);
+            cursor: pointer;
+            @apply(--layout);
+            @apply(--layout-center);
+            @apply(--layout-center-justified);
+            border-right: 0;
+        }
+        /*.styled-blocks > .iron-selected{
+	border: 3px solid var(--styled-blocks-selected-border-color, --app-blue-color);
+	opacity: 1;
+	-webkit-box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+	-moz-box-shadow:    0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+	box-shadow:         0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+}*/
+		
+        .styled-blocks > *:last-of-type{
+        	border-right: 1px solid var(--styled-blocks-border-color, --app-border-color);
+        }
+        
+        .styled-blocks.full-bleed > * {
+            @apply(--layout-flex);
+        }
+        
+        .styled-blocks.small > * {
+            height: 50px;
+            padding: 10px 15px;
+        }
+        
+        .styled-blocks.medium > * {
+            height: 70px;
+        }
+        
+        .styled-blocks.big > * {
+            height: 135px;
+        }
+        
+        .styled-blocks.large > * {
+            height: 231px;
+            width: 200px;
+        }
+        .styled-blocks h2 {
+        	font-weight: var(--font-light, 100);
+        	font-size: 2em;
+        	line-height: 1.2;
+        	margin: 0;
+        }
+        .styled-blocks p {
+        	font-weight: var(--font-light, 100);
+        	font-size: 1.3em;
+        	margin: 0;
+        }
+        /*end styled-blocks styles*/
+        </style>
+    </template>
+</dom-module>
+</div><dom-module id="my-view2">
+  <template>
+    <style include="class-elements"></style>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        height: 100%;
+      }
+      [slot='body']{
+        background: #fff;
+      }
+    </style>
+      
+    <page-layout heading="Concept Coverage">
+        <div slot="body">
+            <div class="styled-blocks big full-bleed">
+              <div>
+                <div>
+                  <h2>0.2%</h2>
+                  <p>Coverage across <span class="app-blue">1 application</span></p>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <h2>279 days</h2>
+                  <p>ETA based on yesterday</p>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <h2>25</h2>
+                  <p>Concepts significantly impacted</p>
+                </div>
+              </div>
+            </div>
+        </div>
+    </page-layout>
+    
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-view2',
+    });
+  </script>
+</dom-module>
+</body></html>

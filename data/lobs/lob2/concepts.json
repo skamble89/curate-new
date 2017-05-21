@@ -1,0 +1,30 @@
+[
+    {
+        "_id": 1,
+        "name": "FICO-Score"
+    },
+    {
+        "_id": 2,
+        "name": "Account-Number"
+    },
+    {
+        "_id": 3,
+        "name": "Customer-Code"
+    },
+    {
+        "_id": 4,
+        "name": "Customer-Type"
+    },
+    {
+        "_id": 5,
+        "name": "Product-Code"
+    },
+    {
+        "_id": 6,
+        "name": "Product-Name"
+    },
+    {
+        "_id": 7,
+        "name": "Market-Segment"
+    }
+]

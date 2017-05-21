@@ -1,0 +1,26 @@
+{
+  "name": "mdb-title",
+  "description": "Title component",
+  "main": "mdb-title.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "mdb-help-text": "git://github.com/skamble89/mdb-help-text.git"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/skamble89/mdb-title",
+  "version": "0.0.4",
+  "_release": "0.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.4",
+    "commit": "285d088dfc1da547a780819b5fbbb2b5aad5c31c"
+  },
+  "_source": "git://github.com/skamble89/mdb-title.git",
+  "_target": "*",
+  "_originalSource": "git://github.com/skamble89/mdb-title.git"
+}

@@ -1,0 +1,239 @@
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../mdb-title/mdb-title.html">
+<link rel="import" href="../mdb-simple-list/mdb-simple-list.html">
+
+<!--
+`mdb-dimension-finder`
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-dimension-finder-list` | Mixin applied to dimension finder list | `{}`
+`--mdb-dimension-finder-list-item` | Mixin applied to dimension finder list item | `{}`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-dimension-finder">
+  <template>
+    <style>
+       :host {
+        display: inline-block;
+        font-size: 14px;
+        --paper-input-container-color: #bbb;
+        --paper-input-container-focus-color: #bbb;
+        --paper-input-container-underline: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container-underline-focus: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container-underline-disabled: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container: {
+          padding-bottom: 0;
+          padding-top: var(--standard-padding, 20px);
+          padding-left: var(--standard-padding, 20px);
+          padding-right: var(--standard-padding, 20px);
+          border: 0;
+        }
+        --paper-input-container-input: {
+          border: 1px solid #e8edf1;
+          padding: 5px;
+          width: 95%;
+          font-size: 1em;
+        }
+        --paper-font-caption: {
+          display: none;
+        }
+        --mdb-title: {
+          font-family: Roboto;
+          color: #9a9a9a;
+          font-weight: 400;
+          margin-top: 0;
+        }
+        --mdb-list-item: {
+          font-size: 1em;
+          padding-left: var(--standard-padding, 20px);
+          padding-right: var(--standard-padding, 20px);
+          @apply(--mdb-dimension-finder-list-item);
+        }
+        --paper-checkbox-label-color:#b9b9b9;
+        --paper-checkbox-checked-color:#b9b9b9;
+        --paper-checkbox-unchecked-color:#b9b9b9;
+        --mdb-simple-list-empty: {
+          margin-top: var(--standard-padding, 20px);
+          margin-left: var(--standard-padding, 20px);
+          margin-right: var(--standard-padding, 20px);
+          text-align: justify;
+          font-family: Roboto;
+          color: #9a9a9a;
+          position: absolute;
+        }
+      }
+      
+       :host .dimension-finder {
+        border: 1px solid #dee7ec;
+        border-top: 0;
+      }
+      
+       :host .dimension-finder mdb-simple-list {
+        min-height: 4em;
+        @apply(--mdb-dimension-finder-list)
+      }
+      
+       :host .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      
+       :host paper-radio-button {
+        text-align: center;
+      }
+    </style>
+
+    <div class="header">
+      <mdb-title help-text="{{helpText}}" level="3">{{dimension}}</mdb-title>
+      <template is="dom-if" if="{{allDimensionsAllowed}}">
+        <paper-checkbox checked="{{showAllDimensions}}">ALL</paper-checkbox>
+      </template>
+    </div>
+    <mdb-radio-list size="small" selected="{{sort}}">
+      <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
+      <paper-radio-button name="recommendation">BY RECOMMENDATION</paper-radio-button>
+    </mdb-radio-list>
+    <div class="dimension-finder">
+      <paper-input placeholder="Search for [[_toLowerCase(dimension)]] name" value="{{filter}}"></paper-input>
+      <mdb-simple-list height="{{height}}" items="{{items}}" empty-message="{{emptyMessage}}">
+        <content select="template"></content>
+      </mdb-simple-list>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-dimension-finder',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-dimension-finder',
+        },
+
+        //Type of dimension
+        dimension: {
+          type: String
+        },
+
+        selectedDimension: {
+          type: String,
+          value: '',
+          notify: true
+        },
+
+        helpText: {
+          type: String
+        },
+
+        height: {
+          type: Number,
+          value: 320
+        },
+
+        _items: {
+          type: Array,
+          value: []
+        },
+
+        items: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        searchProperty: {
+          type: String,
+          value: 'name'
+        },
+
+        filter: {
+          type: String,
+          observer: '_searchDimension'
+        },
+
+        sort: {
+          type: String,
+          value: 'recommendation',
+          observer: '_sortDimension'
+        },
+
+        showAllDimensions: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+          notify: true
+        },
+
+        allDimensionsAllowed: {
+          type: Boolean,
+          value: false
+        },
+
+        emptyMessage: String
+      },
+
+      ready: function () {
+        this.set('_items', this.items.slice());
+        this._isReady = true;
+      },
+
+      attached: function () {
+        var that = this;
+        var list = this.querySelector('mdb-simple-list');
+        if (list) {
+          list.addEventListener('selected-item-changed', function () {
+            that.selectedDimension = this.selectedItem;
+          });
+        }
+      },
+
+      _toLowerCase: function (str) {
+        return str.toLowerCase();
+      },
+
+      _searchDimension: function () {
+        var that = this;
+        if (this._isReady) {
+          this.set('items', this._items
+            .filter(function (e) {
+              return (typeof e === typeof {} ? e[that.searchProperty] : e).toLowerCase().indexOf(that.filter.toLowerCase()) > -1;
+            }));
+        }
+      },
+
+      _sortDimension: function () {
+        //TODO: change sorting logic
+        return this.items;
+      }
+    });
+  </script>
+</dom-module>

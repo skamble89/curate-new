@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Name (Job title)",
+        "property": "name",
+        "width": "300"
+    },
+    {
+        "name": "New Age",
+        "property": "age",
+        "width": "150"
+    },
+    {
+        "name": "Nickname",
+        "property": "nickname",
+        "width": "150"
+    },
+    {
+        "name": "Employee",
+        "property": "employee",
+        "width": "150"
+    },
+    {
+        "name": "Col1",
+        "property": "col1",
+        "width": "100"
+    },
+    {
+        "name": "Col2",
+        "property": "col2",
+        "width": "100"
+    },
+    {
+        "name": "Col3",
+        "property": "col3",
+        "width": "100"
+    },
+    {
+        "name": "Col4",
+        "property": "col4",
+        "width": "100"
+    },
+    {
+        "name": "Col5",
+        "property": "col5",
+        "width": "100"
+    },
+    {
+        "name": "Col6",
+        "property": "col6",
+        "width": "100"
+    }
+]

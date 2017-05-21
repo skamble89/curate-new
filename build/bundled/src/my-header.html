@@ -1,0 +1,40 @@
+<html><head></head><body><dom-module id="my-header">
+    <template>
+        <style>
+        :host,
+        .user-dropdown {
+            display: block;
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+            color: var(--app-border-color);
+            height: 100%;
+        }
+        .user-dropdown {
+        	font-size: var(--font-small,14px);
+        	border-left: 1px solid var(--app-border-color);
+        }
+
+        .user-dropdown iron-icon {
+        	margin: 0 10px;
+        }
+        .arrow {
+        	transform: rotate(90deg);
+        }
+        :host,
+        .flex {
+        	@apply(--layout-flex);
+        }
+        </style>
+        <paper-icon-button noink="" icon="[[_computeFullScreenIcon(_fullScreenActive)]]" title="Go full screen" on-tap="toggleFullscreen"></paper-icon-button>
+        <paper-icon-button noink="" icon="my-icons:magnify" title="Search"></paper-icon-button>
+        <span class="flex"></span>
+        <div class="user-dropdown">
+            <iron-icon icon="my-icons:account-circle"></iron-icon>
+            <span>Mr. John Smith</span>
+            <iron-icon class="arrow" icon="my-icons:chevron-right"></iron-icon>
+        </div>
+        <paper-toggle-button checked=""></paper-toggle-button>
+    </template>
+    <script>Polymer({is:"my-header",properties:{_fullScreenActive:{type:Boolean,value:!1}},_computeFullScreenIcon:function(e){return e?"my-icons:close-screen":"my-icons:full-screen"},toggleFullscreen:function(){document.fullScreenElement&&null!==document.fullScreenElement||!document.mozFullScreen&&!document.webkitIsFullScreen?(this._fullScreenActive=!0,document.documentElement.requestFullScreen?document.documentElement.requestFullScreen():document.documentElement.mozRequestFullScreen?document.documentElement.mozRequestFullScreen():document.documentElement.webkitRequestFullScreen&&document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)):(document.cancelFullScreen?document.cancelFullScreen():document.mozCancelFullScreen?document.mozCancelFullScreen():document.webkitCancelFullScreen&&document.webkitCancelFullScreen(),this._fullScreenActive=!1)}});</script>
+</dom-module>
+</body></html>

@@ -1,0 +1,448 @@
+<html><head><meta charset="UTF-8"><link rel="import" href="my-app.html"></head><body><div hidden="" by-vulcanize=""><dom-module id="class-elements" assetpath="styling-elements/">
+    <template>
+        <style>
+        /*styled-blocks styles*/
+        
+        .styled-blocks {
+            @apply(--layout-horizontal);
+        }
+        
+        .styled-blocks > * {
+            border: 1px solid var(--styled-blocks-border-color, --app-border-color);
+            /*opacity: 0.6;*/
+            text-align: center;
+            box-sizing: border-box;
+            padding: 10px;
+            vertical-align: middle;
+            color: var(--dark-text);
+            cursor: pointer;
+            @apply(--layout);
+            @apply(--layout-center);
+            @apply(--layout-center-justified);
+            border-right: 0;
+        }
+        /*.styled-blocks > .iron-selected{
+	border: 3px solid var(--styled-blocks-selected-border-color, --app-blue-color);
+	opacity: 1;
+	-webkit-box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+	-moz-box-shadow:    0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+	box-shadow:         0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+}*/
+		
+        .styled-blocks > *:last-of-type{
+        	border-right: 1px solid var(--styled-blocks-border-color, --app-border-color);
+        }
+        
+        .styled-blocks.full-bleed > * {
+            @apply(--layout-flex);
+        }
+        
+        .styled-blocks.small > * {
+            height: 50px;
+            padding: 10px 15px;
+        }
+        
+        .styled-blocks.medium > * {
+            height: 70px;
+        }
+        
+        .styled-blocks.big > * {
+            height: 135px;
+        }
+        
+        .styled-blocks.large > * {
+            height: 231px;
+            width: 200px;
+        }
+        .styled-blocks h2 {
+        	font-weight: var(--font-light, 100);
+        	font-size: 2em;
+        	line-height: 1.2;
+        	margin: 0;
+        }
+        .styled-blocks p {
+        	font-weight: var(--font-light, 100);
+        	font-size: 1.3em;
+        	margin: 0;
+        }
+        /*end styled-blocks styles*/
+        </style>
+    </template>
+</dom-module>
+<dom-module id="mdb-metric-display" assetpath="../bower_components/mdb-metric-display/">
+  <template>
+    <style>
+       :host {
+        font-family: 'Roboto', 'Noto', sans-serif;
+        flex: 1;
+        flex-basis: 0.000000001px;        
+        border: 1px solid #e1e6ed;
+        border-right: 0;
+        height: 135px;
+      }
+      
+      section {        
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+      }
+      
+      .stat-value {
+        font-size: 2em;
+      }
+      
+      .stat-description {
+        font-size: 1.3em;
+        font-weight: 100;
+        margin: 0;
+      }
+    </style>
+    <section class="stat">
+      <span class="stat-value">[[statValue]]</span>
+      <p class="stat-description">[[statDescription]]</p>
+    </section>
+  </template>
+
+  <script>Polymer({is:"mdb-metric-display",properties:{name:{type:String,value:"mdb-metric-display"}}});</script>
+</dom-module>
+
+<dom-module id="mdb-metric-display-container" assetpath="../bower_components/mdb-metric-display/">
+  <template>
+    <style>
+       :host {
+        -webkit-display: flex;
+        display: flex;
+        line-height: 1.5;        
+      }
+      
+       ::content mdb-metric-display:last-of-type {
+        border-right: 1px solid #e1e6ed;
+      }
+    </style>
+    <content></content>
+  </template>
+  <script>Polymer({is:"mdb-metric-display-container",properties:{name:{type:String,value:"mdb-metric-display-container"}}});</script>
+</dom-module>
+<script>Polymer.IronMenubarBehaviorImpl={hostAttributes:{role:"menubar"},keyBindings:{left:"_onLeftKey",right:"_onRightKey"},_onUpKey:function(e){this.focusedItem.click(),e.detail.keyboardEvent.preventDefault()},_onDownKey:function(e){this.focusedItem.click(),e.detail.keyboardEvent.preventDefault()},get _isRTL(){return"rtl"===window.getComputedStyle(this).direction},_onLeftKey:function(e){this._isRTL?this._focusNext():this._focusPrevious(),e.detail.keyboardEvent.preventDefault()},_onRightKey:function(e){this._isRTL?this._focusPrevious():this._focusNext(),e.detail.keyboardEvent.preventDefault()},_onKeydown:function(e){this.keyboardEventMatchesKeys(e,"up down left right esc")||this._focusWithKeyboardEvent(e)}},Polymer.IronMenubarBehavior=[Polymer.IronMenuBehavior,Polymer.IronMenubarBehaviorImpl];</script><iron-iconset-svg name="paper-tabs" size="24">
+<svg><defs>
+<g id="chevron-left"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></g>
+<g id="chevron-right"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></g>
+</defs></svg>
+</iron-iconset-svg>
+<dom-module id="paper-tab" assetpath="../bower_components/paper-tabs/">
+  <template>
+    <style>
+      :host {
+        @apply(--layout-inline);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+        @apply(--layout-flex-auto);
+
+        position: relative;
+        padding: 0 12px;
+        overflow: hidden;
+        cursor: pointer;
+        vertical-align: middle;
+
+        @apply(--paper-font-common-base);
+        @apply(--paper-tab);
+      }
+
+      :host(:focus) {
+        outline: none;
+      }
+
+      :host([link]) {
+        padding: 0;
+      }
+
+      .tab-content {
+        height: 100%;
+        transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+        transition: opacity 0.1s cubic-bezier(0.4, 0.0, 1, 1);
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        @apply(--layout-flex-auto);
+        @apply(--paper-tab-content);
+      }
+
+      :host(:not(.iron-selected)) > .tab-content {
+        opacity: 0.8;
+
+        @apply(--paper-tab-content-unselected);
+      }
+
+      :host(:focus) .tab-content {
+        opacity: 1;
+        font-weight: 700;
+      }
+
+      paper-ripple {
+        color: var(--paper-tab-ink, --paper-yellow-a100);
+      }
+
+      .tab-content > ::content > a {
+        @apply(--layout-flex-auto);
+
+        height: 100%;
+      }
+    </style>
+
+    <div class="tab-content">
+      <content></content>
+    </div>
+  </template>
+
+  <script>Polymer({is:"paper-tab",behaviors:[Polymer.IronControlState,Polymer.IronButtonState,Polymer.PaperRippleBehavior],properties:{link:{type:Boolean,value:!1,reflectToAttribute:!0}},hostAttributes:{role:"tab"},listeners:{down:"_updateNoink",tap:"_onTap"},attached:function(){this._updateNoink()},get _parentNoink(){var t=Polymer.dom(this).parentNode;return!!t&&!!t.noink},_updateNoink:function(){this.noink=!!this.noink||!!this._parentNoink},_onTap:function(t){if(this.link){var e=this.queryEffectiveChildren("a");if(!e)return;if(t.target===e)return;e.click()}}});</script>
+</dom-module>
+<dom-module id="paper-tabs" assetpath="../bower_components/paper-tabs/">
+  <template>
+    <style>
+      :host {
+        @apply(--layout);
+        @apply(--layout-center);
+
+        height: 48px;
+        font-size: 14px;
+        font-weight: 500;
+        overflow: hidden;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+
+        /* NOTE: Both values are needed, since some phones require the value to be `transparent`. */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+
+        @apply(--paper-tabs);
+      }
+
+      :host-context([dir=rtl]) {
+        @apply(--layout-horizontal-reverse);
+      }
+
+      #tabsContainer {
+        position: relative;
+        height: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        @apply(--layout-flex-auto);
+        @apply(--paper-tabs-container);
+      }
+
+      #tabsContent {
+        height: 100%;
+        -moz-flex-basis: auto;
+        -ms-flex-basis: auto;
+        flex-basis: auto;
+        @apply(--paper-tabs-content);
+      }
+
+      #tabsContent.scrollable {
+        position: absolute;
+        white-space: nowrap;
+      }
+
+      #tabsContent:not(.scrollable),
+      #tabsContent.scrollable.fit-container {
+        @apply(--layout-horizontal);
+      }
+
+      #tabsContent.scrollable.fit-container {
+        min-width: 100%;
+      }
+
+      #tabsContent.scrollable.fit-container > ::content > * {
+        /* IE - prevent tabs from compressing when they should scroll. */
+        -ms-flex: 1 0 auto;
+        -webkit-flex: 1 0 auto;
+        flex: 1 0 auto;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .not-visible {
+        opacity: 0;
+        cursor: default;
+      }
+
+      paper-icon-button {
+        width: 48px;
+        height: 48px;
+        padding: 12px;
+        margin: 0 4px;
+      }
+
+      #selectionBar {
+        position: absolute;
+        height: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-bottom: 2px solid var(--paper-tabs-selection-bar-color, --paper-yellow-a100);
+          -webkit-transform: scale(0);
+        transform: scale(0);
+          -webkit-transform-origin: left center;
+        transform-origin: left center;
+          transition: -webkit-transform;
+        transition: transform;
+
+        @apply(--paper-tabs-selection-bar);
+      }
+
+      #selectionBar.align-bottom {
+        top: 0;
+        bottom: auto;
+      }
+
+      #selectionBar.expand {
+        transition-duration: 0.15s;
+        transition-timing-function: cubic-bezier(0.4, 0.0, 1, 1);
+      }
+
+      #selectionBar.contract {
+        transition-duration: 0.18s;
+        transition-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+      }
+
+      #tabsContent > ::content > *:not(#selectionBar) {
+        height: 100%;
+      }
+    </style>
+
+    <paper-icon-button icon="paper-tabs:chevron-left" class$="[[_computeScrollButtonClass(_leftHidden, scrollable, hideScrollButtons)]]" on-up="_onScrollButtonUp" on-down="_onLeftScrollButtonDown" tabindex="-1"></paper-icon-button>
+
+    <div id="tabsContainer" on-track="_scroll" on-down="_down">
+      <div id="tabsContent" class$="[[_computeTabsContentClass(scrollable, fitContainer)]]">
+        <div id="selectionBar" class$="[[_computeSelectionBarClass(noBar, alignBottom)]]" on-transitionend="_onBarTransitionEnd"></div>
+        <content select="*"></content>
+      </div>
+    </div>
+
+    <paper-icon-button icon="paper-tabs:chevron-right" class$="[[_computeScrollButtonClass(_rightHidden, scrollable, hideScrollButtons)]]" on-up="_onScrollButtonUp" on-down="_onRightScrollButtonDown" tabindex="-1"></paper-icon-button>
+
+  </template>
+
+  <script>Polymer({is:"paper-tabs",behaviors:[Polymer.IronResizableBehavior,Polymer.IronMenubarBehavior],properties:{noink:{type:Boolean,value:!1,observer:"_noinkChanged"},noBar:{type:Boolean,value:!1},noSlide:{type:Boolean,value:!1},scrollable:{type:Boolean,value:!1},fitContainer:{type:Boolean,value:!1},disableDrag:{type:Boolean,value:!1},hideScrollButtons:{type:Boolean,value:!1},alignBottom:{type:Boolean,value:!1},selectable:{type:String,value:"paper-tab"},autoselect:{type:Boolean,value:!1},autoselectDelay:{type:Number,value:0},_step:{type:Number,value:10},_holdDelay:{type:Number,value:1},_leftHidden:{type:Boolean,value:!1},_rightHidden:{type:Boolean,value:!1},_previousTab:{type:Object}},hostAttributes:{role:"tablist"},listeners:{"iron-resize":"_onTabSizingChanged","iron-items-changed":"_onTabSizingChanged","iron-select":"_onIronSelect","iron-deselect":"_onIronDeselect"},keyBindings:{"left:keyup right:keyup":"_onArrowKeyup"},created:function(){this._holdJob=null,this._pendingActivationItem=void 0,this._pendingActivationTimeout=void 0,this._bindDelayedActivationHandler=this._delayedActivationHandler.bind(this),this.addEventListener("blur",this._onBlurCapture.bind(this),!0)},ready:function(){this.setScrollDirection("y",this.$.tabsContainer)},detached:function(){this._cancelPendingActivation()},_noinkChanged:function(t){Polymer.dom(this).querySelectorAll("paper-tab").forEach(t?this._setNoinkAttribute:this._removeNoinkAttribute)},_setNoinkAttribute:function(t){t.setAttribute("noink","")},_removeNoinkAttribute:function(t){t.removeAttribute("noink")},_computeScrollButtonClass:function(t,e,i){return!e||i?"hidden":t?"not-visible":""},_computeTabsContentClass:function(t,e){return t?"scrollable"+(e?" fit-container":""):" fit-container"},_computeSelectionBarClass:function(t,e){return t?"hidden":e?"align-bottom":""},_onTabSizingChanged:function(){this.debounce("_onTabSizingChanged",function(){this._scroll(),this._tabChanged(this.selectedItem)},10)},_onIronSelect:function(t){this._tabChanged(t.detail.item,this._previousTab),this._previousTab=t.detail.item,this.cancelDebouncer("tab-changed")},_onIronDeselect:function(t){this.debounce("tab-changed",function(){this._tabChanged(null,this._previousTab),this._previousTab=null},1)},_activateHandler:function(){this._cancelPendingActivation(),Polymer.IronMenuBehaviorImpl._activateHandler.apply(this,arguments)},_scheduleActivation:function(t,e){this._pendingActivationItem=t,this._pendingActivationTimeout=this.async(this._bindDelayedActivationHandler,e)},_delayedActivationHandler:function(){var t=this._pendingActivationItem;this._pendingActivationItem=void 0,this._pendingActivationTimeout=void 0,t.fire(this.activateEvent,null,{bubbles:!0,cancelable:!0})},_cancelPendingActivation:function(){void 0!==this._pendingActivationTimeout&&(this.cancelAsync(this._pendingActivationTimeout),this._pendingActivationItem=void 0,this._pendingActivationTimeout=void 0)},_onArrowKeyup:function(t){this.autoselect&&this._scheduleActivation(this.focusedItem,this.autoselectDelay)},_onBlurCapture:function(t){t.target===this._pendingActivationItem&&this._cancelPendingActivation()},get _tabContainerScrollSize(){return Math.max(0,this.$.tabsContainer.scrollWidth-this.$.tabsContainer.offsetWidth)},_scroll:function(t,e){if(this.scrollable){var i=e&&-e.ddx||0;this._affectScroll(i)}},_down:function(t){this.async(function(){this._defaultFocusAsync&&(this.cancelAsync(this._defaultFocusAsync),this._defaultFocusAsync=null)},1)},_affectScroll:function(t){this.$.tabsContainer.scrollLeft+=t;var e=this.$.tabsContainer.scrollLeft;this._leftHidden=0===e,this._rightHidden=e===this._tabContainerScrollSize},_onLeftScrollButtonDown:function(){this._scrollToLeft(),this._holdJob=setInterval(this._scrollToLeft.bind(this),this._holdDelay)},_onRightScrollButtonDown:function(){this._scrollToRight(),this._holdJob=setInterval(this._scrollToRight.bind(this),this._holdDelay)},_onScrollButtonUp:function(){clearInterval(this._holdJob),this._holdJob=null},_scrollToLeft:function(){this._affectScroll(-this._step)},_scrollToRight:function(){this._affectScroll(this._step)},_tabChanged:function(t,e){if(!t)return this.$.selectionBar.classList.remove("expand"),this.$.selectionBar.classList.remove("contract"),void this._positionBar(0,0);var i=this.$.tabsContent.getBoundingClientRect(),n=i.width,o=t.getBoundingClientRect(),s=o.left-i.left;if(this._pos={width:this._calcPercent(o.width,n),left:this._calcPercent(s,n)},this.noSlide||null==e)return this.$.selectionBar.classList.remove("expand"),this.$.selectionBar.classList.remove("contract"),void this._positionBar(this._pos.width,this._pos.left);var a=e.getBoundingClientRect(),l=this.items.indexOf(e),c=this.items.indexOf(t);this.$.selectionBar.classList.add("expand");var r=l<c;this._isRTL&&(r=!r),r?this._positionBar(this._calcPercent(o.left+o.width-a.left,n)-5,this._left):this._positionBar(this._calcPercent(a.left+a.width-o.left,n)-5,this._calcPercent(s,n)+5),this.scrollable&&this._scrollToSelectedIfNeeded(o.width,s)},_scrollToSelectedIfNeeded:function(t,e){var i=e-this.$.tabsContainer.scrollLeft;i<0?this.$.tabsContainer.scrollLeft+=i:(i+=t-this.$.tabsContainer.offsetWidth)>0&&(this.$.tabsContainer.scrollLeft+=i)},_calcPercent:function(t,e){return 100*t/e},_positionBar:function(t,e){t=t||0,e=e||0,this._width=t,this._left=e,this.transform("translateX("+e+"%) scaleX("+t/100+")",this.$.selectionBar)},_onBarTransitionEnd:function(t){var e=this.$.selectionBar.classList;e.contains("expand")?(e.remove("expand"),e.add("contract"),this._positionBar(this._pos.width,this._pos.left)):e.contains("contract")&&e.remove("contract")}});</script>
+</dom-module>
+</div><dom-module id="concept-coverage">
+  <template>
+    <style include="class-elements"></style>
+    <style include="shared-styles">
+       :host {
+        display: block;
+        height: 100%;
+      }
+      
+      [slot='body'] {
+        background: #fff;
+      }
+      /* styles for paper-tabs*/
+      
+      paper-tab {
+        color: #5da9dd;
+        --paper-tab-content-unselected: {
+          color: #b3b3b3;
+        }
+        --layout-flex-auto: {
+          flex: 0.06;
+        }
+      }
+      
+      paper-tabs {
+        --paper-tabs-selection-bar-color: #5da9dd
+      }
+      /*Styles for fields paper-listbox*/
+      
+      paper-listbox.field-list paper-item {
+        display: inline;
+        min-height: 15px;
+        margin: 10px;
+        font-weight: 100;
+        --paper-item-focused-before: {
+          border-radius: 25px;
+        }
+        --paper-item-focused: {
+          border-radius: 25px;
+        }
+        --paper-item-selected-before: {
+          border-radius: 25px;
+        }
+        --paper-item-selected: {
+          border-radius: 25px;
+          color: #fff;
+          background: #5caadb;
+        }
+      }
+      
+      paper-listbox.field-list {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        border: 1px solid #e1e6ed;
+        background: #fcfdff;
+        height: 288px;
+        padding-top: 20px;
+        padding-bottom: 0px;
+      }
+    </style>
+
+    <page-layout heading="Concept Coverage">
+      <div slot="body">
+        <mdb-metric-display-container>
+          <mdb-metric-display stat-value="0.2%" stat-description="Coverage across 1 application"></mdb-metric-display>
+          <mdb-metric-display stat-value="279 days" stat-description="ETA(based on yesterday)"></mdb-metric-display>
+          <mdb-metric-display stat-value="25" stat-description="Concepts significantly impacted"></mdb-metric-display>
+        </mdb-metric-display-container>
+
+        <paper-tabs selected="{{tab}}">
+          <paper-tab>GLOBAL</paper-tab>
+          <paper-tab>MY LOB</paper-tab>
+          <paper-tab>LOB1</paper-tab>
+          <paper-tab>LOB2</paper-tab>
+          <paper-tab>LOB3</paper-tab>
+        </paper-tabs>
+
+        <iron-pages selected="{{tab}}">
+          <iron-page></iron-page>
+          <iron-page>
+            <paper-listbox class="field-list">
+              <paper-item>FICO-Score</paper-item>
+              <paper-item>Account-Number</paper-item>
+              <paper-item>Customer-Code</paper-item>
+              <paper-item>Customer-Type</paper-item>
+              <paper-item>Product-Code</paper-item>
+              <paper-item>Product-Name</paper-item>
+              <paper-item>Market-Segment</paper-item>
+              <paper-item>CUSIP</paper-item>
+              <paper-item>Instrument-ID</paper-item>
+              <paper-item>Holding-ID</paper-item>
+              <paper-item>Published-Price</paper-item>
+              <paper-item>Agreement-ID</paper-item>
+              <paper-item>Contract-ID</paper-item>
+              <paper-item>Organization-ID</paper-item>
+              <paper-item>Date of Birth</paper-item>
+              <paper-item>Organization-Name</paper-item>
+              <paper-item>Activity-ID</paper-item>
+              <paper-item>Notional-ID</paper-item>
+              <paper-item>Agent-ID</paper-item>
+              <paper-item>Agency-Name</paper-item>
+              <paper-item>Asset-ID</paper-item>
+              <paper-item>Asset-Type</paper-item>
+            </paper-listbox>
+          </iron-page>
+          <iron-page></iron-page>
+          <iron-page></iron-page>
+          <iron-page></iron-page>
+        </iron-pages>
+      </div>
+    </page-layout>
+
+  </template>
+
+  <script>Polymer({is:"concept-coverage",properties:{tab:{type:Number,value:0}}});</script>
+</dom-module></body></html>

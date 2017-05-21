@@ -1,0 +1,47 @@
+[
+    {
+        "_id": 1,
+        "name": "CC1",
+        "bulb": true,        
+        "recommendation": 21
+    },
+    {
+        "_id": 2,
+        "name": "CCI-NX",
+        "bulb": false
+    },
+    {
+        "_id": 3,
+        "name": "AAN",
+        "bulb": true,        
+        "recommendation": 25
+    },
+    {
+        "_id": 4,
+        "name": "AGS",
+        "bulb": true,        
+        "recommendation": 37
+    },
+    {
+        "_id": 5,
+        "name": "NETSEC",
+        "bulb": false
+    },
+    {
+        "_id": 6,
+        "name": "CIRMS",
+        "bulb": true,        
+        "recommendation": 42
+    },
+    {
+        "_id": 7,
+        "name": "CRE",
+        "bulb": false,        
+        "recommendation": 29
+    },
+    {
+        "_id": 8,
+        "name": "ECB",
+        "bulb": false
+    }
+]

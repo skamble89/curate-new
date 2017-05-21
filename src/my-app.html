@@ -1,0 +1,164 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/side-menu/side-menu.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/side-menu/side-submenu.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="my-icons.html">
+<link rel="import" href="my-header.html">
+<link rel="import" href="mdb-gsheet-data-adapter.html">
+
+<dom-module id="my-app">
+  <template>
+    <style include="iron-flex">
+       :host {
+        --app-primary-color: #5da9dd;
+        --app-secondary-color: black;
+        --app-border-color: #e1e6ed;
+        display: block;
+        --paper-item-min-height: 62px;
+        --paper-item: {
+          font-size: 14px;
+        }
+        ;
+        --app-menu-item-bg:#fff;
+        --app-menu-color: var(--app-primary-color);
+      }
+      
+      app-header {
+        color: #fff;
+        /*background-color: var(--app-primary-color);*/
+      }
+      
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+      
+      .menu-header-toolbar {
+        @apply(--layout-center-justified);
+      }
+      
+      app-drawer-layout {
+        min-height: 100%;
+        background: var(--app-bg-color, #f0f4f9);
+      }
+      
+      app-toolbar {
+        background-color: var(--app-header-bg, #fff);
+        color: var(--app-header-color, #ddd);
+        height: var(--app-header-height, 80px);
+      }
+      
+      .flex {
+        @apply(--layout-flex);
+      }
+      
+      #pages {
+        height: 100%;
+      }
+    </style>
+
+    <app-location use-hash-as-path route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed responsive-width="1366px">
+      <!-- Drawer content -->
+      <app-drawer id="drawer">
+        <app-toolbar class="menu-header-toolbar">
+          <img src="../images/Logo.png" alt="">
+        </app-toolbar>
+        <side-menu selected="[[page]]" attr-for-selected="name" role="navigation">
+          <paper-item name="view1" on-click="_routeToPage">
+            <span class="flex">LOB ECOSYSTEM</span>
+            <iron-icon icon="my-icons:chevron-right"></iron-icon>
+          </paper-item>
+          <paper-item on-click="_routeToPage" name="concept-coverage">
+            <span class="flex">Concept Coverage</span>
+            <iron-icon icon="my-icons:chevron-right"></iron-icon>
+          </paper-item>
+          <paper-item on-click="_routeToPage" name="view3">
+            <span class="flex">REVIEW & CLASSIFY</span>
+            <iron-icon icon="my-icons:chevron-right"></iron-icon>
+          </paper-item>
+        </side-menu>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+            <my-header profile-picture="./images/img.jpg"></my-header>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+          <my-view1 name="view1"></my-view1>
+          <concept-coverage name="concept-coverage" data-source="mdb-gsheet-data-adapter" data-source-options='{"key":"1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"}'></concept-coverage>
+          <my-view3 name="view3"></my-view3>
+          <my-view404 name="view404"></my-view404>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-app',
+
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged',
+        },
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+      ],
+
+      _routePageChanged: function (page) {
+        this.page = page || 'view1';
+
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      },
+
+      _pageChanged: function (page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      },
+      _routeToPage: function (e) {
+        var pg = e.currentTarget.getAttribute('name');
+        this.set('route.path', '/' + pg);
+      },
+      _showPage404: function () {
+        this.page = 'view404';
+      },
+    });
+  </script>
+</dom-module>

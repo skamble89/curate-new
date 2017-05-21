@@ -1,0 +1,62 @@
+[
+    {
+        "_id": 1,
+        "name": "FICO-Score"
+    },
+    {
+        "_id": 2,
+        "name": "Account-Number"
+    },
+    {
+        "_id": 3,
+        "name": "Customer-Code"
+    },
+    {
+        "_id": 4,
+        "name": "Customer-Type"
+    },
+    {
+        "_id": 5,
+        "name": "Product-Code"
+    },
+    {
+        "_id": 6,
+        "name": "Product-Name"
+    },
+    {
+        "_id": 7,
+        "name": "Market-Segment"
+    },
+    {
+        "_id": 8,
+        "name": "CUSIP"
+    },
+    {
+        "_id": 9,
+        "name": "Instrument-ID"
+    },
+    {
+        "_id": 10,
+        "name": "Holding-ID"
+    },
+    {
+        "_id": 11,
+        "name": "Published-Price"
+    },
+    {
+        "_id": 12,
+        "name": "Agreement-ID"
+    },
+    {
+        "_id": 13,
+        "name": "Contract-ID"
+    },
+    {
+        "_id": 14,
+        "name": "Organization-ID"
+    },
+    {
+        "_id": 15,
+        "name": "Date of Birth"
+    }
+]

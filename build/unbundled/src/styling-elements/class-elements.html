@@ -1,0 +1,72 @@
+<html><head></head><body><dom-module id="class-elements">
+    <template>
+        <style>
+        /*styled-blocks styles*/
+        
+        .styled-blocks {
+            @apply(--layout-horizontal);
+        }
+        
+        .styled-blocks > * {
+            border: 1px solid var(--styled-blocks-border-color, --app-border-color);
+            /*opacity: 0.6;*/
+            text-align: center;
+            box-sizing: border-box;
+            padding: 10px;
+            vertical-align: middle;
+            color: var(--dark-text);
+            cursor: pointer;
+            @apply(--layout);
+            @apply(--layout-center);
+            @apply(--layout-center-justified);
+            border-right: 0;
+        }
+        /*.styled-blocks > .iron-selected{
+	border: 3px solid var(--styled-blocks-selected-border-color, --app-blue-color);
+	opacity: 1;
+	-webkit-box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+	-moz-box-shadow:    0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+	box-shadow:         0px 0px 15px 0px rgba(50, 50, 50, 0.6);
+}*/
+		
+        .styled-blocks > *:last-of-type{
+        	border-right: 1px solid var(--styled-blocks-border-color, --app-border-color);
+        }
+        
+        .styled-blocks.full-bleed > * {
+            @apply(--layout-flex);
+        }
+        
+        .styled-blocks.small > * {
+            height: 50px;
+            padding: 10px 15px;
+        }
+        
+        .styled-blocks.medium > * {
+            height: 70px;
+        }
+        
+        .styled-blocks.big > * {
+            height: 135px;
+        }
+        
+        .styled-blocks.large > * {
+            height: 231px;
+            width: 200px;
+        }
+        .styled-blocks h2 {
+        	font-weight: var(--font-light, 100);
+        	font-size: 2em;
+        	line-height: 1.2;
+        	margin: 0;
+        }
+        .styled-blocks p {
+        	font-weight: var(--font-light, 100);
+        	font-size: 1.3em;
+        	margin: 0;
+        }
+        /*end styled-blocks styles*/
+        </style>
+    </template>
+</dom-module>
+</body></html>

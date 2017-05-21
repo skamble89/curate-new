@@ -1,0 +1,173 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<!--
+`mdb-simple-list`
+list component
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-list-item-font-weight`   | Font weight for list item                                            | `200`
+`--mdb-list-item`               | Mixin applied to list item                                           | `{}`
+`--mdb-list-item-focused`      | Mixin applied to focused list item                                  | `{}`
+`--mdb-list-item-selected`      | Mixin applied to selected list item                                  | `{}`
+`--mdb-simple-list`      | Mixin applied to list container                                  | `{}`
+`--mdb-simple-list-empty`      | Mixin applied to list empty message                                  | `{}`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-simple-list">
+  <template>
+    <style>
+       :host {
+        position: relative;
+        display: block;
+        --paper-item: {
+          min-height: auto;
+          font-weight: var(--mdb-list-item-font-weight, 200);
+          height: 30px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          @apply(--mdb-list-item);
+        }
+        --paper-icon-item: {
+          min-height: auto;
+          font-weight: var(--mdb-list-item-font-weight, 200);
+          height: 30px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          @apply(--mdb-list-item);
+        }
+        --paper-item-focused-before: {
+          @apply(--mdb-list-item-focused);
+        }
+        --paper-item-focused: {
+          @apply(--mdb-list-item-focused);
+        }
+        --paper-item-selected-before: {
+          color: #fff;
+          background-color: #5caadb;
+          @apply(--mdb-list-item-selected);
+        }
+        --paper-item-selected: {
+          color: #fff;
+          background-color: #5caadb;
+          @apply(--mdb-list-item-selected);
+        }
+        --paper-item-selected-weight:var(--mdb-list-item-font-weight, 200);
+      }
+      
+       :host paper-listbox {
+        outline: 0;
+        padding: 0;
+        color: #a1a2a4;
+        @apply(--mdb-simple-list)
+      }
+      
+       :host .empty-message {
+        @apply(--mdb-simple-list-empty)
+      }
+    </style>
+    <template is="dom-if" if="{{items.length}}" on-dom-change="_renderList">
+      <paper-listbox selected="{{selected}}">
+      </paper-listbox>
+    </template>
+    <template is="dom-if" if="{{!items.length}}">
+      <p class="empty-message">[[emptyMessage]]</p>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-simple-list',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-simple-list',
+          readOnly: true
+        },
+
+        items: {
+          type: Array,
+          value: [],
+          notify: true,
+          observer: '_renderList'
+        },
+
+        selected: {
+          type: Number,
+          observer: '_selectedChanged'
+        },
+
+        selectedItem: {
+          type: Object,
+          notify: true
+        },
+
+        selectedItems: {
+          type: Array,
+          notify: true
+        },
+
+        emptyMessage: String,
+
+        height: {
+          type: String,
+          value: '400'
+        }
+      },
+
+      behaviors: [Polymer.Templatizer],
+
+      _renderList: function () {
+        this.selected = undefined;
+        var template = this.queryEffectiveChildren('template');
+        if (template) {
+          var list = this.$$('paper-listbox');
+
+          if (list) {
+            list = Polymer.dom(list);
+            this.dataHost = this;
+            this.templatize(template);
+            this._emptyList();
+
+            var items = this.items;
+            for (var i = 0; i < items.length; i++) {
+              var item = items[i];
+              var clone = this.stamp({});
+
+              if (typeof item === typeof '') {
+                clone['this'] = item;
+              } else {
+                clone['item'] = item;
+              }
+
+              list.appendChild(clone.root);
+            }
+          }
+        }
+      },
+
+      _emptyList: function () {
+        var list = Polymer.dom(this.$$('paper-listbox'));
+        var children = list.children;
+        //Clear the list before rendering
+        for (var i = 0; i < children.length; i++) {
+          list.removeChild(children[i]);
+        }
+      },
+
+      _selectedChanged: function (value) {
+        this.selectedItem = typeof value === typeof 0 ? this.items[value] : undefined;
+      }
+    });
+  </script>
+</dom-module>

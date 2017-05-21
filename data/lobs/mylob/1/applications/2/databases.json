@@ -1,0 +1,55 @@
+[
+    {
+        "_id": 1,
+        "name": "AAN DB",
+        "bulb": true,
+        "face": true,
+        "recommendation": 54
+    },
+    {
+        "_id": 2,
+        "name": "ABA DB",
+        "bulb": false,
+        "face": true
+    },
+    {
+        "_id": 3,
+        "name": "CIS",
+        "bulb": true,
+        "face": false,
+        "recommendation": 23
+    },
+    {
+        "_id": 4,
+        "name": "APD",
+        "bulb": true,
+        "face": false,
+        "recommendation": 48
+    },
+    {
+        "_id": 5,
+        "name": "CIRMS",
+        "bulb": false,
+        "face": true
+    },
+    {
+        "_id": 6,
+        "name": "Adjustments DB",
+        "bulb": true,
+        "face": false,
+        "recommendation": 68
+    },
+    {
+        "_id": 7,
+        "name": "MACS",
+        "bulb": false,
+        "face": true
+    },
+    {
+        "_id": 8,
+        "name": "BDR",
+        "bulb": true,
+        "face": false,
+        "recommendation": 25
+    }
+]

@@ -1,0 +1,185 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
+
+<!--
+`mdb-help-text`
+Help text element
+
+The following custom properties and mixins are also available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-help-text-background` | Background color of the tooltip | `#fff`
+`--mdb-help-text-color` | Color of help text | `#aaa`
+`--mdb-help-text-font-size` | Font size of help text | `1em`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-help-text">
+  <template>
+    <style>
+       :host {
+        display: inline;
+        position: relative;
+      }
+      
+       :host #help {
+        color: var(--icon-color, #aaa);
+        --iron-icon-height: 18px;
+        --iron-icon-width: 18px;
+      }
+      
+       :host paper-tooltip {
+        --paper-tooltip-background: var(--mdb-help-text-background, #fff);
+        --paper-tooltip-text-color: var(--mdb-help-text-color, #aaa);
+        --paper-tooltip-opacity: 1;
+        --paper-tooltip: {
+          box-shadow: 0 0 15px #bfbfbf;
+          font-size: var(--mdb-help-text-font-size, 1em);
+          width: 250px;
+          line-height: 20px;
+          padding: 20px;
+          border-radius: 5px;
+          position: relative;
+          background: #fff;
+          border: 1px solid #bfbfbf;
+          font-weight: 400;
+        }
+      }
+      
+       :host #help+paper-tooltip .arrow:before,
+       :host #help+paper-tooltip .arrow:after {
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+      /*When tooltip is on right*/
+      
+       :host[position="right"] #help+paper-tooltip .arrow:before,
+       :host[position="right"] #help+paper-tooltip .arrow:after {
+        right: 100%;
+        top: 50%;
+      }
+      
+       :host[position="right"] #help+paper-tooltip .arrow:before {
+        border-color: rgba(170, 170, 170, 0);
+        border-right-color: #aaa;
+        border-width: 11px;
+        margin-top: -11px;
+      }
+      
+       :host[position="right"] #help+paper-tooltip .arrow:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-right-color: #fff;
+        border-width: 10px;
+        margin-top: -10px;
+      }
+      /*When tooltip is on left*/
+      
+       :host[position="left"] #help+paper-tooltip .arrow:before,
+       :host[position="left"] #help+paper-tooltip .arrow:after {
+        left: 100%;
+        top: 50%;
+      }
+      
+       :host[position="left"] #help+paper-tooltip .arrow:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-left-color: #fff;
+        border-width: 10px;
+        margin-top: -10px;
+      }
+      
+       :host[position="left"] #help+paper-tooltip .arrow:before {
+        border-color: rgba(170, 170, 170, 0);
+        border-left-color: #aaa;
+        border-width: 11px;
+        margin-top: -11px;
+      }
+      /*When tooltip is above*/
+      
+       :host[position="top"] #help+paper-tooltip .arrow:before,
+       :host[position="top"] #help+paper-tooltip .arrow:after {
+        top: 100%;
+        left: 50%;
+      }
+      
+       :host[position="top"] #help+paper-tooltip .arrow:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-top-color: #fff;
+        border-width: 10px;
+        margin-left: -10px;
+      }
+      
+       :host[position="top"] #help+paper-tooltip .arrow:before {
+        border-color: rgba(170, 170, 170, 0);
+        border-top-color: #aaa;
+        border-width: 11px;
+        margin-left: -11px;
+      }
+      /*When tooltip is below*/
+      
+       :host[position="bottom"] #help+paper-tooltip .arrow:before,
+       :host[position="bottom"] #help+paper-tooltip .arrow:after {
+        bottom: 100%;
+        left: 50%;
+      }
+      
+       :host[position="bottom"] #help+paper-tooltip .arrow:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #fff;
+        border-width: 10px;
+        margin-left: -10px;
+      }
+      
+       :host[position="bottom"] #help+paper-tooltip .arrow:before {
+        border-color: rgba(170, 170, 170, 0);
+        border-bottom-color: #aaa;
+        border-width: 11px;
+        margin-left: -11px;
+      }
+    </style>
+
+    <iron-icon id="help" icon="{{helpIcon}}"></iron-icon>
+    <paper-tooltip for="help" position="{{position}}">
+      <div class="arrow">
+        [[helpText]]
+      </div>
+    </paper-tooltip>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-help-text',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-help-text',
+        },
+
+        helpIcon: {
+          type: String,
+          value: 'icons:help-outline'
+        },
+
+        helpText: {
+          type: String
+        },
+
+        position: {
+          type: String,
+          value: 'right',
+          reflectToAttribute: true
+        },
+      },
+
+    });
+  </script>
+</dom-module>

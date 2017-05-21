@@ -1,0 +1,86 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../mdb-title/mdb-title.html">
+<link rel="import" href="../mdb-search-box/mdb-search-box.html">
+<link rel="import" href="./mdb-concept-recommendation.html">
+
+<!--
+`mdb-recommended-concepts`
+
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-recommended-concepts-title` | Mixin applied to recommended concepts title | `{}`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-recommended-concepts">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+      
+       :host mdb-title {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        border-bottom: 1px solid #f1f5f7;
+        @apply(--mdb-recommended-concepts-title);
+      }
+      
+       :host mdb-concept-recommendation {
+        border-bottom: 1px solid #f1f5f7;
+      }
+      
+       :host #recommendation-list {
+        background-color: #fcfdff;
+        border-top: 1px solid #f1f5f7;
+        border-left: 1px solid #f1f5f7;
+        border-right: 1px solid #f1f5f7;
+      }
+    </style>
+    <div id="recommendation-list">
+      <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
+      <template is="dom-repeat" items="{{_getSortedRecommendations(recommendations)}}">
+        <mdb-concept-recommendation property="{{item.property}}" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
+      </template>
+    </div>
+    <div id="search-box">
+      <mdb-search-box placeholder="Search for more concepts"></mdb-search-box>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-recommended-concepts',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-recommended-concepts',
+        },
+
+        recommendations: {
+          type: Array,
+          value: 0
+        }
+      },
+
+
+      _getSortedRecommendations: function (recommendations) {
+        return recommendations.sort(function (a, b) {
+          return b.recommendationFactor - a.recommendationFactor;
+        });
+      }
+
+    });
+  </script>
+</dom-module>
