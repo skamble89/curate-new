@@ -243,7 +243,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-tabs>
         <template is="dom-if" if="{{lobs.length}}">
           <!-- List of concetps -->
-          <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}" empty-message="No concepts found for selected LOB.">
+          <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
             <template>
               <paper-item>{{this}}</paper-item>
             </template>
@@ -550,6 +550,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set('tableData', []);
           this.selectedColumn = undefined;
           this.set('recommendedConcepts', []);
+          this._resetEmptyMessage('mdb-simple-list.concept-list');
 
           this.isConceptIdentified = false;
           this.identifiedConcept = '';
@@ -557,11 +558,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this._dataSource.getLOBConcepts(this.selectedLob)
             .then(function (concepts) {
               that.set('concepts', concepts);
+              that.querySelector('mdb-simple-list.concept-list').emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
             });
         }
       },
 
       _conceptChanged: function () {
+        this._resetEmptyMessage('mdb-dimension-finder.applications');
         this.set('applications', []);
 
         if (this.selectedConcept) {
@@ -576,6 +579,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _applicationChanged: function () {
+        this._resetEmptyMessage('mdb-dimension-finder.databases');
         this.set('databases', []);
 
         if (this.selectedApplication) {
@@ -589,6 +593,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _databaseChanged: function () {
+        this._resetEmptyMessage('mdb-dimension-finder.schemas');
         this.set('schemas', []);
 
         if (this.selectedDatabase) {
@@ -602,6 +607,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _schemaChanged: function () {
+        this._resetEmptyMessage('mdb-dimension-finder.tables');
         this.set('tables', []);
 
         if (this.selectedSchema) {
@@ -643,6 +649,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               that.set('recommendedConcepts', recommendations);
             });
         }
+      },
+
+      _resetEmptyMessage: function (selector) {
+        var component = this.querySelector(selector);
+        if (component) component.emptyMessage = '';
       }
     });
   </script>
