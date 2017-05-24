@@ -13,7 +13,7 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-recommended-concepts",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-recommended-concepts",
   "version": "0.1.0",
   "_release": "0.1.0",
   "_resolution": {
@@ -21,7 +21,7 @@
     "tag": "v0.1.0",
     "commit": "6993ddfaaf8adac560c3ac644d3b0f44659a747a"
   },
-  "_source": "git://github.com/skamble89/mdb-recommended-concepts.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-recommended-concepts.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-recommended-concepts.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-recommended-concepts.git"
 }

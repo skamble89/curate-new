@@ -67,7 +67,6 @@ Custom property | Description | Default
           font-family: Roboto;
           color: #9a9a9a;
           font-weight: 400;
-          margin-top: 0;
         }
         --mdb-list-item: {
           font-size: 1em;
@@ -88,23 +87,32 @@ Custom property | Description | Default
           position: absolute;
         }
       }
-      
+
        :host .dimension-finder {
         border: 1px solid #dee7ec;
         border-top: 0;
       }
-      
+
        :host .dimension-finder mdb-simple-list {
         min-height: 4em;
         @apply(--mdb-dimension-finder-list)
       }
-      
+
        :host .header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        position: relative;
       }
-      
+
+       :host .header paper-checkbox {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+
+       :host mdb-radio-list {
+        --mdb-radio-list-item-padding: var(--mdb-dimension-finder-radio-item-padding)
+      }
+
        :host paper-radio-button {
         text-align: center;
       }

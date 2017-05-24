@@ -17,15 +17,15 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-dimension-finder",
-  "version": "0.0.14",
-  "_release": "0.0.14",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-dimension-finder",
+  "version": "0.1.0",
+  "_release": "0.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.14",
-    "commit": "ac8464d1119feb86b09e5e8504b588b9a896ca1f"
+    "tag": "v0.1.0",
+    "commit": "b7b7f62d388ca53637f432cf52822e2f38b7c819"
   },
-  "_source": "git://github.com/skamble89/mdb-dimension-finder.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-dimension-finder.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-dimension-finder.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-dimension-finder.git"
 }

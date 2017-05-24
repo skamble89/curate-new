@@ -13,7 +13,7 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-coverage-table",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-coverage-table",
   "version": "0.0.8",
   "_release": "0.0.8",
   "_resolution": {
@@ -21,7 +21,7 @@
     "tag": "v0.0.8",
     "commit": "d4925c90a89c02cd6019b8ace7999c8f77f2d43f"
   },
-  "_source": "git://github.com/skamble89/mdb-coverage-table.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-coverage-table.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-coverage-table.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-coverage-table.git"
 }

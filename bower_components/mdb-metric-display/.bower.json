@@ -11,7 +11,7 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-metric-display",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-metric-display",
   "version": "0.0.3",
   "_release": "0.0.3",
   "_resolution": {
@@ -19,7 +19,7 @@
     "tag": "v0.0.3",
     "commit": "d76e39e32b6327cb1019c5481748a871c53a7aee"
   },
-  "_source": "git://github.com/skamble89/mdb-metric-display.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-metric-display.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-metric-display.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-metric-display.git"
 }
