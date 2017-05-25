@@ -159,6 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-dimension-finder-list: {
           height: 168px;
           overflow: auto;
+          max-width: 237px;
         }
         --mdb-dimension-finder-list-item: {
           min-height: 25px;
@@ -168,16 +169,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           line-height: initial;
         }
       }
-      /*@media all and (min-width: 1024px) {
-         :host .db-entities {
-          margin-top: 15px;
-          padding-bottom: 15px;
-        }
 
-         :host .db-entities .dimension-finder {
-          margin-left: 15px;
+       :host .db-entities {
+        margin-top: var(--standard-padding, 20px);
+        padding-bottom: var(--standard-padding, 20px);
+      }
+
+       :host .db-entities mdb-dimension-finder {
+        margin-left: var(--standard-padding, 20px);
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 14px;
+          padding-right: 14px;
         }
-      }*/
+      }
 
        :host .db-entities[w-1280] {
         margin-top: 20px;
@@ -189,6 +193,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-dimension-finder-radio-button: {
           padding-left: 13px;
           padding-right: 13px;
+        }
+      }
+
+      :host .db-entities[w-1360] {
+        margin-top: 20px;
+        padding-bottom: 20px;
+      }
+
+       :host .db-entities[w-1360] mdb-dimension-finder {
+        margin-left: 20px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 17.5px;
+          padding-right: 17.5px;
+        }
+      }
+
+      :host .db-entities[w-1366] {
+        margin-top: 20px;
+        padding-bottom: 20px;
+      }
+
+       :host .db-entities[w-1366] mdb-dimension-finder {
+        margin-left: 20px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 17.5px;
+          padding-right: 17.5px;
+        }
+      }
+
+      :host .db-entities[w-1440] {
+        margin-top: 20px;
+        padding-bottom: 20px;
+      }
+
+       :host .db-entities[w-1440] mdb-dimension-finder {
+        margin-left: 20px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 7.5px;
+          padding-right: 7.5px;
         }
       }
 
@@ -284,9 +327,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 40%;
       }
     </style>
-
+    
+    <iron-media-query query="(min-width: 1280px) and (max-width: 1359px)" query-matches="{{w-1280}}"></iron-media-query>    
+    <iron-media-query query="(min-width: 1360px) and (max-width: 1365px)" query-matches="{{w-1360}}"></iron-media-query>
+    <iron-media-query query="(min-width: 1366px) and (max-width: 1439px)" query-matches="{{w-1366}}"></iron-media-query>
+    <iron-media-query query="(min-width: 1440px) and (max-width: 1599px)" query-matches="{{w-1440}}"></iron-media-query>
     <iron-media-query query="(min-width: 1600px)" query-matches="{{w-1600}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1280px) and (max-width: 1599px)" query-matches="{{w-1280}}"></iron-media-query>
+
     <page-layout heading="Concept Coverage" help-text="Concept Coverage">
       <div slot="body">
         <mdb-metric-display-container>
@@ -309,7 +356,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
           </mdb-simple-list>
 
-          <div class="db-entities" w-1600$="[[w-1600]]" w-1280$="[[w-1280]]">
+          <div class="db-entities" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]">
             <!-- Applications -->
 
             <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
