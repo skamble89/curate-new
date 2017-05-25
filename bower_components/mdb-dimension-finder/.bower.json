@@ -5,9 +5,9 @@
     "polymer": "Polymer/polymer#^1.4.0",
     "paper-listbox": "PolymerElements/paper-listbox#^1.1.3",
     "paper-item": "PolymerElements/paper-item#^1.2.2",
-    "mdb-radio-list": "git://github.com/skamble89/mdb-radio-list.git",
-    "mdb-title": "git://github.com/skamble89/mdb-title.git",
-    "mdb-simple-list": "git://github.com/skamble89/mdb-simple-list.git",
+    "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
+    "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git",
+    "mdb-simple-list": "git://github.com/makedatabetter-dev/mdb-simple-list.git",
     "paper-input": "PolymerElements/paper-input#^1.1.24",
     "paper-checkbox": "PolymerElements/paper-checkbox#^1.4.2"
   },
@@ -18,12 +18,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/mdb-dimension-finder",
-  "version": "0.1.0",
-  "_release": "0.1.0",
+  "version": "0.1.1",
+  "_release": "0.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.0",
-    "commit": "b7b7f62d388ca53637f432cf52822e2f38b7c819"
+    "tag": "v0.1.1",
+    "commit": "ff20dd1187aa78b36e0870a4fe571edb5517e829"
   },
   "_source": "git://github.com/makedatabetter-dev/mdb-dimension-finder.git",
   "_target": "*",

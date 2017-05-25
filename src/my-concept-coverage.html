@@ -17,15 +17,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/mdb-metric-display/mdb-metric-display.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
 <link rel="import" href="../bower_components/mdb-simple-list/mdb-simple-list.html">
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
 <link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="concept-coverage">
   <template>
-    <style include="class-elements"></style>
+    <style include="class-elements iron-flex iron-flex-alignment"></style>
     <style include="shared-styles">
        :host {
         display: block;
@@ -84,21 +86,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           margin-top: 0;
         }
         --mdb-simple-list: {
-          display: -webkit-box;
-          display: -moz-box;
-          display: -ms-flexbox;
-          display: -webkit-flex;
-          display: flex;
-          -webkit-flex-direction: column;
-          flex-direction: column;
-          -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
           border: 1px solid #e1e6ed;
           background: #fcfdff;
           height: 182px;
           padding-top: var(--standard-padding, 20px);
           padding-bottom: var(--standard-padding, 20px);
           color: #484848;
+          @apply(--layout-vertical);
+          @apply(--layout-wrap);
         }
         --mdb-list-item: {
           min-height: 15px;
@@ -173,8 +168,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           line-height: initial;
         }
       }
-
-      @media only screen and (min-width: 1024px) {
+      /*@media all and (min-width: 1024px) {
          :host .db-entities {
           margin-top: 15px;
           padding-bottom: 15px;
@@ -183,31 +177,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          :host .db-entities .dimension-finder {
           margin-left: 15px;
         }
+      }*/
+
+       :host .db-entities[w-1280] {
+        margin-top: 20px;
+        padding-bottom: 20px;
       }
 
-      @media only screen and (min-width: 1280px) {
-         :host .db-entities {
-          margin-top: 20px;
-          padding-bottom: 20px;
-        }
-
-         :host .db-entities .dimension-finder {
-          margin-left: 20px;
+       :host .db-entities[w-1280] mdb-dimension-finder {
+        margin-left: 20px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 13px;
+          padding-right: 13px;
         }
       }
 
-      @media only screen and (min-width: 1600) {
-         :host .db-entities {
-          margin-top: 30px;
-          padding-bottom: 30px;
-        }
+       :host .db-entities[w-1600] {
+        margin-top: 30px;
+        padding-bottom: 30px;
+      }
 
-         :host .db-entities .dimension-finder {
-          margin-left: 30px;
-        }
-
-         :host mdb-dimension-finder {
-          --mdb-dimension-finder-radio-item-padding: 18px;
+       :host .db-entities[w-1600] mdb-dimension-finder {
+        margin-left: 30px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 14px;
+          padding-right: 14px;
         }
       }
 
@@ -291,6 +285,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
+    <iron-media-query query="(min-width: 1600px)" query-matches="{{w-1600}}"></iron-media-query>
+    <iron-media-query query="(min-width: 1280px) and (max-width: 1599px)" query-matches="{{w-1280}}"></iron-media-query>
     <page-layout heading="Concept Coverage" help-text="Concept Coverage">
       <div slot="body">
         <mdb-metric-display-container>
@@ -313,94 +309,93 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
           </mdb-simple-list>
 
-          <div class="db-entities">
+          <div class="db-entities" w-1600$="[[w-1600]]" w-1280$="[[w-1280]]">
             <!-- Applications -->
-            <div class="dimension-finder">
-              <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
-                selected-dimension="{{selectedApplication}}">
-                <template>
-                  <paper-item>
-                    <span>{{item.name}}</span>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                  </paper-item>
-                </template>
-              </mdb-dimension-finder>
-            </div>
+
+            <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
+              selected-dimension="{{selectedApplication}}">
+              <template>
+                <paper-item>
+                  <span>{{item.name}}</span>
+                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                </paper-item>
+              </template>
+            </mdb-dimension-finder>
+
             <!-- Databases -->
-            <div class="dimension-finder">
-              <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
-                selected-dimension="{{selectedDatabase}}">
-                <template>
-                  <paper-item>
-                    <span class="bulb icon">
+
+            <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
+              selected-dimension="{{selectedDatabase}}">
+              <template>
+                <paper-item>
+                  <span class="bulb icon">
                       <template is="dom-if" if="{{item.systemRecommended}}">
                           <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
                       </template>
                   </span>
-                    <span class="face icon">
+                  <span class="face icon">
                       <template is="dom-if" if="{{item.humanVerified}}">
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                    <span>{{item.name}}</span>
-                    <template is="dom-if" if="{{item.recommendation}}">
-                      <span class="recommendation">{{item.recommendation}}%</span>
-                    </template>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                  </paper-item>
-                </template>
-              </mdb-dimension-finder>
-            </div>
+                  <span>{{item.name}}</span>
+                  <template is="dom-if" if="{{item.recommendation}}">
+                    <span class="recommendation">{{item.recommendation}}%</span>
+                  </template>
+                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                </paper-item>
+              </template>
+            </mdb-dimension-finder>
+
             <!-- Schemas -->
-            <div class="dimension-finder">
-              <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
-                selected-dimension="{{selectedSchema}}">
-                <template>
-                  <paper-item>
-                    <span class="bulb icon">
+            <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
+              selected-dimension="{{selectedSchema}}">
+              <template>
+                <paper-item>
+                  <span class="bulb icon">
                       <template is="dom-if" if="{{item.systemRecommended}}">
                           <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
                       </template>                            
                   </span>
-                    <span class="face icon">
+                  <span class="face icon">
                       <template is="dom-if" if="{{item.humanVerified}}">
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                    <span>{{item.name}}</span>
-                    <template is="dom-if" if="{{item.recommendation}}">
-                      <span class="recommendation">{{item.recommendation}}%</span>
-                    </template>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                  </paper-item>
-                </template>
-              </mdb-dimension-finder>
-            </div>
+                  <span>{{item.name}}</span>
+                  <template is="dom-if" if="{{item.recommendation}}">
+                    <span class="recommendation">{{item.recommendation}}%</span>
+                  </template>
+                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                </paper-item>
+              </template>
+            </mdb-dimension-finder>
+
             <!-- Tables -->
-            <div class="dimension-finder">
-              <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables"
-                selected-dimension="{{selectedTable}}">
-                <template>
-                  <paper-item>
-                    <span class="bulb icon">
+
+            <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables"
+              selected-dimension="{{selectedTable}}">
+              <template>
+                <paper-item>
+                  <span class="bulb icon">
                       <template is="dom-if" if="{{item.systemRecommended}}">
                           <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
                       </template>                            
                   </span>
-                    <span class="face icon">
+                  <span class="face icon">
                       <template is="dom-if" if="{{item.humanVerified}}">
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                    <span>{{item.name}}</span>
-                    <template is="dom-if" if="{{item.recommendation}}">
-                      <span class="recommendation">{{item.recommendation}}%</span>
-                    </template>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                  </paper-item>
-                </template>
-              </mdb-dimension-finder>
-            </div>
+                  <span>{{item.name}}</span>
+                  <template is="dom-if" if="{{item.recommendation}}">
+                    <span class="recommendation">{{item.recommendation}}%</span>
+                  </template>
+                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                </paper-item>
+              </template>
+            </mdb-dimension-finder>
+
           </div>
 
           <!-- Table data -->

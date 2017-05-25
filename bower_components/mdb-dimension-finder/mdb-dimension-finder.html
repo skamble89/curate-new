@@ -20,6 +20,7 @@ Custom property | Description | Default
 ----------------|-------------|----------
 `--mdb-dimension-finder-list` | Mixin applied to dimension finder list | `{}`
 `--mdb-dimension-finder-list-item` | Mixin applied to dimension finder list item | `{}`
+`--mdb-dimension-finder-radio-button` | Mixin applied to dimension finder sorting radio buttons | `{}`
 
 @demo demo/index.html 
 -->
@@ -108,9 +109,10 @@ Custom property | Description | Default
         top: 50%;
         transform: translate(0, -50%);
       }
-      
+
        :host paper-radio-button {
         text-align: center;
+        @apply(--mdb-dimension-finder-radio-button)
       }
     </style>
 
