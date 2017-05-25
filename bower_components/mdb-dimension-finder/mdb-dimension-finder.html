@@ -21,6 +21,8 @@ Custom property | Description | Default
 `--mdb-dimension-finder-list` | Mixin applied to dimension finder list | `{}`
 `--mdb-dimension-finder-list-item` | Mixin applied to dimension finder list item | `{}`
 `--mdb-dimension-finder-radio-button` | Mixin applied to dimension finder sorting radio buttons | `{}`
+`--mdb-dimension-finder-searchbox-container` | Mixin applied to dimension finder searchbox container | `{}`
+`--mdb-dimension-finder-searchbox` | Mixin applied to dimension finder searchbox | `{}`
 
 @demo demo/index.html 
 -->
@@ -54,12 +56,14 @@ Custom property | Description | Default
           padding-left: var(--standard-padding, 20px);
           padding-right: var(--standard-padding, 20px);
           border: 0;
+          @apply(--mdb-dimension-finder-searchbox-container);
         }
         --paper-input-container-input: {
           border: 1px solid #e8edf1;
           padding: 5px;
           width: 95%;
           font-size: 1em;
+          @apply(--mdb-dimension-finder-searchbox);
         }
         --paper-font-caption: {
           display: none;
