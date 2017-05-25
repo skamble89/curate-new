@@ -159,7 +159,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-dimension-finder-list: {
           height: 168px;
           overflow: auto;
-          max-width: 237px;
         }
         --mdb-dimension-finder-list-item: {
           min-height: 25px;
@@ -183,6 +182,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
+       :host .db-entities .item-name {
+        max-width: 199px;
+      }
+
        :host .db-entities[w-1280] {
         margin-top: 20px;
         padding-bottom: 20px;
@@ -196,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-      :host .db-entities[w-1360] {
+       :host .db-entities[w-1360] {
         margin-top: 20px;
         padding-bottom: 20px;
       }
@@ -209,7 +212,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-      :host .db-entities[w-1366] {
+       :host .db-entities[w-1366] {
         margin-top: 20px;
         padding-bottom: 20px;
       }
@@ -222,7 +225,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-      :host .db-entities[w-1440] {
+       :host .db-entities[w-1440] {
         margin-top: 20px;
         padding-bottom: 20px;
       }
@@ -327,8 +330,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 40%;
       }
     </style>
-    
-    <iron-media-query query="(min-width: 1280px) and (max-width: 1359px)" query-matches="{{w-1280}}"></iron-media-query>    
+
+    <iron-media-query query="(min-width: 1280px) and (max-width: 1359px)" query-matches="{{w-1280}}"></iron-media-query>
     <iron-media-query query="(min-width: 1360px) and (max-width: 1365px)" query-matches="{{w-1360}}"></iron-media-query>
     <iron-media-query query="(min-width: 1366px) and (max-width: 1439px)" query-matches="{{w-1366}}"></iron-media-query>
     <iron-media-query query="(min-width: 1440px) and (max-width: 1599px)" query-matches="{{w-1440}}"></iron-media-query>
@@ -363,7 +366,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               selected-dimension="{{selectedApplication}}">
               <template>
                 <paper-item>
-                  <span>{{item.name}}</span>
+                  <span class="item-name">{{item.name}}</span>
                   <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                 </paper-item>
               </template>
@@ -385,7 +388,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span>{{item.name}}</span>
+                  <span class="item-name">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>
@@ -409,7 +412,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span>{{item.name}}</span>
+                  <span class="item-name">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>
@@ -434,7 +437,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span>{{item.name}}</span>
+                  <span class="item-name">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>
