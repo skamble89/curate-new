@@ -276,7 +276,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
        :host mdb-concept-recommendation {
-        margin-top: 20px;
+        margin-top: var(--standard-padding, 20px);
         margin-bottom: var(--standard-padding, 20px);
         border: 1px solid #e5edee;
         background-color: #fcfdff;
@@ -294,8 +294,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: #5bca52;
         color: #fff;
         border-radius: 50%;
-        --iron-icon-width: 40px;
-        --iron-icon-height: 40px;
+        --iron-icon-width: 55px;
+        --iron-icon-height: 55px;
       }
 
        :host .concept-identification {
@@ -312,6 +312,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #aaa;
       }
 
+       :host .concept-identified .success-message mdb-title {
+        color: #000;
+        --mdb-title: {
+          margin: 0;
+        }
+      }
+
+       :host .concept-identified .success-message p {
+        margin: 0;
+      }
+
        :host mdb-coverage-table {
         width: 60%;
         margin-right: var(--standard-padding, 20px);
@@ -319,6 +330,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-title: {
           color: #aaa;
           margin-top: 0;
+          margin-bottom:6px;
         }
         --mdb-coverage-table: {
           height: 511px;
@@ -469,9 +481,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="0"></mdb-concept-recommendation>
                 <template is="dom-if" if="{{isConceptIdentified}}">
                   <div class="concept-identified">
-                    <iron-icon class="arrow" icon="icons:done"></iron-icon>
-                    <mdb-title>Hurray!</mdb-title>
                     <div class="success-message">
+                      <iron-icon class="arrow" icon="icons:done"></iron-icon>
+                      <mdb-title>Hurray!</mdb-title>
                       <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
                       <p>You've helped make data better.</p>
                     </div>
