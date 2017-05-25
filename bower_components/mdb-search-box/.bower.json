@@ -11,15 +11,15 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-search-box",
-  "version": "0.0.4",
-  "_release": "0.0.4",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-search-box",
+  "version": "0.0.5",
+  "_release": "0.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.4",
-    "commit": "603f3e8fc9ea092beae441a9ce8736f2b14596e2"
+    "tag": "v0.0.5",
+    "commit": "92efaedc12ff3312b38786b85f7d124544fc45d0"
   },
-  "_source": "git://github.com/skamble89/mdb-search-box.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-search-box.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-search-box.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-search-box.git"
 }

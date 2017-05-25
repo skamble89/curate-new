@@ -187,6 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         --mdb-dimension-finder-searchbox: {
           padding-left: 10px;
+          width: 93%;
         }
       }
 
@@ -259,6 +260,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
+       :host .db-entities[w-1680] {
+        margin-top: 30px;
+        padding-bottom: 30px;
+      }
+
+       :host .db-entities[w-1680] mdb-dimension-finder {
+        margin-left: 30px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 19px;
+          padding-right: 19px;
+        }
+      }
+
+       :host .db-entities[w-1920] {
+        margin-top: 30px;
+        padding-bottom: 30px;
+      }
+
+       :host .db-entities[w-1920] mdb-dimension-finder {
+        margin-left: 30px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 34px;
+          padding-right: 34px;
+        }
+      }
+
+       :host .db-entities[w-2560] {
+        margin-top: 30px;
+        padding-bottom: 30px;
+      }
+
+       :host .db-entities[w-2560] mdb-dimension-finder {
+        margin-left: 30px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+      }
+
        :host mdb-dimension-finder iron-icon {
         width: 15px;
         height: 15px;
@@ -272,6 +312,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host mdb-recommended-concepts {
         --mdb-title: {
           color: #aaa;
+        }
+        --mdb-search-box: {
+          font-size: 1em;
+          padding-left: 10px;
         }
       }
 
@@ -330,7 +374,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-title: {
           color: #aaa;
           margin-top: 0;
-          margin-bottom:6px;
+          margin-bottom: 6px;
         }
         --mdb-coverage-table: {
           height: 511px;
@@ -357,7 +401,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-media-query query="(min-width: 1360px) and (max-width: 1365px)" query-matches="{{w-1360}}"></iron-media-query>
     <iron-media-query query="(min-width: 1366px) and (max-width: 1439px)" query-matches="{{w-1366}}"></iron-media-query>
     <iron-media-query query="(min-width: 1440px) and (max-width: 1599px)" query-matches="{{w-1440}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1600px)" query-matches="{{w-1600}}"></iron-media-query>
+    <iron-media-query query="(min-width: 1600px) and (max-width: 1679px)" query-matches="{{w-1600}}"></iron-media-query>
+    <iron-media-query query="(min-width: 1680px) and (max-width: 1919px)" query-matches="{{w-1680}}"></iron-media-query>
+    <iron-media-query query="(min-width: 1920px) and (max-width: 2559px)" query-matches="{{w-1920}}"></iron-media-query>
+    <iron-media-query query="(min-width: 2560px)" query-matches="{{w-2560}}"></iron-media-query>
 
     <page-layout heading="Concept Coverage" help-text="Concept Coverage">
       <div slot="body">
@@ -381,7 +428,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
           </mdb-simple-list>
 
-          <div class="db-entities" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]">
+          <div class="db-entities" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]" w-1600$="[[w-1680]]" w-1600$="[[w-1920]]" w-1600$="[[w-2560]]">
             <!-- Applications -->
 
             <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"

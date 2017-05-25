@@ -12,15 +12,15 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-title",
-  "version": "0.0.4",
-  "_release": "0.0.4",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-title",
+  "version": "0.0.5",
+  "_release": "0.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.4",
-    "commit": "285d088dfc1da547a780819b5fbbb2b5aad5c31c"
+    "tag": "v0.0.5",
+    "commit": "e5a3ed042ff20253bf23358fb8f0a3b5ab0d7e82"
   },
-  "_source": "git://github.com/skamble89/mdb-title.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-title.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-title.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-title.git"
 }

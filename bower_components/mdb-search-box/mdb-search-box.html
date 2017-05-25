@@ -4,6 +4,10 @@
 <!--
 `mdb-search-box`
 
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-search-box-container` | Mixin applied to the searchbox container | `{}`
+`--mdb-search-box` | Mixin applied to searchbox input | `{}`
 
 @demo demo/index.html 
 -->
@@ -34,11 +38,13 @@
           padding-top: 0;
           padding-bottom: 0;
           border: 0;
+          @apply(--mdb-search-box-container);
         }
         --paper-input-container-input: {
           border: 1px solid #e8edf1;
           padding: 5px;
           box-sizing: border-box;
+          @apply(--mdb-search-box);
         }
       }
     </style>
