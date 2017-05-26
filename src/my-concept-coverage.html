@@ -156,7 +156,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 1em;
         --mdb-title: {
           font-size: 1.5em;
-          color: #adadad;          
+          color: #adadad;
+        }
+        --mdb-dimension-finder-header-container: {
+          margin-bottom: 20px;
         }
         --mdb-dimension-finder-list: {
           height: 168px;
@@ -372,16 +375,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 60%;
         margin-right: var(--standard-padding, 20px);
         margin-top: var(--standard-padding, 20px);
-        --mdb-title: {
-          color: #aaa;
-          margin-top: 0;
-          margin-bottom: 6px;
-        }
         --mdb-coverage-table: {
           height: 511px;
         }
+        --mdb-coverage-table-title: {
+          color: #aaa;
+          margin-top: 0;
+          margin-bottom: 20px;
+        }
         --mdb-coverage-table-options: {
           color: #aaa;
+        }
+        --mdb-coverage-table-radio-list: {
+          padding-left: 10px;
         }
         --mdb-coverage-table-cell: {
           padding: 14px;
@@ -392,7 +398,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
        :host .recommended-concepts {
-        padding-top: var(--standard-padding, 30px);
+        padding-top: 44px;
         display: inline-block;
         width: 40%;
       }
