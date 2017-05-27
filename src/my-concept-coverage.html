@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-simple-list: {
           border: 1px solid #e1e6ed;
           background: #fcfdff;
-          height: 182px;
+          height: var(--concept-list-height, 182px);
           padding-top: var(--standard-padding, 20px);
           padding-bottom: var(--standard-padding, 20px);
           color: #484848;
@@ -746,8 +746,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           this._dataSource.getLOBConcepts(this.selectedLob)
             .then(function (concepts) {
+              var list = that.querySelector('mdb-simple-list.concept-list');
               that.set('concepts', concepts);
-              that.querySelector('mdb-simple-list.concept-list').emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
+              list.emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
             });
         }
       },
