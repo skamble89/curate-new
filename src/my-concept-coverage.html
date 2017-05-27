@@ -84,12 +84,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-simple-list: {
           border: 1px solid #e1e6ed;
           background: #fcfdff;
-          height: var(--concept-list-height, 182px);
+          height: var(--concept-list-height, 180px);
           padding-top: var(--standard-padding, 20px);
           padding-bottom: var(--standard-padding, 20px);
           color: #484848;
-          @apply(--layout-vertical);
-          @apply(--layout-wrap);
+          position: relative;
+          width: 100%;
         }
         --mdb-list-item: {
           min-height: 15px;
@@ -97,10 +97,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           padding-bottom: 0;
           padding-top: 0;
           margin-left: var(--standard-padding, 20px);
-          margin-top: 0.4em;
-          margin-right: auto;
+          margin-top: 0.4em;          
           font-weight: 400;
           font-size: 1.2em;
+          float: left;
+          width: 18%;
         }
         --mdb-list-item-focused: {
           border-radius: 25px;
@@ -752,7 +753,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 list = that.querySelector('mdb-simple-list.concept-list');
 
               if (extra_rows > 0) {
-                list.customStyle['--concept-list-height'] = (182 + (extra_rows * row_height)) + 'px';
+                list.customStyle['--concept-list-height'] = (180 + (extra_rows * row_height)) + 'px';
               } else {
                 delete list.customStyle['--concept-list-height'];
               }
