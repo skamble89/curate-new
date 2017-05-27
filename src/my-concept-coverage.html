@@ -746,9 +746,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           this._dataSource.getLOBConcepts(this.selectedLob)
             .then(function (concepts) {
-              var list = that.querySelector('mdb-simple-list.concept-list');
+              var row_height = 30;
+              var max_item_count = 24,
+                extra_rows = concepts.length - max_item_count > 0 ? Math.ceil((concepts.length - max_item_count) / 4) : 0,
+                list = that.querySelector('mdb-simple-list.concept-list');
+
+              if (extra_rows > 0) {
+                list.customStyle['--concept-list-height'] = (182 + (extra_rows * row_height)) + 'px';
+              } else {
+                delete list.customStyle['--concept-list-height'];
+              }
+
               that.set('concepts', concepts);
               list.emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
+              list.updateStyles();
             });
         }
       },
