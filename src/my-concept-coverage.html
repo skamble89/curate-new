@@ -64,9 +64,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: #b3b3b3;
         }
         --layout-flex-auto: {
-          -ms-flex: 0.06;
-          -webkit-flex: 0.06;
-          flex: 0.06;
+          -ms-flex: initial;
+          -webkit-flex: initial;
+          flex: initial;
         }
       }
 
@@ -195,12 +195,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 199px;
       }
 
-       :host .db-entities[w-1280] {
+       :host page-layout[w-1280] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
       }
 
-       :host .db-entities[w-1280] mdb-dimension-finder {
+       :host page-layout[w-1280] .db-entities mdb-dimension-finder {
         margin-left: 20px;
         --mdb-dimension-finder-radio-button: {
           padding-left: 13px;
@@ -208,12 +208,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-       :host .db-entities[w-1360] {
+       :host page-layout[w-1360] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
       }
 
-       :host .db-entities[w-1360] mdb-dimension-finder {
+       :host page-layout[w-1360] .db-entities mdb-dimension-finder {
         margin-left: 20px;
         --mdb-dimension-finder-radio-button: {
           padding-left: 17.5px;
@@ -221,25 +221,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-       :host .db-entities[w-1366] {
+       :host page-layout[w-1366] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
       }
 
-       :host .db-entities[w-1366] mdb-dimension-finder {
+       :host page-layout[w-1366] .db-entities mdb-dimension-finder {
         margin-left: 20px;
         --mdb-dimension-finder-radio-button: {
-          padding-left: 17.5px;
-          padding-right: 17.5px;
+          padding-left: 18.5px;
+          padding-right: 18.5px;
         }
       }
 
-       :host .db-entities[w-1440] {
+       :host page-layout[w-1440] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
       }
 
-       :host .db-entities[w-1440] mdb-dimension-finder {
+       :host page-layout[w-1440] .db-entities mdb-dimension-finder {
         margin-left: 20px;
         --mdb-dimension-finder-radio-button: {
           padding-left: 7.5px;
@@ -247,12 +247,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-       :host .db-entities[w-1600] {
+       :host page-layout[w-1600] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
       }
 
-       :host .db-entities[w-1600] mdb-dimension-finder {
+       :host page-layout[w-1600] .db-entities mdb-dimension-finder {
         margin-left: 30px;
         --mdb-dimension-finder-radio-button: {
           padding-left: 14px;
@@ -260,12 +260,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-       :host .db-entities[w-1680] {
+       :host page-layout[w-1680] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
       }
 
-       :host .db-entities[w-1680] mdb-dimension-finder {
+       :host page-layout[w-1680] .db-entities mdb-dimension-finder {
         margin-left: 30px;
         --mdb-dimension-finder-radio-button: {
           padding-left: 19px;
@@ -273,12 +273,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-       :host .db-entities[w-1920] {
+       :host page-layout[w-1920] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
       }
 
-       :host .db-entities[w-1920] mdb-dimension-finder {
+       :host page-layout[w-1920] .db-entities mdb-dimension-finder {
         margin-left: 30px;
         --mdb-dimension-finder-radio-button: {
           padding-left: 34px;
@@ -286,12 +286,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-       :host .db-entities[w-2560] {
+       :host page-layout[w-2560] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
       }
 
-       :host .db-entities[w-2560] mdb-dimension-finder {
+       :host page-layout[w-2560] .db-entities mdb-dimension-finder {
         margin-left: 30px;
         --mdb-dimension-finder-radio-button: {
           padding-left: 14px;
@@ -411,7 +411,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-media-query query="(min-width: 1920px) and (max-width: 2559px)" query-matches="{{w-1920}}"></iron-media-query>
     <iron-media-query query="(min-width: 2560px)" query-matches="{{w-2560}}"></iron-media-query>
 
-    <page-layout heading="Concept Coverage" help-text="Concept Coverage">
+    <page-layout heading="Concept Coverage" help-text="Concept Coverage" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]"
+      w-1440$="[[w-1440]]" w-1600$="[[w-1600]]" w-1680$="[[w-1680]]" w-1920$="[[w-1920]]" w-2560$="[[w-2560]]">
       <div slot="body">
         <mdb-metric-display-container>
           <mdb-metric-display stat-value="0.2%" stat-description="Coverage across 1 application"></mdb-metric-display>
@@ -433,8 +434,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
           </mdb-simple-list>
 
-          <div class="db-entities" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]"
-            w-1680$="[[w-1680]]" w-1920$="[[w-1920]]" w-2560$="[[w-2560]]">
+          <div class="db-entities">
             <!-- Applications -->
 
             <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
