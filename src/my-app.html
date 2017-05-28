@@ -44,35 +44,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --app-menu-item-bg:#fff;
         --app-menu-color: var(--app-primary-color);
       }
-      
+
+      app-header-layout {
+        /*Added to fix horizontal scrollbar in Edge*/
+        --layout-fit: {
+          overflow-x: hidden;
+        }
+      }
+
       app-header {
         color: #fff;
         /*background-color: var(--app-primary-color);*/
       }
-      
+
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
-      
+
       .menu-header-toolbar {
         @apply(--layout-center-justified);
       }
-      
+
       app-drawer-layout {
         min-height: 100%;
         background: var(--app-bg-color, #f0f4f9);
       }
-      
+
       app-toolbar {
         background-color: var(--app-header-bg, #fff);
         color: var(--app-header-color, #ddd);
         height: var(--app-header-height, 80px);
       }
-      
+
       .flex {
         @apply(--layout-flex);
       }
-      
+
       #pages {
         height: 100%;
       }

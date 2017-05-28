@@ -18,32 +18,40 @@
                 padding-top: 10px;
                 padding-bottom: 10px;
             }
-            
+
              :host mdb-radio-list {
-                display: inline-block;
+                position: absolute;
+                left: 30%;
+                top: 50%;
+                transform: translate(0, -50%);
             }
-            
+
              :host paper-radio-button {
                 width: 50px;
                 text-align: center;
             }
-            
+
              :host #recommendationContainer {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: nowrap;
                 justify-content: space-between;
+                padding: 3px;
+                position: relative;
             }
-            
+
              :host #recommendationFactor {
-                display: inline-block;
                 width: 30px;
-                margin-left: 1.2em;
-                margin-right: 1.2em;
+                min-height: 1em;
+                position: absolute;
+                left: 90%;
+                top: 50%;
+                transform: translate(0, -50%);
             }
-            
+
              :host #recommendationContainer #property {
                 display: inline-block;
+                min-height: 1em;
                 width: 25%;
                 word-wrap: break-word;
                 @apply(--mdb-recommended-concepts-property-name)
