@@ -13,12 +13,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/mdb-title",
-  "version": "0.0.7",
-  "_release": "0.0.7",
+  "version": "0.0.8",
+  "_release": "0.0.8",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.7",
-    "commit": "c16f52c7875edea86c157a57443ca7d9b8cd93d3"
+    "tag": "v0.0.8",
+    "commit": "79d6201221b7ca82f1098764ad8cc262d64c8560"
   },
   "_source": "git://github.com/makedatabetter-dev/mdb-title.git",
   "_target": "*",

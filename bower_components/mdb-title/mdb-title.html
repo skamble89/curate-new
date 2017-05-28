@@ -44,14 +44,6 @@ Custom property | Description | Default
        :host[level="1"] mdb-help-text {
         top: 2px;
       }
-
-       :host[level="2"] mdb-help-text,
-       :host[level="3"] mdb-help-text,
-       :host[level="4"] mdb-help-text,
-       :host[level="5"] mdb-help-text,
-       :host[level="6"] mdb-help-text {
-        top: 1px;
-      }
     </style>
     <template is="dom-if" if="{{_isLevel(level,1)}}">
       <h1>
