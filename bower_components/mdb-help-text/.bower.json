@@ -14,15 +14,15 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-help-text",
-  "version": "0.0.4",
-  "_release": "0.0.4",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-help-text",
+  "version": "0.0.5",
+  "_release": "0.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.4",
-    "commit": "654b514131304bf6f18832aceb1679badfb87856"
+    "tag": "v0.0.5",
+    "commit": "810291f50461b59ae1637a341f7bd588fc40a9f7"
   },
-  "_source": "git://github.com/skamble89/mdb-help-text.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-help-text.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-help-text.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-help-text.git"
 }

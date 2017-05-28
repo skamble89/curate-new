@@ -36,25 +36,21 @@ Custom property | Description | Default
        :host mdb-help-text {
         display: table-cell;
         vertical-align: middle;
-        position: relative;        
+        position: relative;
         font-size: 0;
         --mdb-help-text-font-size: 1rem;
       }
 
-      :host[level="1"] mdb-help-text, :host[level="2"] mdb-help-text {
-        top: 3px;
-      }
-
-      :host[level="3"] mdb-help-text, :host[level="4"] mdb-help-text {
+       :host[level="1"] mdb-help-text {
         top: 2px;
       }
 
-      :host[level="5"] mdb-help-text {
-        top: 1px;
-      }
-
+       :host[level="2"] mdb-help-text,
+       :host[level="3"] mdb-help-text,
+       :host[level="4"] mdb-help-text,
+       :host[level="5"] mdb-help-text,
        :host[level="6"] mdb-help-text {
-        top: 0;
+        top: 1px;
       }
     </style>
     <template is="dom-if" if="{{_isLevel(level,1)}}">
