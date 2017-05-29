@@ -86,13 +86,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <iron-media-query query="(min-width: 1280px) and (max-width: 1359px)" query-matches="{{w-1280}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1360px) and (max-width: 1365px)" query-matches="{{w-1360}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1366px) and (max-width: 1439px)" query-matches="{{w-1366}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1440px) and (max-width: 1599px)" query-matches="{{w-1440}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1600px) and (max-width: 1679px)" query-matches="{{w-1600}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1680px) and (max-width: 1919px)" query-matches="{{w-1680}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1920px) and (max-width: 2559px)" query-matches="{{w-1920}}"></iron-media-query>
+    <iron-media-query query="(min-width: 1280px) and (max-width: 1359px)" query-matches="{{w-1280}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1360px) and (max-width: 1365px)" query-matches="{{w-1360}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1366px) and (max-width: 1439px)" query-matches="{{w-1366}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1440px) and (max-width: 1599px)" query-matches="{{w-1440}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1600px) and (max-width: 1679px)" query-matches="{{w-1600}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1680px) and (max-width: 1919px)" query-matches="{{w-1680}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1920px) and (max-width: 2559px)" query-matches="{{w-1920}}" on-query-matches-changed="_updateStyles"></iron-media-query>
     <iron-media-query query="(min-width: 2560px)" query-matches="{{w-2560}}"></iron-media-query>
 
     <app-location use-hash-as-path route="{{route}}"></app-location>
@@ -178,6 +178,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showPage404: function () {
         this.page = 'view404';
       },
+      _updateStyles: function () {
+        Polymer.updateStyles();
+      }
     });
   </script>
 </dom-module>

@@ -138,13 +138,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         transform: translate(0, -50%);
       }
 
-       :host .db-entities {
-        border: 1px solid #e3eaee;
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding-top: var(--standard-padding, 20px);
-      }
-
        :host mdb-dimension-finder {
         font-size: 1em;
         --mdb-title: {
@@ -169,8 +162,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
        :host .db-entities {
+        border: 1px solid #e3eaee;
+        overflow-y: auto;
+        overflow-x: hidden;
         margin-top: var(--standard-padding, 20px);
         padding-bottom: var(--standard-padding, 20px);
+        padding-top: var(--standard-padding, 20px);
       }
 
        :host .db-entities mdb-dimension-finder {
@@ -191,11 +188,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
        :host .db-entities .item-name {
         max-width: 199px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
        :host[w-1280] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
+        padding-top: 20px;
       }
 
        :host[w-1280] .db-entities mdb-dimension-finder {
@@ -210,6 +211,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host[w-1360] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
+        padding-top: 20px;
       }
 
        :host[w-1360] .db-entities mdb-dimension-finder {
@@ -224,6 +226,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host[w-1366] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
+        padding-top: 20px;
       }
 
        :host[w-1366] .db-entities mdb-dimension-finder {
@@ -238,6 +241,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host[w-1440] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
+        padding-top: 20px;
       }
 
        :host[w-1440] .db-entities mdb-dimension-finder {
@@ -252,6 +256,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host[w-1600] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
+        padding-top: 30px;
       }
 
        :host[w-1600] .db-entities mdb-dimension-finder {
@@ -266,6 +271,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host[w-1680] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
+        padding-top: 30px;
       }
 
        :host[w-1680] .db-entities mdb-dimension-finder {
@@ -280,6 +286,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host[w-1920] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
+        padding-top: 30px;
       }
 
        :host[w-1920] .db-entities mdb-dimension-finder {
@@ -294,6 +301,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host[w-2560] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
+        padding-top: 30px;
       }
 
        :host[w-2560] .db-entities mdb-dimension-finder {
@@ -392,6 +400,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: #aaa;
         }
         --mdb-coverage-table-radio-list: {
+          font-size: 0.9em;
           padding-left: 10px;
         }
         --mdb-coverage-table-cell: {
@@ -408,7 +417,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: inline-block;
         width: 40%;
       }
-    </style>    
+    </style>
 
     <page-layout heading="Concept Coverage" help-text="Concept Coverage">
       <div slot="body">
@@ -439,7 +448,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               selected-dimension="{{selectedApplication}}">
               <template>
                 <paper-item>
-                  <span class="item-name">{{item.name}}</span>
+                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
                   <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                 </paper-item>
               </template>
@@ -461,7 +470,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span class="item-name">{{item.name}}</span>
+                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>
@@ -485,7 +494,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span class="item-name">{{item.name}}</span>
+                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>
@@ -510,7 +519,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span class="item-name">{{item.name}}</span>
+                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>

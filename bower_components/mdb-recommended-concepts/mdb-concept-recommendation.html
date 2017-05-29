@@ -19,11 +19,18 @@
                 padding-bottom: 10px;
             }
 
-             :host mdb-radio-list {
+             :host #recommendationContainer #property {                
+                width: 25%;
+                word-wrap: break-word;
                 position: absolute;
-                left: 30%;
                 top: 50%;
                 transform: translate(0, -50%);
+                @apply(--mdb-recommended-concepts-property-name)
+            }
+
+             :host mdb-radio-list {
+                position: relative;
+                left: 25%;
             }
 
              :host paper-radio-button {
@@ -40,21 +47,11 @@
                 position: relative;
             }
 
-             :host #recommendationFactor {
-                width: 30px;
-                min-height: 1em;
+             :host #recommendationFactor {                
                 position: absolute;
                 left: 90%;
                 top: 50%;
                 transform: translate(0, -50%);
-            }
-
-             :host #recommendationContainer #property {
-                display: inline-block;
-                min-height: 1em;
-                width: 25%;
-                word-wrap: break-word;
-                @apply(--mdb-recommended-concepts-property-name)
             }
         </style>
         <div id="recommendationContainer">

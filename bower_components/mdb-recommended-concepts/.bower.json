@@ -14,12 +14,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/mdb-recommended-concepts",
-  "version": "0.1.4",
-  "_release": "0.1.4",
+  "version": "0.1.6",
+  "_release": "0.1.6",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.4",
-    "commit": "b758190b84d9132137c1a41e0cbea3954c1faef4"
+    "tag": "v0.1.6",
+    "commit": "524cc1844cee7715dc97c457f9e214e01e82bc3a"
   },
   "_source": "git://github.com/makedatabetter-dev/mdb-recommended-concepts.git",
   "_target": "*",
