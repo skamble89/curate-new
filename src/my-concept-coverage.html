@@ -17,7 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/mdb-metric-display/mdb-metric-display.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
 <link rel="import" href="../bower_components/mdb-simple-list/mdb-simple-list.html">
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
@@ -194,40 +193,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 199px;
       }
 
-       :host page-layout[w-1280] .db-entities {
+       :host[w-1280] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
       }
 
-       :host page-layout[w-1280] .db-entities mdb-dimension-finder {
+       :host[w-1280] .db-entities mdb-dimension-finder {
         margin-left: 20px;
         float: left;
         --mdb-dimension-finder-radio-button: {
-          padding-left: 13px;
-          padding-right: 13px;
+          padding-left: 14px;
+          padding-right: 14px;
         }
       }
 
-       :host page-layout[w-1360] .db-entities {
+       :host[w-1360] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
       }
 
-       :host page-layout[w-1360] .db-entities mdb-dimension-finder {
+       :host[w-1360] .db-entities mdb-dimension-finder {
         margin-left: 20px;
         float: left;
         --mdb-dimension-finder-radio-button: {
-          padding-left: 17.5px;
-          padding-right: 17.5px;
+          padding-left: 19px;
+          padding-right: 19px;
         }
       }
 
-       :host page-layout[w-1366] .db-entities {
+       :host[w-1366] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
       }
 
-       :host page-layout[w-1366] .db-entities mdb-dimension-finder {
+       :host[w-1366] .db-entities mdb-dimension-finder {
         margin-left: 20px;
         float: left;
         --mdb-dimension-finder-radio-button: {
@@ -236,68 +235,68 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-       :host page-layout[w-1440] .db-entities {
+       :host[w-1440] .db-entities {
         margin-top: 20px;
         padding-bottom: 20px;
       }
 
-       :host page-layout[w-1440] .db-entities mdb-dimension-finder {
+       :host[w-1440] .db-entities mdb-dimension-finder {
         margin-left: 20px;
         float: left;
         --mdb-dimension-finder-radio-button: {
-          padding-left: 7.5px;
-          padding-right: 7.5px;
+          padding-left: 8px;
+          padding-right: 8px;
         }
       }
 
-       :host page-layout[w-1600] .db-entities {
+       :host[w-1600] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
       }
 
-       :host page-layout[w-1600] .db-entities mdb-dimension-finder {
+       :host[w-1600] .db-entities mdb-dimension-finder {
         margin-left: 30px;
         float: left;
         --mdb-dimension-finder-radio-button: {
-          padding-left: 14px;
-          padding-right: 14px;
+          padding-left: 15px;
+          padding-right: 15px;
         }
       }
 
-       :host page-layout[w-1680] .db-entities {
+       :host[w-1680] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
       }
 
-       :host page-layout[w-1680] .db-entities mdb-dimension-finder {
+       :host[w-1680] .db-entities mdb-dimension-finder {
         margin-left: 30px;
         float: left;
         --mdb-dimension-finder-radio-button: {
-          padding-left: 19px;
-          padding-right: 19px;
+          padding-left: 20px;
+          padding-right: 20px;
         }
       }
 
-       :host page-layout[w-1920] .db-entities {
+       :host[w-1920] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
       }
 
-       :host page-layout[w-1920] .db-entities mdb-dimension-finder {
+       :host[w-1920] .db-entities mdb-dimension-finder {
         margin-left: 30px;
         float: left;
         --mdb-dimension-finder-radio-button: {
-          padding-left: 34px;
-          padding-right: 34px;
+          padding-left: 35px;
+          padding-right: 35px;
         }
       }
 
-       :host page-layout[w-2560] .db-entities {
+       :host[w-2560] .db-entities {
         margin-top: 30px;
         padding-bottom: 30px;
       }
 
-       :host page-layout[w-2560] .db-entities mdb-dimension-finder {
+       :host[w-2560] .db-entities mdb-dimension-finder {
         margin-left: 30px;
         float: left;
         --mdb-dimension-finder-radio-button: {
@@ -409,19 +408,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: inline-block;
         width: 40%;
       }
-    </style>
+    </style>    
 
-    <iron-media-query query="(min-width: 1280px) and (max-width: 1359px)" query-matches="{{w-1280}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1360px) and (max-width: 1365px)" query-matches="{{w-1360}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1366px) and (max-width: 1439px)" query-matches="{{w-1366}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1440px) and (max-width: 1599px)" query-matches="{{w-1440}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1600px) and (max-width: 1679px)" query-matches="{{w-1600}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1680px) and (max-width: 1919px)" query-matches="{{w-1680}}"></iron-media-query>
-    <iron-media-query query="(min-width: 1920px) and (max-width: 2559px)" query-matches="{{w-1920}}"></iron-media-query>
-    <iron-media-query query="(min-width: 2560px)" query-matches="{{w-2560}}"></iron-media-query>
-
-    <page-layout heading="Concept Coverage" help-text="Concept Coverage" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]"
-      w-1440$="[[w-1440]]" w-1600$="[[w-1600]]" w-1680$="[[w-1680]]" w-1920$="[[w-1920]]" w-2560$="[[w-2560]]">
+    <page-layout heading="Concept Coverage" help-text="Concept Coverage">
       <div slot="body">
         <mdb-metric-display-container>
           <mdb-metric-display stat-value="0.2%" stat-description="Coverage across 1 application"></mdb-metric-display>
