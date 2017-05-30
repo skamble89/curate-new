@@ -22,25 +22,29 @@ Custom property | Description | Default
        :host {
         display: block;
       }
-      
+
+       :host paper-radio-group {
+        white-space: nowrap;
+      }
+
        :host ::content paper-radio-button {
         border: 1px solid;
         border-color: #e0e8ed;
       }
-      
+
        :host[size="small"] ::content paper-radio-button {
         padding-top: 3px;
         padding-bottom: 3px;
         @apply(--mdb-radio-list-button);
       }
-      
+
        :host ::content paper-radio-button[aria-checked="true"] {
         -webkit-box-shadow: 0 0 15px #71b3e1;
         -moz-box-shadow: 0 0 15px #71b3e1;
         box-shadow: 0 0 15px #71b3e1;
         border-color: #71b3e1;
       }
-      
+
        :host ::content paper-radio-button[aria-checked="true"]+paper-radio-button {
         border-left: 1px solid transparent;
       }
