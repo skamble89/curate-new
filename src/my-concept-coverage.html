@@ -22,10 +22,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
 <link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="concept-coverage">
   <template>
-    <style include="class-elements"></style>
+    <style include="class-elements iron-flex iron-flex-alignment"></style>
     <style include="shared-styles">
        :host {
         display: block;
@@ -35,32 +36,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-recommended-concepts-property-name: {
           color: #aaa;
         }
+        --stat-value: {
+          font-size: 3em;
+          font-weight: lighter;
+        }
+        --stat-description: {
+          font-size: 1.5em;
+          font-weight: 100;
+          margin: 0;
+          color: #afafaf;
+        }
       }
-      
+
       [slot='body'] {
         background: #fff;
       }
-      
+
        :host paper-tabs {
         padding-top: var(--standard-padding, 20px);
       }
       /* styles for paper-tabs*/
-      
+
       paper-tab {
         color: #5da9dd;
         --paper-tab-content-unselected: {
           color: #b3b3b3;
         }
         --layout-flex-auto: {
-          flex: 0.06;
+          -ms-flex: initial;
+          -webkit-flex: initial;
+          flex: initial;
         }
       }
-      
+
       paper-tabs {
         --paper-tabs-selection-bar-color: #5da9dd
       }
       /*Styling for concept list*/
-      
+
        :host .concept-list {
         --mdb-simple-list-empty: {
           border: 1px solid #ddd;
@@ -68,15 +81,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           margin-top: 0;
         }
         --mdb-simple-list: {
-          display: flex;
-          flex-direction: column;
-          flex-wrap: wrap;
           border: 1px solid #e1e6ed;
           background: #fcfdff;
-          height: 182px;
+          height: var(--concept-list-height, 180px);
           padding-top: var(--standard-padding, 20px);
           padding-bottom: var(--standard-padding, 20px);
           color: #484848;
+          position: relative;
+          width: 100%;
         }
         --mdb-list-item: {
           min-height: 15px;
@@ -85,9 +97,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           padding-top: 0;
           margin-left: var(--standard-padding, 20px);
           margin-top: 0.4em;
-          margin-right: auto;
           font-weight: 400;
           font-size: 1.2em;
+          float: left;
+          width: 18%;
         }
         --mdb-list-item-focused: {
           border-radius: 25px;
@@ -99,16 +112,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
       /* Dimension finder */
-      
+
        :host paper-item .icon {
         display: inline-block;
         width: 1.5em;
       }
-      
+
        :host paper-item iron-icon.arrow {
         display: none;
       }
-      
+
        :host paper-item .recommendation {
         display: inline-block;
         position: absolute;
@@ -116,7 +129,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         top: 50%;
         transform: translate(0, -50%);
       }
-      
+
        :host paper-item[aria-selected="true"] iron-icon.arrow {
         display: inline-block;
         position: absolute;
@@ -124,24 +137,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         top: 50%;
         transform: translate(0, -50%);
       }
-      
-       :host .db-entities {
-        border: 1px solid #e3eaee;
-        margin-top: var(--standard-padding, 20px);
-        padding-bottom: var(--standard-padding, 20px);
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-around;
-      }
-      
+
        :host mdb-dimension-finder {
-        margin-top: var(--standard-padding, 20px);
         font-size: 1em;
+        --mdb-title: {
+          font-size: 1.5em;
+          color: #adadad;
+        }
+        --mdb-dimension-finder-header-container: {
+          margin-bottom: 20px;
+        }
         --mdb-dimension-finder-list: {
           height: 168px;
           overflow: auto;
-          width: 255px;
         }
         --mdb-dimension-finder-list-item: {
           min-height: 25px;
@@ -149,79 +157,278 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           padding-top: 0;
           padding-bottom: 0;
           line-height: initial;
+          padding-left: 20px;
         }
       }
+
+       :host .db-entities {
+        border: 1px solid #e3eaee;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-top: var(--standard-padding, 20px);
+        padding-bottom: var(--standard-padding, 20px);
+        padding-top: var(--standard-padding, 20px);
+      }
+
+       :host .db-entities mdb-dimension-finder {
+        margin-left: var(--standard-padding, 20px);
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+        --mdb-dimension-finder-searchbox-container: {
+          padding: 20px;
+        }
+        --mdb-dimension-finder-searchbox: {
+          padding-left: 10px;
+          width: 93%;
+        }
+      }
+
+       :host .db-entities .item-name {
+        max-width: 199px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       
+      :host[w-1024] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1024] .db-entities mdb-dimension-finder {
+        margin-left: 20px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+
+       :host[w-1280] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1280] .db-entities mdb-dimension-finder {
+        margin-left: 20px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+      }
+
+       :host[w-1360] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1360] .db-entities mdb-dimension-finder {
+        margin-left: 20px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 19px;
+          padding-right: 19px;
+        }
+      }
+
+       :host[w-1366] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1366] .db-entities mdb-dimension-finder {
+        margin-left: 20px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+      }
+
+       :host[w-1440] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1440] .db-entities mdb-dimension-finder {
+        margin-left: 20px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+      }
+
+       :host[w-1600] .db-entities {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+
+       :host[w-1600] .db-entities mdb-dimension-finder {
+        margin-left: 30px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+      }
+
+       :host[w-1680] .db-entities {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+
+       :host[w-1680] .db-entities mdb-dimension-finder {
+        margin-left: 30px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+       :host[w-1920] .db-entities {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+
+       :host[w-1920] .db-entities mdb-dimension-finder {
+        margin-left: 30px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 35px;
+          padding-right: 35px;
+        }
+      }
+
+       :host[w-2560] .db-entities {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+
+       :host[w-2560] .db-entities mdb-dimension-finder {
+        margin-left: 30px;
+        float: left;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 75px;
+          padding-right: 75px;
+        }
+      }
+
        :host mdb-dimension-finder iron-icon {
         width: 15px;
         height: 15px;
       }
-      
+
        :host .face {
         padding-right: 3px;
       }
       /*Recommended Concepts*/
-      
+
        :host mdb-recommended-concepts {
-        --mdb-title: {
+        --mdb-recommended-concepts-title: {
           color: #aaa;
+          display: block;
+        }
+        --mdb-search-box: {
+          font-size: 1em;
+          padding-left: 10px;
         }
       }
-      
+
        :host mdb-concept-recommendation {
-        margin-top: 20px;
+        margin-top: var(--standard-padding, 20px);
         margin-bottom: var(--standard-padding, 20px);
         border: 1px solid #e5edee;
         background-color: #fcfdff;
       }
-      
+
        :host .concept-identified {
         text-align: center;
         font-size: 1.6em;
         --iron-icon-width: 40px;
         --iron-icon-height: 40px;
       }
-      
+
        :host .concept-identified iron-icon {
         font-size: 2em;
         background-color: #5bca52;
         color: #fff;
         border-radius: 50%;
-        --iron-icon-width: 40px;
-        --iron-icon-height: 40px;
+        --iron-icon-width: 55px;
+        --iron-icon-height: 55px;
       }
-      
+
        :host .concept-identification {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
         display: flex;
+        -webkit-justify-content: space-between;
         justify-content: space-between;
       }
-      
+
        :host .concept-identified .success-message {
         color: #aaa;
       }
-      
+
+       :host .concept-identified .success-message mdb-title {
+        color: #000;
+        display: block;
+        --mdb-title: {
+          margin: 0;
+          display: block;
+        }
+      }
+
+       :host .concept-identified .success-message p {
+        margin: 0;
+      }
+
        :host mdb-coverage-table {
         width: 60%;
-        margin-right: 30px;
-        --mdb-title: {
-          color: #aaa;
-        }
+        margin-right: var(--standard-padding, 20px);
+        margin-top: var(--standard-padding, 20px);
         --mdb-coverage-table: {
           height: 511px;
+        }
+        --mdb-coverage-table-title: {
+          color: #aaa;
+          margin-top: 0;
+          margin-bottom: 20px;
         }
         --mdb-coverage-table-options: {
           color: #aaa;
         }
+        --mdb-coverage-table-radio-list: {
+          font-size: 0.9em;
+          padding-left: 10px;
+        }
         --mdb-coverage-table-cell: {
+          height: 18px;
           padding: 14px;
         }
         --mdb-coverage-table-body-cell: {
           color: #aaa;
         }
       }
-      
+
        :host .recommended-concepts {
-        padding-top: 30px;
+        padding-top: 44px;
         display: inline-block;
         width: 40%;
       }
@@ -251,17 +458,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <div class="db-entities">
             <!-- Applications -->
+
             <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
               selected-dimension="{{selectedApplication}}">
               <template>
                 <paper-item>
-                  <span>{{item.name}}</span>
+                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
                   <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                 </paper-item>
               </template>
             </mdb-dimension-finder>
 
             <!-- Databases -->
+
             <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
               selected-dimension="{{selectedDatabase}}">
               <template>
@@ -276,7 +485,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span>{{item.name}}</span>
+                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>
@@ -300,7 +509,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span>{{item.name}}</span>
+                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>
@@ -310,6 +519,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </mdb-dimension-finder>
 
             <!-- Tables -->
+
             <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables"
               selected-dimension="{{selectedTable}}">
               <template>
@@ -324,7 +534,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
-                  <span>{{item.name}}</span>
+                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
                     <span class="recommendation">{{item.recommendation}}%</span>
                   </template>
@@ -332,6 +542,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </paper-item>
               </template>
             </mdb-dimension-finder>
+
           </div>
 
           <!-- Table data -->
@@ -345,9 +556,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="0"></mdb-concept-recommendation>
                 <template is="dom-if" if="{{isConceptIdentified}}">
                   <div class="concept-identified">
-                    <iron-icon class="arrow" icon="icons:done"></iron-icon>
-                    <mdb-title>Hurray!</mdb-title>
                     <div class="success-message">
+                      <iron-icon class="arrow" icon="icons:done"></iron-icon>
+                      <mdb-title>Hurray!</mdb-title>
                       <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
                       <p>You've helped make data better.</p>
                     </div>
@@ -557,8 +768,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           this._dataSource.getLOBConcepts(this.selectedLob)
             .then(function (concepts) {
+              var row_height = 30;
+              var max_item_count = 24,
+                extra_rows = concepts.length - max_item_count > 0 ? Math.ceil((concepts.length - max_item_count) / 4) : 0,
+                list = that.querySelector('mdb-simple-list.concept-list');
+
+              if (extra_rows > 0) {
+                list.customStyle['--concept-list-height'] = (180 + (extra_rows * row_height)) + 'px';
+              } else {
+                delete list.customStyle['--concept-list-height'];
+              }
+
               that.set('concepts', concepts);
-              that.querySelector('mdb-simple-list.concept-list').emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
+              list.emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
+              list.updateStyles();
             });
         }
       },

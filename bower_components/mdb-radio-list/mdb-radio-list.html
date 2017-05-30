@@ -6,6 +6,13 @@
 `mdb-radio-list`
 pill box selection component
 
+
+The following custom properties and mixins are also available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-radio-list-button` | Mixin applied to the radio list buttons | `{}`
+
 @demo demo/index.html 
 -->
 
@@ -24,6 +31,7 @@ pill box selection component
        :host[size="small"] ::content paper-radio-button {
         padding-top: 3px;
         padding-bottom: 3px;
+        @apply(--mdb-radio-list-button);
       }
       
        :host ::content paper-radio-button[aria-checked="true"] {

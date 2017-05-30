@@ -18,8 +18,12 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
+`--mdb-dimension-finder-header-container` | Mixin applied to dimension finder header container | `{}`
 `--mdb-dimension-finder-list` | Mixin applied to dimension finder list | `{}`
 `--mdb-dimension-finder-list-item` | Mixin applied to dimension finder list item | `{}`
+`--mdb-dimension-finder-radio-button` | Mixin applied to dimension finder sorting radio buttons | `{}`
+`--mdb-dimension-finder-searchbox-container` | Mixin applied to dimension finder searchbox container | `{}`
+`--mdb-dimension-finder-searchbox` | Mixin applied to dimension finder searchbox | `{}`
 
 @demo demo/index.html 
 -->
@@ -53,12 +57,14 @@ Custom property | Description | Default
           padding-left: var(--standard-padding, 20px);
           padding-right: var(--standard-padding, 20px);
           border: 0;
+          @apply(--mdb-dimension-finder-searchbox-container);
         }
         --paper-input-container-input: {
           border: 1px solid #e8edf1;
           padding: 5px;
           width: 95%;
           font-size: 1em;
+          @apply(--mdb-dimension-finder-searchbox);
         }
         --paper-font-caption: {
           display: none;
@@ -67,7 +73,6 @@ Custom property | Description | Default
           font-family: Roboto;
           color: #9a9a9a;
           font-weight: 400;
-          margin-top: 0;
         }
         --mdb-list-item: {
           font-size: 1em;
@@ -88,25 +93,32 @@ Custom property | Description | Default
           position: absolute;
         }
       }
-      
+
        :host .dimension-finder {
         border: 1px solid #dee7ec;
         border-top: 0;
       }
-      
+
        :host .dimension-finder mdb-simple-list {
         min-height: 4em;
         @apply(--mdb-dimension-finder-list)
       }
-      
+
        :host .header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        position: relative;
+        @apply(--mdb-dimension-finder-header-container);
       }
-      
+
+       :host .header paper-checkbox {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+
        :host paper-radio-button {
         text-align: center;
+        @apply(--mdb-dimension-finder-radio-button)
       }
     </style>
 

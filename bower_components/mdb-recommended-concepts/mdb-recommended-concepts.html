@@ -26,19 +26,20 @@ Custom property | Description | Default
        :host {
         display: block;
       }
-      
+
        :host mdb-title {
         padding-top: 10px;
         padding-bottom: 10px;
         padding-left: 20px;
         border-bottom: 1px solid #f1f5f7;
+        height: 50px;
         @apply(--mdb-recommended-concepts-title);
       }
-      
+
        :host mdb-concept-recommendation {
         border-bottom: 1px solid #f1f5f7;
       }
-      
+
        :host #recommendation-list {
         background-color: #fcfdff;
         border-top: 1px solid #f1f5f7;
@@ -70,7 +71,7 @@ Custom property | Description | Default
 
         recommendations: {
           type: Array,
-          value: 0
+          value: []
         }
       },
 

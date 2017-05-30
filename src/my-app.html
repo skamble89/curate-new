@@ -24,6 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/side-menu/side-submenu.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="my-header.html">
 <link rel="import" href="mdb-gsheet-data-adapter.html">
@@ -44,39 +45,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --app-menu-item-bg:#fff;
         --app-menu-color: var(--app-primary-color);
       }
-      
+
+      app-header-layout {
+        /*Added to fix horizontal scrollbar in Edge*/
+        --layout-fit: {
+          overflow-x: hidden;
+        }
+      }
+
       app-header {
         color: #fff;
         /*background-color: var(--app-primary-color);*/
       }
-      
+
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
-      
+
       .menu-header-toolbar {
         @apply(--layout-center-justified);
       }
-      
+
       app-drawer-layout {
         min-height: 100%;
         background: var(--app-bg-color, #f0f4f9);
       }
-      
+
       app-toolbar {
         background-color: var(--app-header-bg, #fff);
         color: var(--app-header-color, #ddd);
         height: var(--app-header-height, 80px);
       }
-      
+
       .flex {
         @apply(--layout-flex);
       }
-      
+
       #pages {
         height: 100%;
       }
     </style>
+
+    <iron-media-query query="(min-width: 1024px) and (max-width: 1279px)" query-matches="{{w-1024}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1280px) and (max-width: 1359px)" query-matches="{{w-1280}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1360px) and (max-width: 1365px)" query-matches="{{w-1360}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1366px) and (max-width: 1439px)" query-matches="{{w-1366}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1440px) and (max-width: 1599px)" query-matches="{{w-1440}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1600px) and (max-width: 1679px)" query-matches="{{w-1600}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1680px) and (max-width: 1919px)" query-matches="{{w-1680}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1920px) and (max-width: 2559px)" query-matches="{{w-1920}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 2560px)" query-matches="{{w-2560}}"></iron-media-query>
 
     <app-location use-hash-as-path route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
@@ -115,7 +133,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
           <my-view1 name="view1"></my-view1>
-          <concept-coverage name="concept-coverage" data-source="mdb-gsheet-data-adapter" data-source-options='{"key":"1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"}'></concept-coverage>
+          <concept-coverage name="concept-coverage" data-source="mdb-gsheet-data-adapter" data-source-options='{"key":"1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"}'
+            w-1024$="[[w-1024]]" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]" w-1680$="[[w-1680]]"
+            w-1920$="[[w-1920]]" w-2560$="[[w-2560]]"></concept-coverage>
           <my-view3 name="view3"></my-view3>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
@@ -159,6 +179,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showPage404: function () {
         this.page = 'view404';
       },
+      _updateStyles: function () {
+        Polymer.updateStyles();
+      }
     });
   </script>
 </dom-module>

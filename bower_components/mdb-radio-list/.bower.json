@@ -12,15 +12,15 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-radio-list",
-  "version": "0.0.3",
-  "_release": "0.0.3",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-radio-list",
+  "version": "0.0.4",
+  "_release": "0.0.4",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.3",
-    "commit": "5a16da06c3187df04c3a74060dac7d72164d9ed0"
+    "tag": "v0.0.4",
+    "commit": "47f471ea70fbf91c20374c18bb1095e8842652f2"
   },
-  "_source": "git://github.com/skamble89/mdb-radio-list.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-radio-list.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-radio-list.git"
 }

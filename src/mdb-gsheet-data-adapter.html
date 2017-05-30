@@ -183,10 +183,10 @@
             },
 
             _getTabIndex: function (name) {
-                return this.tabMapping
+                return (this.tabMapping
                     .find(function (e) {
                         return e.name.toLowerCase() === name.toString().toLowerCase();
-                    }).index;
+                    }) || {}).index;
             },
 
             _getSpreadsheetMetadata: function () {

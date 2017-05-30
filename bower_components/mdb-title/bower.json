@@ -4,7 +4,7 @@
   "main": "mdb-title.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "mdb-help-text": "git://github.com/skamble89/mdb-help-text.git"
+    "mdb-help-text": "git://github.com/makedatabetter-dev/mdb-help-text.git"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

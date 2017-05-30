@@ -4,7 +4,7 @@
   "main": "mdb-title.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "mdb-help-text": "git://github.com/skamble89/mdb-help-text.git"
+    "mdb-help-text": "git://github.com/makedatabetter-dev/mdb-help-text.git"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
@@ -12,15 +12,15 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-title",
-  "version": "0.0.4",
-  "_release": "0.0.4",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-title",
+  "version": "0.0.8",
+  "_release": "0.0.8",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.4",
-    "commit": "285d088dfc1da547a780819b5fbbb2b5aad5c31c"
+    "tag": "v0.0.8",
+    "commit": "79d6201221b7ca82f1098764ad8cc262d64c8560"
   },
-  "_source": "git://github.com/skamble89/mdb-title.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-title.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-title.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-title.git"
 }

@@ -14,7 +14,7 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-simple-list",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-simple-list",
   "version": "0.1.3",
   "_release": "0.1.3",
   "_resolution": {
@@ -22,7 +22,7 @@
     "tag": "v0.1.3",
     "commit": "9f9295d68ea482024f54663370f2c3e7baa392a8"
   },
-  "_source": "git://github.com/skamble89/mdb-simple-list.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-simple-list.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-simple-list.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-simple-list.git"
 }

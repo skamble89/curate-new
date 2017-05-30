@@ -3,9 +3,9 @@
   "main": "mdb-recommended-concepts.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "mdb-radio-list": "git://github.com/skamble89/mdb-radio-list.git",
-    "mdb-title": "git://github.com/skamble89/mdb-title.git",
-    "mdb-search-box": "git://github.com/skamble89/mdb-search-box.git"
+    "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
+    "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git",
+    "mdb-search-box": "git://github.com/makedatabetter-dev/mdb-search-box.git"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
@@ -13,15 +13,15 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "homepage": "https://github.com/skamble89/mdb-recommended-concepts",
-  "version": "0.1.0",
-  "_release": "0.1.0",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-recommended-concepts",
+  "version": "0.1.6",
+  "_release": "0.1.6",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.0",
-    "commit": "6993ddfaaf8adac560c3ac644d3b0f44659a747a"
+    "tag": "v0.1.6",
+    "commit": "524cc1844cee7715dc97c457f9e214e01e82bc3a"
   },
-  "_source": "git://github.com/skamble89/mdb-recommended-concepts.git",
+  "_source": "git://github.com/makedatabetter-dev/mdb-recommended-concepts.git",
   "_target": "*",
-  "_originalSource": "git://github.com/skamble89/mdb-recommended-concepts.git"
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-recommended-concepts.git"
 }

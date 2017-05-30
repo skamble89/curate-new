@@ -3,8 +3,8 @@
   "main": "mdb-coverage-table.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "mdb-radio-list": "git://github.com/skamble89/mdb-radio-list.git",
-    "mdb-title": "git://github.com/skamble89/mdb-title.git",
+    "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
+    "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git",
     "vaadin-grid": "vaadin/vaadin-grid#^2.0.1"
   },
   "devDependencies": {
