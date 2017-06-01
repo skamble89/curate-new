@@ -19,7 +19,7 @@
                 padding-bottom: 10px;
             }
 
-             :host #recommendationContainer #property {                
+             :host #recommendationContainer #property {
                 width: 25%;
                 word-wrap: break-word;
                 position: absolute;
@@ -47,7 +47,7 @@
                 position: relative;
             }
 
-             :host #recommendationFactor {                
+             :host #recommendationFactor {
                 position: absolute;
                 left: 90%;
                 top: 50%;
@@ -61,7 +61,7 @@
                 <paper-radio-button name="no">NO</paper-radio-button>
                 <paper-radio-button name="maybe">MAYBE</paper-radio-button>
             </mdb-radio-list>
-            <span id="recommendationFactor">[[recommendation-factor]]%</span>
+            <span id="recommendationFactor">{{recommendationFactor}}%</span>
         </div>
     </template>
 
@@ -82,15 +82,15 @@
 
                 recommendationFactor: {
                     type: Number,
-                    value: 0,
-                    readOnly: true
+                    value: 0
                 },
 
                 recommended: {
                     type: String,
                     value: 'maybe',
                     notify: true,
-                    reflectToAttribute: true
+                    reflectToAttribute: true,
+                    observer: '_recommendedChanged'
                 }
             },
 
@@ -98,6 +98,23 @@
                 if (this.recommended === 'yes') {
                     this.fire('concept-identified', this.property.trim());
                 }
+            },
+
+            _recommendedChanged: function () {
+                switch (this.recommended) {
+                    case 'yes':
+                        this.recommendationFactor = 100;
+                        break;
+                    case 'no':
+                        this.recommendationFactor = 0;
+                        break;
+                }
+
+                this.fire('recommendation-changed', {
+                    property: this.property,
+                    recommended: this.recommended,
+                    recommendationFactory: this.recommendationFactor
+                });
             }
 
         });
