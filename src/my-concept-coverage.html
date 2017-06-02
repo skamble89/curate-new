@@ -23,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
 <link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 
 <dom-module id="concept-coverage">
   <template>
@@ -390,6 +391,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 0;
       }
 
+       :host paper-button.undo {
+        --paper-button: {
+          font-size: 0.6em;
+          vertical-align: text-bottom;
+        }
+      }
+
        :host mdb-coverage-table {
         width: 60%;
         margin-right: var(--standard-padding, 20px);
@@ -552,6 +560,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <mdb-title>Hurray!</mdb-title>
                       <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
                       <p>You've helped make data better.</p>
+                      <p>If you think this was a mistake, you can
+                        <paper-button raised class="undo" on-click="_undoConceptIdentification">Undo</paper-button>.</p>
                     </div>
                   </div>
                 </template>
@@ -868,6 +878,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _resetEmptyMessage: function (selector) {
         var component = this.querySelector(selector);
         if (component) component.emptyMessage = '';
+      },
+
+      _undoConceptIdentification: function () { 
+        this._selectedColumnChanged();
       }
     });
   </script>
