@@ -29,7 +29,9 @@
     "mdb-recommended-concepts": "git://github.com/makedatabetter-dev/mdb-recommended-concepts.git",
     "iron-ajax": "PolymerElements/iron-ajax#^1.4.4",
     "google-sheets": "GoogleWebComponents/google-sheets#^1.0.6",
-    "paper-button": "PolymerElements/paper-button#^2.0.0"
+    "paper-button": "PolymerElements/paper-button#^2.0.0",
+    "paper-menu-button": "PolymerElements/paper-menu-button#^2.0.0",
+    "paper-menu": "PolymerElements/paper-menu#^1.3.0"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

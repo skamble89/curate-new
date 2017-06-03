@@ -80,6 +80,12 @@
                     type: String
                 },
 
+                _initialRecommendationFactor: {
+                    type: Number,
+                    value: 0,
+                    readonly: true
+                },
+
                 recommendationFactor: {
                     type: Number,
                     value: 0
@@ -92,6 +98,10 @@
                     reflectToAttribute: true,
                     observer: '_recommendedChanged'
                 }
+            },
+
+            attached: function () {
+                this._initialRecommendationFactor = this.recommendationFactor;
             },
 
             _checkConceptIdentified: function () {
@@ -107,6 +117,9 @@
                         break;
                     case 'no':
                         this.recommendationFactor = 0;
+                        break;
+                    case 'maybe':
+                        this.recommendationFactor = this._initialRecommendationFactor;
                         break;
                 }
 

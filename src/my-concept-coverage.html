@@ -560,8 +560,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <mdb-title>Hurray!</mdb-title>
                       <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
                       <p>You've helped make data better.</p>
-                      <p>If you think this was a mistake, you can
-                        <paper-button raised class="undo" on-click="_undoConceptIdentification">Undo</paper-button>.</p>
+                      <p>
+                        <paper-button raised class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
+                      </p>
                     </div>
                   </div>
                 </template>
@@ -749,7 +750,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _lobChanged: function () {
         var that = this;
-        that.set('concepts', []);
+        this.set('concepts', []);
 
         if (this.selectedLob) {
           //Reset everything
@@ -880,8 +881,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (component) component.emptyMessage = '';
       },
 
-      _undoConceptIdentification: function () { 
-        this._selectedColumnChanged();
+      _undoConceptIdentification: function () {
+        var that = this,
+          concept = this.identifiedConcept,
+          recommendedConcepts = that.get('recommendedConcepts');
+        
+        this.isConceptIdentified = false;
+        this.identifiedConcept = undefined;
+
+        this.set('recommendedConcepts', JSON.parse(JSON.stringify(recommendedConcepts.map(function (e) {
+          if (e.property.trim() === concept.trim()) {
+            e.recommended = 'maybe';
+          }
+          return e;
+        }))));
       }
     });
   </script>
