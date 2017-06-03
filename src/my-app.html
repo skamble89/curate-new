@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style include="iron-flex">
        :host {
-         font-size: 11px;
+        font-size: 11px;
         --app-primary-color: #5da9dd;
         --app-secondary-color: black;
         --app-border-color: #e1e6ed;
@@ -153,7 +153,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         role: {
-          type: String
+          type: String,
+          observer: '_roleChanged'
         },
 
         pageList: {
@@ -196,7 +197,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function (page) {
-        this.page = page || 'view1';
+        this.page = page || 'app-welcome';
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
@@ -208,20 +209,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
+
       _routeToPage: function (e) {
         var pg = e.currentTarget.getAttribute('name');
         this.set('route.path', '/' + pg);
       },
+
       _showPage404: function () {
         this.page = 'view404';
       },
+
       _updateStyles: function () {
         Polymer.updateStyles();
       },
+
       _getPageList(role) {
         return this.pageList.filter(function (e) {
           return e.role.toLowerCase() === role.toLowerCase();
         });
+      },
+
+      _roleChanged: function () {
+        var that = this;
+        var pages = this._getPageList(this.role);
+        if (!pages.find(function (e) { return that.page === e.name; })) {
+          this.page = 'app-welcome';
+        }
       }
     });
   </script>
