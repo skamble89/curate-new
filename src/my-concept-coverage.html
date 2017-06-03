@@ -31,8 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
        :host {
         display: block;        
-        height: 100%;
-        --standard-padding: 30px;
+        height: 100%;        
         --mdb-recommended-concepts-property-name: {
           color: #aaa;
         }
@@ -51,27 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       [slot='body'] {
         background: #fff;
       }
-
-       :host paper-tabs {
-        padding-top: var(--standard-padding, 20px);
-      }
-      /* styles for paper-tabs*/
-
-      paper-tab {
-        color: #5da9dd;
-        --paper-tab-content-unselected: {
-          color: #b3b3b3;
-        }
-        --layout-flex-auto: {
-          -ms-flex: initial;
-          -webkit-flex: initial;
-          flex: initial;
-        }
-      }
-
-      paper-tabs {
-        --paper-tabs-selection-bar-color: #5da9dd
-      }
+       
       /*Styling for concept list*/
 
        :host .concept-list {

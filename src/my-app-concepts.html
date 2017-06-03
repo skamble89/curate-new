@@ -11,6 +11,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
 <dom-module id="app-concepts">
   <template>
@@ -18,11 +21,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host {
         display: block;
         padding: 10px;
+        --paper-tabs: {
+          padding-top: 0;
+          border-bottom: 1px solid #ddd;
+        }
       }
     </style>
 
-    <page-layout heading="Concepts">
+    <page-layout heading="Concepts" help-text="Concepts">
       <div class="banner" slot="body">
+        <paper-tabs selected="{{selectedTab}}">
+          <paper-tab>LIST</paper-tab>
+          <paper-tab>DETAILS</paper-tab>
+        </paper-tabs>
+
+        <iron-pages selected="{{selectedTab}}">
+          <div>            
+          </div>
+          <div>            
+          </div>
+        </iron-pages>
       </div>
     </page-layout>
   </template>
@@ -30,6 +48,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     Polymer({
       is: 'app-concepts',
+
+      properties: {
+        selectedTab: {
+          type: Number,
+          value: 0
+        }
+      }
     });
   </script>
 </dom-module>
