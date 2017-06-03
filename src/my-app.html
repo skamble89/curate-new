@@ -234,6 +234,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var pages = this._getPageList(this.role);
         if (!pages.find(function (e) { return that.page === e.name; })) {
           this.page = 'app-welcome';
+          this.set('route.path', '/' + this.page);
         }
       }
     });
