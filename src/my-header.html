@@ -22,6 +22,21 @@ Example:
 <dom-module id="my-header">
     <template>
         <style>
+             :host {
+                --paper-menu: {
+                    padding: 0;
+                }
+                --paper-menu-selected-item: {
+                    background-color: #e6e6e6;
+                }
+                --paper-menu-focused-item: {
+                    background-color: #fff;
+                }
+                --paper-menu-focused-item-after: {
+                    background-color: #fff;
+                }
+            }
+
              :host,
             .user-dropdown {
                 display: block;

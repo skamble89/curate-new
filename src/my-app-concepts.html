@@ -13,6 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="page-layout.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="./concepts/concept-list.html">
+<link rel="import" href="./concepts/concept-details.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
 <dom-module id="app-concepts">
@@ -36,9 +38,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-tabs>
 
         <iron-pages selected="{{selectedTab}}">
-          <div>            
+          <div>
+            <concept-list></concept-list>
           </div>
-          <div>            
+          <div>
+            <concept-details></concept-details>
           </div>
         </iron-pages>
       </div>

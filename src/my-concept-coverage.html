@@ -30,8 +30,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="class-elements iron-flex iron-flex-alignment"></style>
     <style include="shared-styles">
        :host {
-        display: block;        
-        height: 100%;        
+        display: block;
+        height: 100%;
         --mdb-recommended-concepts-property-name: {
           color: #aaa;
         }
@@ -50,7 +50,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       [slot='body'] {
         background: #fff;
       }
-       
       /*Styling for concept list*/
 
        :host .concept-list {
@@ -367,9 +366,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
        :host .concept-identified .success-message p {
         margin: 0;
+        font-weight: 300;
       }
 
        :host paper-button.undo {
+        padding-top: var(--standard-padding, 20px);
         --paper-button: {
           font-size: 0.6em;
           vertical-align: text-bottom;
@@ -529,9 +530,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 items="{{tableData}}"></mdb-coverage-table>
 
               <!-- Recommended concepts -->
+              <template is="dom-if" if="{{!isConceptIdentified}}">
+                <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
+                <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
+              </template>
+              
               <div class="recommended-concepts">
-                <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="0"></mdb-concept-recommendation>
                 <template is="dom-if" if="{{isConceptIdentified}}">
+                  <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
                   <div class="concept-identified">
                     <div class="success-message">
                       <iron-icon class="arrow" icon="icons:done"></iron-icon>
@@ -539,13 +545,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
                       <p>You've helped make data better.</p>
                       <p>
-                        <paper-button raised class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
+                        <a tabindex="-1" href="javascript:void(0);">
+                          <paper-button class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
+                        </a>
                       </p>
                     </div>
                   </div>
-                </template>
-                <template is="dom-if" if="{{!isConceptIdentified}}">
-                  <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
                 </template>
               </div>
             </div>
@@ -602,6 +607,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: '',
           notify: true,
           observer: '_conceptChanged'
+        },
+
+        selectedConceptRecommendation: {
+          type: Number,
+          value: 0
+        },
+
+        selectedConceptRecommended: {
+          type: String,
+          value: 'maybe'
         },
 
         applications: {
@@ -849,6 +864,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var that = this;
           this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
             .then(function (recommendations) {
+              //Initial values for selected concept recommendation
+              that.selectedConceptRecommended = 'maybe';
+              that.selectedConceptRecommendation = (recommendations
+                .find(function (e) {
+                  return e.property.trim().toLowerCase() === that.selectedConcept.trim().toLowerCase();
+                }) || {}).recommendationFactor || parseInt(Math.random() * 100);
+
               that.set('recommendedConcepts', recommendations);
             });
         }
@@ -863,9 +885,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var that = this,
           concept = this.identifiedConcept,
           recommendedConcepts = that.get('recommendedConcepts');
-        
+
         this.isConceptIdentified = false;
         this.identifiedConcept = undefined;
+
+        if (concept.trim() === this.selectedConcept) {
+          this.querySelector('mdb-concept-recommendation').recommended = 'maybe';
+        }
 
         this.set('recommendedConcepts', JSON.parse(JSON.stringify(recommendedConcepts.map(function (e) {
           if (e.property.trim() === concept.trim()) {
