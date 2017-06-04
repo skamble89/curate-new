@@ -8,11 +8,14 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="shared-styles.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="./concept-details-health.html">
+<link rel="import" href="./concept-details-curate.html">
 
 <dom-module id="concept-details">
     <template>
@@ -29,8 +32,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-tabs>
             <iron-pages selected="{{selectedTab}}">
                 <div>
+                    <concept-details-curate></concept-details-curate>
                 </div>
                 <div>                    
+                    <concept-details-health></concept-details-health>
                 </div>
             </iron-pages>
         </div>

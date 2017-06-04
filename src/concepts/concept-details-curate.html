@@ -10,32 +10,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../shared-styles.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
-<dom-module id="concept-list">
+<dom-module id="concept-details-curate">
     <template>
         <style include="shared-styles">
              :host {
                 display: block;
             }
+
+             :host .header {
+                padding-top: var(--standard-padding, 20px);
+                padding-bottom: var(--standard-padding, 20px);
+                @apply(--layout);
+                @apply(--layout-end-justified);
+            }
         </style>
 
-        <div>
-            <h1>CONCEPT LIST TABLE HERE</h1>
+        <div class="header">
+            <mdb-radio-list selected="explore">
+                <paper-radio-button name="explore">Explore</paper-radio-button>
+                <paper-radio-button name="define">Define</paper-radio-button>
+            </mdb-radio-list>
         </div>
     </template>
 
     <script>
         Polymer({
-            is: 'concept-list',
+            is: 'concept-details-curate',
 
             properties: {
-                selectedTab: {
-                    type: Number,
-                    value: 0
-                }
             }
         });
     </script>
