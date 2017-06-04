@@ -30,12 +30,12 @@ Custom property | Description | Default
        :host ::content paper-radio-button {
         border: 1px solid;
         border-color: #e0e8ed;
+        @apply(--mdb-radio-list-button);
       }
 
        :host[size="small"] ::content paper-radio-button {
         padding-top: 3px;
         padding-bottom: 3px;
-        @apply(--mdb-radio-list-button);
       }
 
        :host ::content paper-radio-button[aria-checked="true"] {

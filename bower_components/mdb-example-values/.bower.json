@@ -1,0 +1,26 @@
+{
+  "name": "mdb-example-values",
+  "main": "mdb-example-values.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "mdb-simple-list": "git://github.com/makedatabetter-dev/mdb-simple-list.git",
+    "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/makedatabetter-dev/mdb-example-values",
+  "version": "0.0.1",
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.1",
+    "commit": "47662ad6c2b10fbeb5acb590f1b91248ee384dc5"
+  },
+  "_source": "git://github.com/makedatabetter-dev/mdb-example-values.git",
+  "_target": "*",
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-example-values.git"
+}
