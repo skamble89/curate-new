@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/mdb-radio-list/mdb-radio-list.html">
 <link rel="import" href="../../bower_components/mdb-facet-discovery/mdb-facet-discovery.html">
 <link rel="import" href="../../bower_components/mdb-example-values/mdb-example-values.html">
+<link rel="import" href="../../bower_components/atom-table/atom-table.html">
 
 
 <dom-module id="concept-details-curate">
@@ -70,6 +71,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 border: 1px solid #ddd;
                 background-color: #fcfdff;
             }
+
+             :host .example-columns {
+                margin-top: var(--standard-padding, 20px);
+            }
+
+             :host atom-table {
+                overflow: hidden;
+            }
         </style>
 
         <div class="mode-selection">
@@ -92,6 +101,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <mdb-example-values help-text="Use example values to see examples of values found in columns matching your selected set of synonyms, patterns, and proximate domains."
                 examples='["21/03/2007","08/07/2006","18/03/2007","22/03/1936","Jan 5, 1999","12-13-1956","12-30-1988","3-18-1922","Feb 8, 1923","Feb 14, 1955","01/01/1914","08/03/1999","08/07/1997","03/06/1960","04/10/1936","08/13/1955","03/06/1960","Jun 12, 1987","Jun 8, 1999","Feb 12, 1967","Mar 3, 1960","04-10-1944","04-11-1977","08-15-1999","12-13-1999","08/17/1927"]'></mdb-example-values>
         </div>
+        <div class="example-columns">
+            <mdb-title help-text="Use example columns to see samples of columns matching your selected set of synonyms, patters, and proximate domains">Example Columns</mdb-title>
+            <atom-table items="{{items}}">
+                <vaadin-grid-column>
+                    <template class="header">
+                        DOB
+                    </template>
+                    <template>
+                        {{item.dob}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        BIRTH_DAY
+                    </template>
+                    <template>
+                        {{item.birthday}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        ORDER_DATE
+                    </template>
+                    <template>
+                        {{item.orderDate}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        DATE
+                    </template>
+                    <template>
+                        {{item.date}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        BIRTH_DT
+                    </template>
+                    <template>
+                        {{item.birthDt}}
+                    </template>
+                </vaadin-grid-column>
+            </atom-table>
+        </div>
     </template>
 
     <script>
@@ -102,6 +156,80 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 mode: {
                     type: String,
                     value: 'explore'
+                },
+
+                items: {
+                    type: Array,
+                    value: [{
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    }]
                 }
             }
         });
