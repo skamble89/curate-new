@@ -529,13 +529,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <mdb-coverage-table selected-column="{{selectedColumn}}" title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}"
                 items="{{tableData}}"></mdb-coverage-table>
 
-              <!-- Recommended concepts -->
-              <template is="dom-if" if="{{!isConceptIdentified}}">
-                <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
-                <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
-              </template>
-              
+
+
               <div class="recommended-concepts">
+                <!-- Recommended concepts -->
+                <template is="dom-if" if="{{!isConceptIdentified}}">
+                  <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
+                  <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
+                </template>
                 <template is="dom-if" if="{{isConceptIdentified}}">
                   <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
                   <div class="concept-identified">
