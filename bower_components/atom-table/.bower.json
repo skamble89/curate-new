@@ -12,12 +12,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/atom-table",
-  "version": "0.0.1",
-  "_release": "0.0.1",
+  "version": "0.0.2",
+  "_release": "0.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.1",
-    "commit": "7334bce785bdec8ea08d539693daeb824e17f98a"
+    "tag": "v0.0.2",
+    "commit": "596be8992c38e871b7ba64134464a8b7e2abe7a4"
   },
   "_source": "git://github.com/makedatabetter-dev/atom-table.git",
   "_target": "*",

@@ -382,6 +382,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-right: var(--standard-padding, 20px);
         margin-top: var(--standard-padding, 20px);
         --mdb-coverage-table: {
+          @apply(--app-table);
           height: 511px;
         }
         --mdb-coverage-table-title: {
@@ -389,19 +390,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           margin-top: 0;
           margin-bottom: 20px;
         }
+        --mdb-coverage-table-header-cell: {
+          border-top: 0;
+        }
         --mdb-coverage-table-options: {
           color: #aaa;
         }
         --mdb-coverage-table-radio-list: {
           font-size: 0.9em;
           padding-left: 10px;
-        }
-        --mdb-coverage-table-cell: {
-          height: 18px;
-          padding: 14px;
-        }
-        --mdb-coverage-table-body-cell: {
-          color: #aaa;
         }
       }
 

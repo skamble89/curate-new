@@ -20,7 +20,9 @@ Custom property | Description | Default
 `--mdb-coverage-table-options-padding` | Top and bottom padding applied to coverage table options sections | `10px`
 `--mdb-coverage-table-options` | Mixin applied to coverage table options section | `{}`
 `--mdb-coverage-table-cell` | Mixin applied to coverage table cells | `{}`
+`--mdb-coverage-table-header-cell` | Mixin applied to coverage table header cells | `{}`
 `--mdb-coverage-table-body-cell` | Mixin applied to coverage table cells | `{}`
+`--mdb-coverage-table-odd-row-cell` | Mixin applied to coverage table odd row cells | `{}`
 
 @demo demo/index.html 
 -->
@@ -33,22 +35,18 @@ Custom property | Description | Default
         --vaadin-grid-cell: {
           padding: 0;
         }
-        --vaadin-grid-body-cell: {
-          background-color: #fcfdff;
+        --vaadin-grid-header-cell: {
+          @apply(--mdb-coverage-table-header-cell);
+        }
+        --vaadin-grid-body-cell: {          
           @apply(--mdb-coverage-table-body-cell);
         }
-        --vaadin-grid-body-row-odd-cell: {
-          background-color: #fff;
+        --vaadin-grid-body-row-odd-cell: {          
+          @apply(--mdb-coverage-table-odd-row-cell);
         }
       }
-      /*:host vaadin-grid-sorter {
-        --vaadin-grid-sorter-arrow: {
-          display: none !important;
-        }
-        ;
-      }*/
 
-      :host mdb-title{
+       :host mdb-title {
         @apply(--mdb-coverage-table-title);
       }
 
@@ -57,7 +55,6 @@ Custom property | Description | Default
       }
 
        :host vaadin-grid {
-        border: 0;
         @apply(--mdb-coverage-table);
       }
 

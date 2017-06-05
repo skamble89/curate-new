@@ -13,9 +13,11 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
+`--atom-table` | Mixin applied to all atom table host | `{}`
 `--atom-table-cell` | Mixin applied to all atom table cells | `{}`
 `--atom-table-header-cell` | Mixin applied to atom table header cells | `{}`
 `--atom-table-body-cell` | Mixin applied to atom table body cells | `{}`
+`--atom-table-odd-row-cell` | Mixin applied to atom table odd row body cells | `{}`
 `--atom-table-page-size` | Mixin applied to atom table page size element | `{}`
 `--atom-table-page-num` | Mixin applied to atom table page number element | `{}`
 `--atom-table-paging-buttons-container` | Mixin applied to atom table paging buttons container | `{}`
@@ -30,17 +32,22 @@ Custom property | Description | Default
        :host {
         display: block;
         overflow: auto;
-
         --vaadin-grid-cell: {
           @apply(--atom-table-cell);
-        }
-        --vaadin-grid-body-cell: {
-          background-color: #fcfdff;
-          @apply(--atom-table-body-cell);
         }
         --vaadin-grid-header-cell: {
           @apply(--atom-table-header-cell);
         }
+        --vaadin-grid-body-cell: {          
+          @apply(--atom-table-body-cell);
+        }
+        --vaadin-grid-body-row-odd-cell: {          
+          @apply(--atom-table-odd-row-cell);
+        }
+      }
+
+       :host vaadin-grid {
+        @apply(--atom-table);
       }
 
        :host .actions {
