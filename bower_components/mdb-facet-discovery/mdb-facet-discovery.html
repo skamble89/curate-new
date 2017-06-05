@@ -5,6 +5,7 @@
 <link rel="import" href="../mdb-search-box/mdb-search-box.html">
 <link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
 
 <!--
 `mdb-facet-discovery`
@@ -60,10 +61,18 @@ Custom property | Description | Default
         }
         @apply(--mdb-facet-recommendation);
       }
+
+       :host .search-icon {
+        position: relative;
+        right: 40px;
+        color: #aaa;
+      }
     </style>
     <div>
       <mdb-title help-text="[[helpText]]" level="3">[[facetType]]</mdb-title>
-      <mdb-search-box placeholder="Search [[_getPlaceholder(facetType)]]"></mdb-search-box>
+      <mdb-search-box placeholder="Search [[_getPlaceholder(facetType)]]">
+        <iron-icon class="search-icon" suffix icon="icons:search"></iron-icon>
+      </mdb-search-box>
       <template is="dom-repeat" items="{{facets}}">
         <div class="facet">
           <paper-checkbox>[[item.name]] ([[item.recommendationFactor]])</paper-checkbox>
