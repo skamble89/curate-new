@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     {{item.concept}}
                 </template>
             </vaadin-grid-column>
-            <vaadin-grid-column>
+            <vaadin-grid-column width="30px">
                 <template class="header">
                     # Mapping
                 </template>
@@ -40,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     {{item.mappingCount}}
                 </template>
             </vaadin-grid-column>
-            <vaadin-grid-column>
+            <vaadin-grid-column width="30px">
                 <template class="header">
                     Health
                 </template>
@@ -48,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     {{item.health}}
                 </template>
             </vaadin-grid-column>
-            <vaadin-grid-column>
+            <vaadin-grid-column width="30px">
                 <template class="header">
                     Coverage
                 </template>
@@ -56,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     {{item.coverage}}
                 </template>
             </vaadin-grid-column>
-            <vaadin-grid-column>
+            <vaadin-grid-column width="30px">
                 <template class="header">
                     Owner
                 </template>
@@ -72,13 +72,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     {{item.impactArea}}
                 </template>
             </vaadin-grid-column>
-            <vaadin-grid-column>
+            <vaadin-grid-column width="300px">
                 <template class="header">
                     Applications
                 </template>
                 <template>
                     <template is="dom-repeat" items="{{item.applications}}">
-                        <span style="background-color:#eaeff3;margin-top:3px;margin-right:3px;">{{item}}</span>
+                        <span style="background-color:#eaeff3;margin-top:3px;margin-right:3px;padding-left: 5px;padding-right: 5px;border-radius: 10px;text-align: center;">{{item}}</span>
                     </template>
                 </template>
             </vaadin-grid-column>
