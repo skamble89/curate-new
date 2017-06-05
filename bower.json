@@ -39,5 +39,8 @@
   "devDependencies": {
     "web-component-tester": "^4.0.0"
   },
-  "private": true
+  "private": true,
+  "resolutions": {
+    "paper-checkbox": "^1.4.2"
+  }
 }

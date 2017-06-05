@@ -18,6 +18,7 @@ Custom property | Description | Default
 `--mdb-facet-title` | Mixin applied to facet title | `{}`
 `--mdb-facet-container-top-margin` | Top margin applied to facet row container | `20px`
 `--mdb-facet-container` | Mixin applied to each facet row | `{}`
+`--mdb-facet-search-box` | Mixin applied to facet search box | `{}`
 `--mdb-facet` | Mixin applied to each facet | `{}`
 `--mdb-facet-recommendation` | Mixin applied to each facet recommendation section | `{}`
 `--mdb-facet-recommendation-button` | Mixin applied to each radio button recommendation section | `{}`
@@ -45,14 +46,18 @@ Custom property | Description | Default
         @apply(--mdb-facet-container);
       }
 
+       :host mdb-search-box {
+        @apply(--mdb-facet-search-box);
+      }
+
        :host paper-checkbox {
         @apply(--mdb-facet);
       }
 
        :host mdb-radio-list {
-         --mdb-radio-list-button:{
-           @apply(--mdb-facet-recommendation-button);
-         }
+        --mdb-radio-list-button: {
+          @apply(--mdb-facet-recommendation-button);
+        }
         @apply(--mdb-facet-recommendation);
       }
     </style>
