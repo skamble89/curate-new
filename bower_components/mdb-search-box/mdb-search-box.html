@@ -37,18 +37,17 @@ Custom property | Description | Default
         --paper-input-container: {
           padding-top: 0;
           padding-bottom: 0;
-          border: 0;
+          border: 1px solid #e8edf1;
           @apply(--mdb-search-box-container);
         }
         --paper-input-container-input: {
-          border: 1px solid #e8edf1;
           padding: 5px;
           box-sizing: border-box;
           @apply(--mdb-search-box);
         }
       }
     </style>
-    <paper-input placeholder="{{placeholder}}">
+    <paper-input no-label-float placeholder="{{placeholder}}">
       <content></content>
     </paper-input>
   </template>
@@ -70,7 +69,7 @@ Custom property | Description | Default
           value: 'Search',
           reflectToAttribute: true,
           notify: true
-        },        
+        },
       },
 
     });
