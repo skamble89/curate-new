@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-recommended-concepts-property-name: {
           color: #aaa;
         }
-        --stat-value: {
+        /*--stat-value: {
           font-size: 3em;
           font-weight: lighter;
         }
@@ -44,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           font-weight: 100;
           margin: 0;
           color: #afafaf;
-        }
+        }*/
       }
 
       [slot='body'] {
@@ -328,8 +328,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host .concept-identified {
         text-align: center;
         font-size: 1.6em;
-        --iron-icon-width: 40px;
-        --iron-icon-height: 40px;
       }
 
        :host .concept-identified iron-icon {
@@ -339,6 +337,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-radius: 50%;
         --iron-icon-width: 55px;
         --iron-icon-height: 55px;
+        --iron-icon-fill-color: #fff;
       }
 
        :host .concept-identification {
@@ -374,6 +373,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-button: {
           font-size: 0.6em;
           vertical-align: text-bottom;
+          color: #5caadb;
+          font-weight: 600;
         }
       }
 
@@ -541,9 +542,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
                       <p>You've helped make data better.</p>
                       <p>
-                        <a tabindex="-1" href="javascript:void(0);">
-                          <paper-button class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
-                        </a>
+                        <paper-button class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
                       </p>
                     </div>
                   </div>

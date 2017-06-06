@@ -15,12 +15,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/mdb-facet-discovery",
-  "version": "0.0.8",
-  "_release": "0.0.8",
+  "version": "0.0.9",
+  "_release": "0.0.9",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.8",
-    "commit": "45d9da4c4f3d53368cbf66e5150e457bb1bc1580"
+    "tag": "v0.0.9",
+    "commit": "53c411b9767dd2ca74d8c99fc809713809329ffc"
   },
   "_source": "git://github.com/makedatabetter-dev/mdb-facet-discovery.git",
   "_target": "*",

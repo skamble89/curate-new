@@ -64,11 +64,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 width: 44.8%;
                 font-size: 0.8rem;
                 flex: 1;
-                --mdb-facet-container: {                    
+                --mdb-facet-container: {
                     height: 25px;
                 }
-                --mdb-facet-search-box: {
-                    margin-bottom: 20px;
+                --mdb-facet-list-container: {
+                    height: 120px;
                 }
             }
 
@@ -86,11 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
              :host .example-columns {
                 margin-top: var(--standard-padding, 20px);
-            }
-
-             :host atom-table {
-                overflow: hidden;
-            }
+            }             
         </style>
 
         <div class="mode-selection">
@@ -109,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <mdb-facet-discovery mode="[[mode]]" facets='[{"name":"DD/MM/YY","recommendationFactor":"37%","recommended":"no"},{"name":"MM/DD/YY","recommendationFactor":"54%","recommended":"no"},{"name":"MM/DD/YYYY","recommendationFactor":"59%","recommended":"yes"}]'
                 facet-type="Patterns" help-text="Use patterns to find examples of columns having matching data values."></mdb-facet-discovery>
 
-            <mdb-facet-discovery mode="[[mode]]" facets='[{"name":"First Name","recommendationFactor":"44%","recommended":"no"},{"name":"Last Name","recommendationFactor":"32%","recommended":"no"},{"name":"Address","recommendationFactor":"48%","recommended":"yes"}]'
+            <mdb-facet-discovery mode="[[mode]]" facets='[{"name":"First Name","recommendationFactor":"44%","recommended":"no"},{"name":"Last Name","recommendationFactor":"32%","recommended":"no"},{"name":"Address","recommendationFactor":"48%","recommended":"yes"},{"name":"List Price","recommendationFactor":"57%","recommended":"no"},{"name":"City of Birth","recommendationFactor":"60%","recommended":"yes"},{"name":"City","recommendationFactor":"54%","recommended":"maybe"},{"name":"Stock Unit Number","recommendationFactor":"57%","recommended":"no"}]'
                 facet-type="Related Concepts" help-text="Use patterns to find examples of columns having matching data values."></mdb-facet-discovery>
         </div>
         <div class="example-values">
