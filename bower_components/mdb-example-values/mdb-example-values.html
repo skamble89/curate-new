@@ -12,8 +12,9 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--mdb-example-values-title` | Mixin applied to title | `{}`
 `--mdb-example-values` | Mixin applied to all example values | `{}`
+`--mdb-example-background-color` | Mixin applied to all example values | `#eaeff3`
+`--mdb-example-font-color` | Mixin applied to all example values | `#a5a8ad`
 
 @demo demo/index.html 
 -->
@@ -25,12 +26,6 @@ Custom property | Description | Default
         display: block;
         --mdb-example-background-color: #eaeff3;
         --mdb-example-font-color: #a5a8ad;
-      }
-
-       :host mdb-title {
-        --mdb-title: {
-          @apply(--mdb-example-values-title);
-        }
       }
 
        :host mdb-simple-list {
