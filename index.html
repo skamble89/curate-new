@@ -96,6 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </script>
 
   <link rel="import" href="src/my-app.html">
+  <link rel="import" href="bower_components/atom-feedback/atom-feedback.html">
 
   <style is="custom-style">
     body {
@@ -196,8 +197,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #aaa;
       }
 
-      --iron-icon-fill-color: #aaa;
-
       /*metric display styles*/
       --stat-value: {
         font-size: 3em;
@@ -211,19 +210,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     }
 
-     :root .feedback {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-    }     
+     :root atom-feedback {
+      --atom-feedback-icon-color: #aaa;
+      --atom-feedback-hover-icon-color: #5caadb;
+    }
   </style>
 </head>
 
 <body>
   <my-app></my-app>
-  <a class="feedback" href="https://www.google.com" title="Send Feedback" target="_blank">
-    <iron-icon icon="icons:feedback"></iron-icon>
-  </a>
+  <atom-feedback target="https://www.google.com/"></atom-feedback>
 
   <!-- Built with love using Polymer Starter Kit -->
 </body>
