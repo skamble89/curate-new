@@ -408,14 +408,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: inline-block;
         width: 40%;
       }
+
+       :host .no-table {
+        background-color: #fcfdff;
+        height: 100px;
+        border: 1px solid #e1e6ed;
+        position: relative;
+        margin-top: var(--standard-padding, 20px);
+      }
+
+       :host .no-table p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        font-weight: 400px;
+      }
     </style>
 
     <page-layout heading="Concept Coverage" help-text="Concept Coverage">
       <div slot="body">
         <mdb-metric-display-container>
-          <mdb-metric-display stat-value="0.2%" stat-description="Coverage across 1 application"></mdb-metric-display>
-          <mdb-metric-display stat-value="279 days" stat-description="ETA (based on yesterday)"></mdb-metric-display>
-          <mdb-metric-display stat-value="25" stat-description="Confirmed Columns"></mdb-metric-display>
+          <mdb-metric-display stat-value="{{coverage}}" stat-description="Coverage across 1 application"></mdb-metric-display>
+          <mdb-metric-display stat-value="{{eta}}" stat-description="ETA (based on yesterday)"></mdb-metric-display>
+          <mdb-metric-display stat-value="{{confirmedColumns}}" stat-description="Confirmed Columns"></mdb-metric-display>
         </mdb-metric-display-container>
 
         <!-- LOBs -->
@@ -522,7 +539,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
 
           <!-- Table data -->
-          <template is="dom-if" if="{{tableColumns.length}}">
+          <template is="dom-if" if="[[tableColumns.length]]">
             <div class="concept-identification">
               <mdb-coverage-table selected-column="{{selectedColumn}}" title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}"
                 items="{{tableData}}"></mdb-coverage-table>
@@ -550,6 +567,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </div>
           </template>
+          <!--<template is="dom-if" if="[[selectedTable]]">
+            <template is="dom-if" if="!tableColumns.length">
+              <div class="no-table">
+                <p>No table found.</p>
+              </div>
+            </template>
+          </template>-->
         </template>
 
       </div>
@@ -697,7 +721,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         },
 
-        identifiedConcept: String
+        identifiedConcept: String,
+
+        coverage: {
+          type: Number,
+          value: 0
+        },
+
+        eta: {
+          type: Number,
+          value: 0
+        },
+
+        confirmedColumns: {
+          type: Number,
+          value: 0
+        }
       },
 
       ready: function () {
@@ -717,6 +756,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           .then(function (lobs) {
             that.set('lobs', lobs.map(function (e) { return e.toUpperCase() }));
             that._setSelectedLob();
+          });
+
+
+        this._dataSource.getMetrics()
+          .then(function (data) {
+            that.coverage = data.coverage;
+            that.eta = data.eta;
+            that.confirmedColumns = data.confirmedColumns;
+          }).catch(function (error) {
+
           });
 
         this.addEventListener('concept-identified', function (e) {
@@ -846,6 +895,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               that.set('tableColumns', tableData.columns);
               that.set('tableData', tableData.rows);
               that.selectedColumn = tableData.columns[0].name
+            }).catch(function (error) {
+              that.set('tableColumns', []);
+              that.set('tableData', []);
             });
         }
       },

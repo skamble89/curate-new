@@ -210,11 +210,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #afafaf;
       }
     }
+
+     :root .feedback {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+    }
+
+     :root .feedback:hover {
+      --iron-icon-fill-color: #5caadb;
+    }
   </style>
 </head>
 
 <body>
   <my-app></my-app>
+  <a href="https://www.google.com" title="Send Feedback" target="_blank">
+    <iron-icon class="feedback" icon="icons:feedback"></iron-icon>
+  </a>
+
   <!-- Built with love using Polymer Starter Kit -->
 </body>
 

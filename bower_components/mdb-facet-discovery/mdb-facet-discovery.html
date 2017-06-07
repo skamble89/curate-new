@@ -51,6 +51,11 @@ Custom property | Description | Default
         padding-top: 20px;
         padding-bottom: 20px;
       }
+
+       :host mdb-radio-list iron-icon {
+        --iron-icon-width: 18px;
+        --iron-icon-height: 18px;
+      }
     </style>
     <div>
       <mdb-title help-text="[[helpText]]" level="3">[[facetType]]</mdb-title>
@@ -63,9 +68,15 @@ Custom property | Description | Default
             <paper-checkbox>[[item.name]] ([[item.recommendationFactor]])</paper-checkbox>
             <template is="dom-if" if="{{_isDefineMode(mode)}}">
               <mdb-radio-list size="small" data-facet$="[[item.name]]" selected="{{item.recommended}}" on-paper-radio-group-changed="_facetRecommendationChanged">
-                <paper-radio-button name="yes">YES</paper-radio-button>
-                <paper-radio-button name="no">NO</paper-radio-button>
-                <paper-radio-button name="maybe">MAYBE</paper-radio-button>
+                <paper-radio-button name="yes">
+                  &#x2713;
+                </paper-radio-button>
+                <paper-radio-button name="no">
+                  &#x2717;
+                </paper-radio-button>
+                <paper-radio-button name="maybe">
+                  ?
+                </paper-radio-button>
               </mdb-radio-list>
             </template>
           </div>

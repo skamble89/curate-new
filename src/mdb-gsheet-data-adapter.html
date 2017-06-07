@@ -164,6 +164,35 @@
                 });
             },
 
+            getMetrics: function () {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var tabIndex = that._getTabIndex('metric-strip');
+                            if (tabIndex !== null && tabIndex !== undefined) {
+                                that._loadSheetTab(tabIndex, function (e) {
+                                    var data = that._parseMetrics(this.rows);
+                                    resolve(data);
+                                });
+                            } else {
+                                reject('Table not found.');
+                            }
+                        });
+                });
+            },
+
+            _parseMetrics: function (rows) {
+                var result = {},
+                    row = rows[0];
+
+                result.coverage = row['gsx$coverage'].$t;
+                result.eta = row['gsx$eta'].$t;
+                result.confirmedColumns = row['gsx$confirmedcolumns'].$t;
+
+                return result;
+            },
+
             _ensureCoverageLoaded: function () {
                 var that = this;
 
