@@ -419,11 +419,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
        :host .no-table p {
         position: absolute;
-        top: 50%;
+        top: 25%;
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 20px;
-        font-weight: 400px;
+        font-weight: 400;
       }
     </style>
 
@@ -567,13 +567,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </div>
           </template>
-          <!--<template is="dom-if" if="[[selectedTable]]">
-            <template is="dom-if" if="!tableColumns.length">
-              <div class="no-table">
-                <p>No table found.</p>
-              </div>
+          <template is="dom-if" if="[[selectedTable]]">
+            <template is="dom-if" if="!loadingInProgress">
+              <template is="dom-if" if="!tableColumns.length">
+                <div class="no-table">
+                  <p>No table found.</p>
+                </div>
+              </template>
             </template>
-          </template>-->
+          </template>
         </template>
 
       </div>
@@ -736,6 +738,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         confirmedColumns: {
           type: Number,
           value: 0
+        },
+
+        loadingInProgess: {
+          type: Boolean,
+          value: false
         }
       },
 
@@ -890,14 +897,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.selectedTable) {
           var that = this;
+          this.loadingInProgess = true;
           this._dataSource.getTableData(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
             .then(function (tableData) {
               that.set('tableColumns', tableData.columns);
               that.set('tableData', tableData.rows);
               that.selectedColumn = tableData.columns[0].name
+              that.loadingInProgess = false;
             }).catch(function (error) {
               that.set('tableColumns', []);
               that.set('tableData', []);
+              that.loadingInProgess = false;
             });
         }
       },
