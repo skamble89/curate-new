@@ -13,26 +13,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="lob-ecosystem">
     <template>
         <style include="shared-styles">
-        :host ,
-        .banner {
-            height: 100%;
-        }
-        
-        .banner {
-            background: url('../images/ecosystem.png') no-repeat center center;
-            -webkit-background-size: contain;
-            background-size: contain;
-            height: 75vh;
-        }
+             :host {
+                height: 100%;
+            }
+
+             :host img {
+                width: 100%;
+            }
         </style>
         <page-layout heading="LOB Ecosystem">
-            <div class="banner" slot="body">
+            <div slot="body">
+                <img src="../images/ecosystem.png" />
             </div>
         </page-layout>
     </template>
     <script>
-    Polymer({
-        is: 'lob-ecosystem',
-    });
+        Polymer({
+            is: 'lob-ecosystem',
+        });
     </script>
 </dom-module>
