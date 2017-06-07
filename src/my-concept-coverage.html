@@ -539,43 +539,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
 
           <!-- Table data -->
-          <template is="dom-if" if="[[tableColumns.length]]">
-            <div class="concept-identification">
-              <mdb-coverage-table selected-column="{{selectedColumn}}" title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}"
-                items="{{tableData}}"></mdb-coverage-table>
-
-              <div class="recommended-concepts">
-                <!-- Recommended concepts -->
-                <template is="dom-if" if="{{!isConceptIdentified}}">
-                  <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
-                  <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
-                </template>
-                <template is="dom-if" if="{{isConceptIdentified}}">
-                  <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
-                  <div class="concept-identified">
-                    <div class="success-message">
-                      <iron-icon class="arrow" icon="icons:done"></iron-icon>
-                      <mdb-title>Hurray!</mdb-title>
-                      <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
-                      <p>You've helped make data better.</p>
-                      <p>
-                        <paper-button class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
-                      </p>
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </div>
-          </template>
           <template is="dom-if" if="[[selectedTable]]">
-            <template is="dom-if" if="!loadingInProgress">
-              <template is="dom-if" if="!tableColumns.length">
+            <template is="dom-if" if="[[!loadingInProgress]]">
+              <template is="dom-if" if="[[tableColumns.length]]">
+                <div class="concept-identification">
+                  <mdb-coverage-table selected-column="{{selectedColumn}}" title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}"
+                    items="{{tableData}}"></mdb-coverage-table>
+
+                  <div class="recommended-concepts">
+                    <!-- Recommended concepts -->
+                    <template is="dom-if" if="{{!isConceptIdentified}}">
+                      <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
+                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
+                    </template>
+                    <template is="dom-if" if="{{isConceptIdentified}}">
+                      <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
+                      <div class="concept-identified">
+                        <div class="success-message">
+                          <iron-icon class="arrow" icon="icons:done"></iron-icon>
+                          <mdb-title>Hurray!</mdb-title>
+                          <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
+                          <p>You've helped make data better.</p>
+                          <p>
+                            <paper-button class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
+                          </p>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+              <template is="dom-if" if="[[!tableColumns.length]]">
                 <div class="no-table">
                   <p>No table found.</p>
                 </div>
               </template>
             </template>
           </template>
+
         </template>
 
       </div>
@@ -740,7 +741,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 0
         },
 
-        loadingInProgess: {
+        loadingInProgress: {
           type: Boolean,
           value: false
         }
@@ -897,17 +898,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.selectedTable) {
           var that = this;
-          this.loadingInProgess = true;
+          this.loadingInProgress = true;
           this._dataSource.getTableData(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
             .then(function (tableData) {
               that.set('tableColumns', tableData.columns);
               that.set('tableData', tableData.rows);
               that.selectedColumn = tableData.columns[0].name
-              that.loadingInProgess = false;
+              that.loadingInProgress = false;
             }).catch(function (error) {
               that.set('tableColumns', []);
               that.set('tableData', []);
-              that.loadingInProgess = false;
+              that.loadingInProgress = false;
             });
         }
       },
@@ -956,6 +957,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
           return e;
         }))));
+      },
+
+      _showTable: function () {
+        return this.selectedTable && !this.loadingInProgress && this.tableColumns.length > 0;
       }
     });
   </script>
