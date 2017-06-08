@@ -47,7 +47,7 @@ Custom property | Description | Default
         border-right: 1px solid #f1f5f7;
       }
 
-      :host #search-box {
+       :host #search-box {
         margin-top: var(--standard-padding, 20px);
       }
     </style>
@@ -75,15 +75,30 @@ Custom property | Description | Default
 
         recommendations: {
           type: Array,
-          value: []
+          value: [],
+          observer: '_recommendationsChanged'
         }
       },
-
 
       _getSortedRecommendations: function (recommendations) {
         return recommendations.sort(function (a, b) {
           return b.recommendationFactor - a.recommendationFactor;
         });
+      },
+
+      _recommendationsChanged: function () {
+        var that = this;
+        var listItems = this.querySelectorAll('mdb-concept-recommendation');
+        var recommendations = this.recommendations;
+
+        if (listItems && listItems.length && recommendations && recommendations.length) {
+          Array.prototype.forEach.call(listItems, function (e, i) {
+            var recommendation = recommendations[i];
+            e.property = recommendation.property;
+            e.recommendationFactor = recommendation.recommendationFactor;
+            e.recommended = recommendation.recommended;
+          });
+        }
       }
 
     });

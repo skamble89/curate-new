@@ -450,8 +450,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </mdb-simple-list>
 
           <div class="db-entities">
-            <!-- Applications -->
 
+            <!-- Applications -->
             <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
               selected-dimension="{{selectedApplication}}">
               <template>
@@ -463,7 +463,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </mdb-dimension-finder>
 
             <!-- Databases -->
-
             <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
               selected-dimension="{{selectedDatabase}}">
               <template>
@@ -512,7 +511,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </mdb-dimension-finder>
 
             <!-- Tables -->
-
             <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables"
               selected-dimension="{{selectedTable}}">
               <template>
@@ -535,7 +533,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </paper-item>
               </template>
             </mdb-dimension-finder>
-
           </div>
 
           <!-- Table data -->
@@ -543,22 +540,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="[[!loadingInProgress]]">
               <template is="dom-if" if="[[tableColumns.length]]">
                 <div class="concept-identification">
-                  <mdb-coverage-table selected-column="{{selectedColumn}}" title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}"
-                    items="{{tableData}}"></mdb-coverage-table>
+                  <mdb-coverage-table selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Coverage table" columns="[[tableColumns]]"
+                    items="[[tableData]]"></mdb-coverage-table>
 
                   <div class="recommended-concepts">
                     <!-- Recommended concepts -->
-                    <template is="dom-if" if="{{!isConceptIdentified}}">
-                      <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
+                    <template is="dom-if" if="[[!isConceptIdentified]]">
+                      <mdb-concept-recommendation property="[[selectedConcept]]" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
                       <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
                     </template>
-                    <template is="dom-if" if="{{isConceptIdentified}}">
-                      <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{selectedConceptRecommended}}"></mdb-concept-recommendation>
+                    <template is="dom-if" if="[[isConceptIdentified]]">
+                      <mdb-concept-recommendation property="[[selectedConcept]]" recommendation-factor="[[selectedConceptRecommendation]]" recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
                       <div class="concept-identified">
                         <div class="success-message">
                           <iron-icon class="arrow" icon="icons:done"></iron-icon>
                           <mdb-title>Hurray!</mdb-title>
-                          <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
+                          <p>Thanks for identifying [[selectedColumn]] as [[identifiedConcept]].</p>
                           <p>You've helped make data better.</p>
                           <p>
                             <paper-button class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
@@ -576,9 +573,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </template>
             </template>
           </template>
-
         </template>
-
       </div>
     </page-layout>
   </template>
@@ -636,7 +631,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 0
         },
 
-        selectedConceptRecommended: {
+        isSelectedConceptRecommended: {
           type: String,
           value: 'maybe'
         },
@@ -776,9 +771,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           });
 
-        this.addEventListener('concept-identified', function (e) {
-          that.isConceptIdentified = true;
-          that.identifiedConcept = e.detail;
+        this.addEventListener('recommendation-changed', function (e) {
+          var data = e.detail;
+          that.isConceptIdentified = e.detail.recommended === 'yes';
+          that.identifiedConcept = e.detail.property;
+          if (that.selectedConcept === e.detail.property) {
+            that.selectedConceptRecommendation = e.detail.recommendationFactor;
+            that.isSelectedConceptRecommended = e.detail.recommended;
+          }
         });
       },
 
@@ -923,7 +923,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
             .then(function (recommendations) {
               //Initial values for selected concept recommendation
-              that.selectedConceptRecommended = 'maybe';
+              that.isSelectedConceptRecommended = 'maybe';
               that.selectedConceptRecommendation = (recommendations
                 .find(function (e) {
                   return e.property.trim().toLowerCase() === that.selectedConcept.trim().toLowerCase();
@@ -940,23 +940,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _undoConceptIdentification: function () {
-        var that = this,
-          concept = this.identifiedConcept,
-          recommendedConcepts = that.get('recommendedConcepts');
+        var concept = this.identifiedConcept,
+          recommendedConcepts = this.get('recommendedConcepts');
 
         this.isConceptIdentified = false;
         this.identifiedConcept = undefined;
 
         if (concept.trim() === this.selectedConcept) {
-          this.querySelector('mdb-concept-recommendation').recommended = 'maybe';
+          this.isSelectedConceptRecommended = 'maybe';          
         }
 
-        this.set('recommendedConcepts', JSON.parse(JSON.stringify(recommendedConcepts.map(function (e) {
+        this.set('recommendedConcepts', recommendedConcepts.map(function (e) {
           if (e.property.trim() === concept.trim()) {
             e.recommended = 'maybe';
           }
           return e;
-        }))));
+        }));
       },
 
       _showTable: function () {
