@@ -53,7 +53,7 @@ Custom property | Description | Default
     </style>
     <div id="recommendation-list">
       <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
-      <template is="dom-repeat" items="{{_getSortedRecommendations(recommendations)}}">
+      <template is="dom-repeat" items="[[_getSortedRecommendations(recommendations)]]">
         <mdb-concept-recommendation property="{{item.property}}" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
       </template>
     </div>

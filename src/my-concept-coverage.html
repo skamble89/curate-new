@@ -545,12 +545,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                   <div class="recommended-concepts">
                     <!-- Recommended concepts -->
-                    <template is="dom-if" if="[[!isConceptIdentified]]">
-                      <mdb-concept-recommendation property="[[selectedConcept]]" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
+                    <mdb-concept-recommendation property="[[selectedConcept]]" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
+                    <template is="dom-if" if="[[!isConceptIdentified]]">                      
                       <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
                     </template>
-                    <template is="dom-if" if="[[isConceptIdentified]]">
-                      <mdb-concept-recommendation property="[[selectedConcept]]" recommendation-factor="[[selectedConceptRecommendation]]" recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
+                    <template is="dom-if" if="[[isConceptIdentified]]">                      
                       <div class="concept-identified">
                         <div class="success-message">
                           <iron-icon class="arrow" icon="icons:done"></iron-icon>
@@ -771,14 +770,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           });
 
-        this.addEventListener('recommendation-changed', function (e) {
-          var data = e.detail;
+        this.addEventListener('recommendation-changed', function (e) {          
           that.isConceptIdentified = e.detail.recommended === 'yes';
-          that.identifiedConcept = e.detail.property;
+          
+          if (that.isConceptIdentified) {
+            that.identifiedConcept = e.detail.property;
+          } else {
+            that.identifiedConcept = undefined;
+          }
+
           if (that.selectedConcept === e.detail.property) {
             that.selectedConceptRecommendation = e.detail.recommendationFactor;
             that.isSelectedConceptRecommended = e.detail.recommended;
           }
+          
         });
       },
 
@@ -947,7 +952,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.identifiedConcept = undefined;
 
         if (concept.trim() === this.selectedConcept) {
-          this.isSelectedConceptRecommended = 'maybe';          
+          this.isSelectedConceptRecommended = 'maybe';
         }
 
         this.set('recommendedConcepts', recommendedConcepts.map(function (e) {

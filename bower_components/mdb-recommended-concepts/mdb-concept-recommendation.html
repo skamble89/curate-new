@@ -104,12 +104,6 @@
                 this._initialRecommendationFactor = this.recommendationFactor;
             },
 
-            _checkConceptIdentified: function () {
-                if (this.recommended === 'yes') {
-                    this.fire('concept-identified', this.property.trim());
-                }
-            },
-
             _recommendedChanged: function () {
                 switch (this.recommended) {
                     case 'yes':

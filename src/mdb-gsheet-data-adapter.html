@@ -319,7 +319,7 @@
                     if (j.indexOf('gsx$') === 0 && val) {
                         recommendedConcepts[j.replace('gsx$', '')] = val.split(',').map(function (e) {
                             return {
-                                property: e.replace(regex, ''),
+                                property: e.replace(regex, '').trim(),
                                 recommendationFactor: parseFloat((e.match(regex) || [])[1] || 0),
                                 recommended: 'maybe'
                             }
