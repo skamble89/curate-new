@@ -160,6 +160,8 @@
                     resolve(that.selectedTableData.recommendedConcepts[column].map(function (e) {
                         //Create a copy of the object
                         return JSON.parse(JSON.stringify(e));
+                    }).sort(function (a, b) {
+                        return b.recommendationFactor - a.recommendationFactor;
                     }));
                 });
             },

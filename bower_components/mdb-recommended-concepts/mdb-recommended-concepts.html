@@ -53,8 +53,8 @@ Custom property | Description | Default
     </style>
     <div id="recommendation-list">
       <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
-      <template is="dom-repeat" items="[[_getSortedRecommendations(recommendations)]]">
-        <mdb-concept-recommendation property="{{item.property}}" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
+      <template is="dom-repeat" items="[[recommendations]]">
+        <mdb-concept-recommendation property="[[item.property]]" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
       </template>
     </div>
     <div id="search-box">
@@ -80,23 +80,18 @@ Custom property | Description | Default
         }
       },
 
-      _getSortedRecommendations: function (recommendations) {
-        return recommendations.sort(function (a, b) {
-          return b.recommendationFactor - a.recommendationFactor;
-        });
-      },
-
       _recommendationsChanged: function () {
         var that = this;
         var listItems = this.querySelectorAll('mdb-concept-recommendation');
         var recommendations = this.recommendations;
 
         if (listItems && listItems.length && recommendations && recommendations.length) {
-          Array.prototype.forEach.call(listItems, function (e, i) {
-            var recommendation = recommendations[i];
-            e.property = recommendation.property;
-            e.recommendationFactor = recommendation.recommendationFactor;
-            e.recommended = recommendation.recommended;
+          Array.prototype.forEach.call(listItems, function (e) {
+            var recommendation = recommendations.find(function (i) { return i.property === e.property; });
+            if (recommendation) {
+              e.recommendationFactor = recommendation.recommendationFactor;
+              e.recommended = recommendation.recommended;
+            }
           });
         }
       }
