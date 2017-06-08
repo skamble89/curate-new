@@ -114,6 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         right: 0;
         top: 50%;
         transform: translate(0, -50%);
+        color: #fff;
       }
 
        :host mdb-dimension-finder {
@@ -932,12 +933,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var that = this;
           this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
             .then(function (recommendations) {
+              var r = recommendations[0];
+              var rf = r.recommendationFactor + 3;
               //Initial values for selected concept recommendation
               that.isSelectedConceptRecommended = 'maybe';
-              that.selectedConceptRecommendation = (recommendations
-                .find(function (e) {
-                  return e.property.trim().toLowerCase() === that.selectedConcept.trim().toLowerCase();
-                }) || {}).recommendationFactor || parseInt(Math.random() * 100);
+              that.selectedConceptRecommendation = rf < 100 ? rf : 99;
 
               that.set('recommendedConcepts', recommendations);
             });
