@@ -10,28 +10,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="page-layout.html">
-<dom-module id="my-view1">
+<dom-module id="risk-assessment-data-steward">
     <template>
         <style include="shared-styles">
-        :host ,
-        .banner {
-            height: 100%;
-        }
-        
-        .banner {
-            background: url('../images/ecosystem.png') no-repeat center center #000;
-            -webkit-background-size: contain;
-            background-size: contain;
-        }
+             :host {
+                height: 100%;
+            }
+
+             :host img {
+                width: 100%;
+            }
         </style>
-        <page-layout heading="LOB Ecosystem">
-            <div class="banner" slot="body">
+        <page-layout heading="GDPR Risk Assessment">
+            <div slot="body">
+                <img src="../images/report-data-steward.png" />
             </div>
         </page-layout>
     </template>
     <script>
-    Polymer({
-        is: 'my-view1',
-    });
+        Polymer({
+            is: 'risk-assessment-data-steward',
+        });
     </script>
 </dom-module>

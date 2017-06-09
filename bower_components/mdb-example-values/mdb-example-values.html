@@ -1,0 +1,89 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../mdb-title/mdb-title.html">
+<link rel="import" href="../mdb-simple-list/mdb-simple-list.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<!--
+`mdb-example-values`
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-example-values` | Mixin applied to all example values | `{}`
+`--mdb-example-background-color` | Mixin applied to all example values | `#eaeff3`
+`--mdb-example-font-color` | Mixin applied to all example values | `#a5a8ad`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-example-values">
+  <template>
+    <style>
+       :host {
+        display: block;
+        --mdb-example-background-color: #eaeff3;
+        --mdb-example-font-color: #a5a8ad;
+      }
+
+       :host mdb-simple-list {
+        --mdb-simple-list: {
+          background-color: inherit;
+          overflow: auto;
+        }
+        --mdb-list-item: {
+          float: left;
+          background-color: var(--mdb-example-background-color);
+          color: var(--mdb-example-font-color);
+          border-radius: 1em;
+          padding: 0 10px 0 10px;
+          margin: 5px 5px 5px 0;
+          @apply(--mdb-example-values);
+        }
+        --mdb-list-item-focused: {
+          border-radius: 1em;
+          background-color: var(--mdb-example-background-color);
+          color: var(--mdb-example-font-color);
+        }
+        --mdb-list-item-selected: {
+          border-radius: 1em;
+          background-color: var(--mdb-example-background-color);
+          color: var(--mdb-example-font-color);
+        }
+      }
+    </style>
+    <mdb-title help-text="{{helpText}}" level="3">[[title]]</mdb-title>
+    <mdb-simple-list items="{{examples}}">
+      <template>
+        <paper-item class="example">[[this]]</paper-item>
+      </template>
+    </mdb-simple-list>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-example-values',
+
+      properties: {
+        title: {
+          type: String,
+          value: 'Example Values',
+        },
+
+        helpText: {
+          type: String,
+          value: ''
+        },
+
+        examples: {
+          type: Array,
+          value: []
+        }
+      },
+
+    });
+  </script>
+</dom-module>

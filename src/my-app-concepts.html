@@ -1,0 +1,65 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="./concepts/concept-list.html">
+<link rel="import" href="./concepts/concept-details.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<dom-module id="app-concepts">
+  <template>
+    <style include="shared-styles">
+       :host {
+        display: block;
+        overflow: auto;
+        --iron-icon-fill-color: #aaa;
+        --paper-tabs: {
+          padding-top: 0;
+          border-bottom: 1px solid #ddd;
+        }
+      }
+    </style>
+
+    <page-layout heading="Concepts" help-text="Concepts">
+      <div class="banner" slot="body">
+        <paper-tabs selected="{{selectedTab}}">
+          <paper-tab>LIST</paper-tab>
+          <paper-tab>DETAILS</paper-tab>
+        </paper-tabs>
+
+        <iron-pages selected="{{selectedTab}}">
+          <div>
+            <concept-list></concept-list>
+          </div>
+          <div>
+            <concept-details></concept-details>
+          </div>
+        </iron-pages>
+      </div>
+    </page-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'app-concepts',
+
+      properties: {
+        selectedTab: {
+          type: Number,
+          value: 0
+        }
+      }
+    });
+  </script>
+</dom-module>

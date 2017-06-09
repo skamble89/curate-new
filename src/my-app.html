@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="my-app">
   <template>
     <style include="iron-flex">
-       :host {
+       :host {        
         --app-primary-color: #5da9dd;
         --app-secondary-color: black;
         --app-border-color: #e1e6ed;
@@ -106,18 +106,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <img src="../images/Logo.png" alt="">
         </app-toolbar>
         <side-menu selected="[[page]]" attr-for-selected="name" role="navigation">
-          <paper-item name="view1" on-click="_routeToPage">
-            <span class="flex">LOB ECOSYSTEM</span>
-            <iron-icon icon="my-icons:chevron-right"></iron-icon>
-          </paper-item>
-          <paper-item on-click="_routeToPage" name="concept-coverage">
-            <span class="flex">Concept Coverage</span>
-            <iron-icon icon="my-icons:chevron-right"></iron-icon>
-          </paper-item>
-          <paper-item on-click="_routeToPage" name="view3">
-            <span class="flex">REVIEW & CLASSIFY</span>
-            <iron-icon icon="my-icons:chevron-right"></iron-icon>
-          </paper-item>
+          <template is="dom-repeat" items="{{_getPageList(role)}}" as="page">
+            <paper-item name$="[[page.name]]" on-click="_routeToPage">
+              <span class="flex">{{page.title}}</span>
+              <iron-icon icon="my-icons:chevron-right"></iron-icon>
+            </paper-item>
+          </template>
         </side-menu>
       </app-drawer>
 
@@ -127,17 +121,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <my-header profile-picture="./images/img.jpg"></my-header>
+            <my-header profile-picture="./images/img.jpg" role="{{role}}"></my-header>
           </app-toolbar>
         </app-header>
 
         <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-          <my-view1 name="view1"></my-view1>
+          <app-welcome name="app-welcome"></app-welcome>
           <concept-coverage name="concept-coverage" data-source="mdb-gsheet-data-adapter" data-source-options='{"key":"1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"}'
-            w-1024$="[[w-1024]]" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]" w-1680$="[[w-1680]]"
-            w-1920$="[[w-1920]]" w-2560$="[[w-2560]]"></concept-coverage>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
+            w-1024$="[[w-1024]]" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]"
+            w-1680$="[[w-1680]]" w-1920$="[[w-1920]]" w-2560$="[[w-2560]]"></concept-coverage>
+          <request-status name="request-status"></request-status>
+          <lob-ecosystem name="lob-ecosystem"></lob-ecosystem>
+          <app-concepts name="app-concepts"></app-concepts>
+          <review-classify name="review-classify"></review-classify>
+          <risk-assessment-data-steward name="risk-assessment-data-steward"></risk-assessment-data-steward>
+          <risk-assessment-cdo name="risk-assessment-cdo"></risk-assessment-cdo>
+          <my-view404 name="view404"></my-view404>          
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
@@ -153,6 +152,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           reflectToAttribute: true,
           observer: '_pageChanged',
         },
+
+        role: {
+          type: String,
+          observer: '_roleChanged'
+        },
+
+        pageList: {
+          type: Array,
+          value: [{
+            name: 'app-welcome',
+            title: 'WELCOME',
+            role: 'Data Steward'
+          }, {
+            name: 'concept-coverage',
+            title: 'CONCEPT COVERAGE',
+            role: 'Data Steward'
+          }, {
+            name: 'request-status',
+            title: 'REQUESTS & STATUS',
+            role: 'Data Steward'
+          }, {
+            name: 'risk-assessment-data-steward',
+            title: 'GDPR Risk Assessment',
+            role: 'Data Steward'
+          }, {
+            name: 'app-welcome',
+            title: 'WELCOME',
+            role: 'Information Architect'
+          }, {
+            name: 'lob-ecosystem',
+            title: 'LOB ECOSYSTEM',
+            role: 'Information Architect'
+          }, {
+            name: 'app-concepts',
+            title: 'CONCEPTS',
+            role: 'Information Architect'
+          }, {
+            name: 'review-classify',
+            title: 'REVIEW & CLASSIFY',
+            role: 'Information Architect'
+          }, {
+            name: 'app-welcome',
+            title: 'WELCOME',
+            role: 'Chief Data Officer'
+          }, {
+            name: 'risk-assessment-cdo',
+            title: 'GDPR Risk Assessment',
+            role: 'Chief Data Officer'
+          }, {
+            name: 'app-welcome',
+            title: 'WELCOME',
+            role: 'Citizen'
+          }, {
+            name: 'my-data',
+            title: 'MY DATA',
+            role: 'Citizen'
+          }],
+          readonly: true
+        }
       },
 
       observers: [
@@ -160,7 +218,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function (page) {
-        this.page = page || 'view1';
+        this.page = page || 'app-welcome';
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
@@ -172,15 +230,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
+
       _routeToPage: function (e) {
         var pg = e.currentTarget.getAttribute('name');
         this.set('route.path', '/' + pg);
       },
+
       _showPage404: function () {
         this.page = 'view404';
       },
+
       _updateStyles: function () {
         Polymer.updateStyles();
+      },
+
+      _getPageList(role) {
+        return this.pageList.filter(function (e) {
+          return e.role.toLowerCase() === role.toLowerCase();
+        });
+      },
+
+      _roleChanged: function () {
+        var that = this;
+        var pages = this._getPageList(this.role);
+        if (!pages.find(function (e) { return that.page === e.name; })) {
+          this.page = 'app-welcome';
+          this.set('route.path', '/' + this.page);
+        }
       }
     });
   </script>

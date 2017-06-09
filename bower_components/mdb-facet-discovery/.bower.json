@@ -1,0 +1,28 @@
+{
+  "name": "mdb-facet-discovery",
+  "main": "mdb-facet-discovery.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
+    "mdb-search-box": "git://github.com/makedatabetter-dev/mdb-search-box.git",
+    "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/makedatabetter-dev/mdb-facet-discovery",
+  "version": "0.1.1",
+  "_release": "0.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.1",
+    "commit": "733e40ff7c2c4f95e6996f67ae2a88111320dab8"
+  },
+  "_source": "git://github.com/makedatabetter-dev/mdb-facet-discovery.git",
+  "_target": "*",
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-facet-discovery.git"
+}

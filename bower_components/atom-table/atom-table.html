@@ -1,0 +1,175 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+
+<!--
+`atom-table`
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--atom-table` | Mixin applied to all atom table host | `{}`
+`--atom-table-cell` | Mixin applied to all atom table cells | `{}`
+`--atom-table-header-cell` | Mixin applied to atom table header cells | `{}`
+`--atom-table-body-cell` | Mixin applied to atom table body cells | `{}`
+`--atom-table-odd-row-cell` | Mixin applied to atom table odd row body cells | `{}`
+`--atom-table-page-size` | Mixin applied to atom table page size element | `{}`
+`--atom-table-page-num` | Mixin applied to atom table page number element | `{}`
+`--atom-table-paging-buttons-container` | Mixin applied to atom table paging buttons container | `{}`
+`--atom-table-paging-buttons` | Mixin applied to atom table paging buttons | `{}`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="atom-table">
+  <template>
+    <style>
+       :host {
+        display: block;
+        overflow: auto;
+        --vaadin-grid-cell: {
+          @apply(--atom-table-cell);
+        }
+        --vaadin-grid-header-cell: {
+          @apply(--atom-table-header-cell);
+        }
+        --vaadin-grid-body-cell: {          
+          @apply(--atom-table-body-cell);
+        }
+        --vaadin-grid-body-row-odd-cell: {          
+          @apply(--atom-table-odd-row-cell);
+        }
+      }
+
+       :host vaadin-grid {
+        @apply(--atom-table);
+      }
+
+       :host .actions {
+        @apply(--layout);
+        @apply(--layout-end-justified);
+      }
+
+       :host .paging {
+        float: right;
+      }
+
+       :host .pageSize {
+        margin-left: 30px;
+        @apply(--atom-table-page-size);
+      }
+
+       :host .pageNum {
+        margin-left: 30px;
+        @apply(--atom-table-page-num);
+      }
+
+       :host .pagingButtons {
+        display: inline;
+        margin-left: 30px;
+        @apply(--atom-table-paging-buttons-container);
+      }
+
+       :host .pagingButtons paper-icon-button {
+        @apply(--atom-table-paging-buttons);
+      }
+    </style>
+    <div class="actions">
+      <template is="dom-if" if="{{allowGlobalSearch}}">
+        <paper-icon-button class="global-search" icon="icons:search"></paper-icon-button>
+      </template>
+      <template is="dom-if" if="{{allowAddNew}}">
+        <paper-icon-button class="add-new" icon="icons:add"></paper-icon-button>
+      </template>
+    </div>
+    <div class="grid">
+      <vaadin-grid items="{{items}}">
+        <content></content>
+      </vaadin-grid>
+    </div>
+    <div class="paging">
+      <template is="dom-if" if="{{allowPaging}}">
+        <span>Rows per page</span>
+        <select id="pageSize" class="pageSize">
+          <option>10</option>
+          <option>20</option>
+          <option>50</option>
+        </select>
+        <span class="pageNum">[[_getStart()]]-[[_getEnd()]] of [[_getTotalRecordsCount()]]</span>
+        <div class="pagingButtons">
+          <paper-icon-button id="prevPage" icon="icons:chevron-left"></paper-icon-button>
+          <paper-icon-button id="nextPage" icon="icons:chevron-right"></paper-icon-button>
+        </div>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'atom-table',
+
+      properties: {
+        allowFilters: {
+          type: Boolean,
+          value: false
+        },
+        allowPaging: {
+          type: Boolean,
+          value: false
+        },
+        pageSize: {
+          type: Number,
+          value: 10,
+          observer: '_pageSizeChanged'
+        },
+        pageNum: {
+          type: Number,
+          value: 1,
+          observer: '_pageNumChanged'
+        },
+        allowAddNew: {
+          type: Boolean,
+          value: false
+        },
+        allowGlobalSearch: {
+          type: Boolean,
+          value: false
+        },
+        columns: {
+          type: Array,
+          value: []
+        },
+        items: {
+          type: Array,
+          value: []
+        }
+      },
+
+      _pageSizeChanged: function () {
+
+      },
+
+      _pageNumChanged: function () {
+
+      },
+
+      _getStart: function () {
+        return 1;
+      },
+
+      _getEnd: function () {
+        return 10;
+      },
+
+      _getTotalRecordsCount: function () {
+        return this.items.length;
+      }
+    });
+  </script>
+</dom-module>

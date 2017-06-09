@@ -157,8 +157,42 @@
             getRecommendedConcepts: function (lob, concept, application, db, schema, table, column) {
                 var that = this;
                 return new Promise(function (resolve, reject) {
-                    resolve(that.selectedTableData.recommendedConcepts[column]);
+                    resolve(that.selectedTableData.recommendedConcepts[column].map(function (e) {
+                        //Create a copy of the object
+                        return JSON.parse(JSON.stringify(e));
+                    }).sort(function (a, b) {
+                        return b.recommendationFactor - a.recommendationFactor;
+                    }));
                 });
+            },
+
+            getMetrics: function () {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var tabIndex = that._getTabIndex('metric-strip');
+                            if (tabIndex !== null && tabIndex !== undefined) {
+                                that._loadSheetTab(tabIndex, function (e) {
+                                    var data = that._parseMetrics(this.rows);
+                                    resolve(data);
+                                });
+                            } else {
+                                reject('Table not found.');
+                            }
+                        });
+                });
+            },
+
+            _parseMetrics: function (rows) {
+                var result = {},
+                    row = rows[0];
+
+                result.coverage = row['gsx$coverage'].$t;
+                result.eta = row['gsx$eta'].$t;
+                result.confirmedColumns = row['gsx$confirmedcolumns'].$t;
+
+                return result;
             },
 
             _ensureCoverageLoaded: function () {
@@ -287,7 +321,7 @@
                     if (j.indexOf('gsx$') === 0 && val) {
                         recommendedConcepts[j.replace('gsx$', '')] = val.split(',').map(function (e) {
                             return {
-                                property: e.replace(regex, ''),
+                                property: e.replace(regex, '').trim(),
                                 recommendationFactor: parseFloat((e.match(regex) || [])[1] || 0),
                                 recommended: 'maybe'
                             }

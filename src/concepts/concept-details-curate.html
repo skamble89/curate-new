@@ -1,0 +1,248 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/mdb-title/mdb-title.html">
+<link rel="import" href="../../bower_components/mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../../bower_components/mdb-facet-discovery/mdb-facet-discovery.html">
+<link rel="import" href="../../bower_components/mdb-example-values/mdb-example-values.html">
+<link rel="import" href="../../bower_components/atom-table/atom-table.html">
+
+
+<dom-module id="concept-details-curate">
+    <template>
+        <style include="shared-styles">
+             :host {
+                display: block;
+                --mdb-example-values: {
+                    font-size: 0.6em;
+                    height: 1.7em;
+                    border-radius: 2em;
+                }
+            }
+
+             :host .mode-selection {
+                padding-top: var(--standard-padding, 20px);
+                padding-bottom: var(--standard-padding, 20px);
+                @apply(--layout);
+                @apply(--layout-end-justified);
+            }
+
+             :host .mode-selection mdb-radio-list {
+                --mdb-radio-list-button: {
+                    padding-left: 35px;
+                    padding-right: 35px;
+                }
+            }
+
+             :host .pivot {
+                margin-right: 60px;
+                line-height: 35px;
+            }
+
+             :host .facets {
+                font-size: 0;
+                @apply(--layout);
+                @apply(--layout-center-justified);
+            }
+
+             :host mdb-facet-discovery {
+                @apply(--layout-flex-auto);
+                padding: var(--standard-padding, 20px);
+                border: 1px solid #ddd;
+                background-color: #fcfdff;
+                width: 44.8%;
+                font-size: 0.8rem;
+                flex: 1;
+                --mdb-facet-container: {
+                    height: 25px;
+                }
+                --mdb-facet-list-container: {
+                    height: 125px;
+                }
+            }
+
+             :host .facets mdb-facet-discovery:not(:last-child) {
+                border-right: 0;
+            }
+
+             :host .example-values {
+                font-size: 1rem;
+                margin-top: var(--standard-padding, 20px);
+                padding: var(--standard-padding, 20px);
+                border: 1px solid #ddd;
+                background-color: #fcfdff;
+            }
+
+             :host .example-columns {
+                margin-top: var(--standard-padding, 20px);
+            }             
+        </style>
+
+        <div class="mode-selection">
+            <paper-checkbox class="pivot">
+                <mdb-title level="3" help-text="Use pivot to explore combinations of features by linking selection with others. For example, select a particular pattern to see possible synonyms and proximate domains within the set of columns having selected pattern.">Pivot</mdb-title>
+            </paper-checkbox>
+            <mdb-radio-list selected="{{mode}}">
+                <paper-radio-button name="explore">Explore</paper-radio-button>
+                <paper-radio-button name="define">Define</paper-radio-button>
+            </mdb-radio-list>
+        </div>
+        <div class="facets">
+            <mdb-facet-discovery mode="[[mode]]" facets='[{"name":"DOB","recommendationFactor":"45%","recommended":"maybe"},{"name":"Birthday","recommendationFactor":"65%","recommended":"no"},{"name":"Order Date","recommendationFactor":"54%","recommended":"yes"}]'
+                facet-type="Synonyms" help-text="Use synonymns to find examples of columns that may have the same or similar meaning."></mdb-facet-discovery>
+
+            <mdb-facet-discovery mode="[[mode]]" facets='[{"name":"DD/MM/YY","recommendationFactor":"37%","recommended":"no"},{"name":"MM/DD/YY","recommendationFactor":"54%","recommended":"no"},{"name":"MM/DD/YYYY","recommendationFactor":"59%","recommended":"yes"}]'
+                facet-type="Patterns" help-text="Use patterns to find examples of columns having matching data values."></mdb-facet-discovery>
+
+            <mdb-facet-discovery mode="[[mode]]" facets='[{"name":"First Name","recommendationFactor":"44%","recommended":"no"},{"name":"Last Name","recommendationFactor":"32%","recommended":"no"},{"name":"Address","recommendationFactor":"48%","recommended":"yes"},{"name":"List Price","recommendationFactor":"57%","recommended":"no"},{"name":"City of Birth","recommendationFactor":"60%","recommended":"yes"},{"name":"City","recommendationFactor":"54%","recommended":"maybe"},{"name":"Stock Unit Number","recommendationFactor":"57%","recommended":"no"}]'
+                facet-type="Related Concepts" help-text="Use patterns to find examples of columns having matching data values."></mdb-facet-discovery>
+        </div>
+        <div class="example-values">
+            <mdb-example-values help-text="Use example values to see examples of values found in columns matching your selected set of synonyms, patterns, and proximate domains."
+                examples='["21/03/2007","08/07/2006","18/03/2007","22/03/1936","Jan 5, 1999","12-13-1956","12-30-1988","3-18-1922","Feb 8, 1923","Feb 14, 1955","01/01/1914","08/03/1999","08/07/1997","03/06/1960","04/10/1936","08/13/1955","03/06/1960","Jun 12, 1987","Jun 8, 1999","Feb 12, 1967","Mar 3, 1960","04-10-1944","04-11-1977","08-15-1999","12-13-1999","08/17/1927"]'></mdb-example-values>
+        </div>
+        <div class="example-columns">
+            <mdb-title help-text="Use example columns to see samples of columns matching your selected set of synonyms, patters, and proximate domains">Example Columns</mdb-title>
+            <atom-table items="{{items}}">
+                <vaadin-grid-column>
+                    <template class="header">
+                        DOB
+                    </template>
+                    <template>
+                        {{item.dob}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        BIRTH_DAY
+                    </template>
+                    <template>
+                        {{item.birthday}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        ORDER_DATE
+                    </template>
+                    <template>
+                        {{item.orderDate}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        DATE
+                    </template>
+                    <template>
+                        {{item.date}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        BIRTH_DT
+                    </template>
+                    <template>
+                        {{item.birthDt}}
+                    </template>
+                </vaadin-grid-column>
+            </atom-table>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'concept-details-curate',
+
+            properties: {
+                mode: {
+                    type: String,
+                    value: 'explore'
+                },
+
+                items: {
+                    type: Array,
+                    value: [{
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    },
+                    {
+                        dob: '21/03/2007',
+                        birthday: '22/03/1936',
+                        orderDate: '02-16-40',
+                        date: '1461911293',
+                        birthDt: 'Apr 26, 1916'
+                    }]
+                }
+            }
+        });
+    </script>
+</dom-module>

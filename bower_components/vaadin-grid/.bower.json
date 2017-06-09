@@ -59,15 +59,21 @@
     "iron-a11y-keys-behavior": "^1.1.9",
     "iron-a11y-announcer": "^1.0.5"
   },
+  "resolutions": {
+    "iron-ajax": "^1.4.3",
+    "iron-demo-helpers": "^1.2.5",
+    "iron-location": "^0.8.0",
+    "iron-doc-viewer": "^1.0.1"
+  },
   "homepage": "https://github.com/vaadin/vaadin-grid",
-  "version": "2.0.2",
-  "_release": "2.0.2",
+  "version": "2.0.3",
+  "_release": "2.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.2",
-    "commit": "2d84428a5679dad2141c672d5de4eb08bf994fb3"
+    "tag": "v2.0.3",
+    "commit": "cb7bc1937b941e22ac4f4e95ea643f43f17d3b37"
   },
   "_source": "https://github.com/vaadin/vaadin-grid.git",
-  "_target": "^2.0.1",
+  "_target": "^2.0.2",
   "_originalSource": "vaadin/vaadin-grid"
 }
