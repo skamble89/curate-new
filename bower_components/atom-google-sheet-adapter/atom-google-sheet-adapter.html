@@ -1,0 +1,123 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../google-sheets/google-sheets.html">
+
+<!--
+`atom-google-sheet-adapter`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="atom-google-sheet-adapter">
+  <template>
+    <google-sheets key="[[key]]" tab-id="dummy" published></google-sheets>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'atom-google-sheet-adapter',
+
+      properties: {
+        key: String,
+
+        tab: {
+          type: String,
+          reflectToAttribute: true,
+          observer: 'read'
+        },
+
+        rows: {
+          type: Array,
+          value: []
+        }
+      },
+
+      read: function (tab) {
+        var that = this;
+        return new Promise(function (resolve, reject) {
+          that._getSpreadsheetMetadata()
+            .then(function () {
+              var index = that._getTabIndex(tab);
+              that._readSheetTab(index, function (err, data) {
+                var rows = that._parse(data);
+                that.set('rows', rows);
+                resolve(rows);
+              });
+            }).catch(function (error) {
+              reject(error);
+            });
+        });
+      },
+
+      _parse: function (data) {
+        var rows = [];
+        data.forEach(function (row) {
+          var obj = {};
+          for (var i in row) {
+            if (i.startsWith('gsx$')) {
+              obj[i.replace('gsx$', '')] = row[i]['$t'];
+            }
+          }
+          rows.push(obj);
+        });
+        return rows;
+      },
+
+      _readSheetTab: function (tabId, callback) {
+        var sheet = this.querySelector('google-sheets');
+        sheet.addEventListener('google-sheet-data', _dataLoaded);
+        sheet.tabId = tabId;
+
+        function _dataLoaded(e) {
+          callback.apply(this, [null, e.detail.data.entry]);
+          this.removeEventListener('google-sheet-data', _dataLoaded);
+        }
+
+        function _error(e) {
+          callback.apply(this, [e]);
+          this.removeEventListener('google-sheet-data', _error);
+        }
+      },
+
+      _getSpreadsheetMetadata: function () {
+        var that = this;
+        return new Promise(function (resolve, reject) {
+          if (!that._tabMapping) {
+            that._makeRequest({
+              url: 'https://spreadsheets.google.com/feeds/worksheets/' + that.key + '/public/full?alt=json'
+            }).then(function (e) {
+              that._tabMapping = JSON.parse(e.response).feed.entry
+                .map(function (e, i) {
+                  return {
+                    index: i + 1,
+                    name: e.title.$t
+                  };
+                });
+              resolve();
+            }).catch(function (error) {
+              reject(error);
+            });
+          } else {
+            resolve();
+          }
+        });
+      },
+
+      _getTabIndex: function (name) {
+        return (this._tabMapping
+          .find(function (e) {
+            return e.name.toLowerCase() === name.toString().toLowerCase();
+          }) || {}).index;
+      },
+
+      _makeRequest: function (options) {
+        var xhr = document.createElement('iron-request');
+        xhr.send(options);
+        return xhr.completes;
+      },
+
+    });
+  </script>
+</dom-module>

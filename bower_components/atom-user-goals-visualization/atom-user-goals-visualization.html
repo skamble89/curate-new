@@ -1,0 +1,171 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="atom-user-goals-visualization-summary.html">
+<link rel="import" href="atom-user-goals-visualization-details.html">
+
+<!--
+`atom-user-goals-visualization`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="atom-user-goals-visualization">
+  <template>
+    <style>
+       :host {
+        display: block;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        text-align: center;
+        background-image: url('default-bg.jpg');
+        position: relative;
+        --mdb-radio-list-button: {}
+        --mdb-radio-list-selected-button-font-color: gold;
+        --mdb-radio-list-selected-button-border-color: gold;
+        --mdb-radio-list-selected-button-label-color: gold;
+      }
+
+       :host .dashboard-strip {
+        height: 135px;
+        display: flex;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: #ffffff;
+        padding: 30px;
+        font-family: 'Electrolize', sans-serif;
+        text-shadow: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+       :host .dashboard-strip--about,
+       :host .dashboard-strip--title,
+       :host .dashboard-strip--option {
+        width: calc(100% / 3);
+      }
+
+       :host .dashboard-strip span.heading {
+        font-family: 'Electrolize', sans-serif;
+        text-shadow: none;
+        display: block;
+        font-size: 50px;
+      }
+
+       :host .dashboard-strip span.sub-heading {
+        font-family: 'Electrolize', sans-serif;
+        text-shadow: none;
+        display: block;
+        font-size: 30px;
+      }
+
+       :host .dashboard-strip p {
+        color: #777777;
+        font-size: 12px;
+        padding: 0px 70px;
+      }
+
+       :host .dashboard-strip span.font-size-18 {
+        font-size: 18px;
+      }
+
+       :host #tree-container {
+        text-align: center;
+      }
+
+       :host paper-radio-button {
+        width: 100px;
+      }
+    </style>
+    <div class="dashboard-strip">
+      <div class="dashboard-strip--about">
+        <span class="sub-heading">What's This?</span>
+        <p>
+          {{description}}
+        </p>
+      </div>
+      <div class="dashboard-strip--title">
+        <span class="heading">{{productName}}</span>
+        <span class="sub-heading">Who? What? How?</span>
+        <span class="sub-heading font-size-18">
+        A list of system users, their goals and tasks
+      </span>
+      </div>
+      <div class="dashboard-strip--option">
+        <mdb-radio-list selected="{{selectedVisualization}}">
+          <paper-radio-button name="summary">Summary</paper-radio-button>
+          <paper-radio-button name="details">Details</paper-radio-button>
+        </mdb-radio-list>
+      </div>
+    </div>
+    <div id="tree-container" style="height:638px;width:1349px;">
+      <template is="dom-if" if="{{_isDetails(selectedVisualization)}}" restamp>
+        <atom-user-goals-visualization-details goals="{{goals}}"></atom-user-goals-visualization-details>
+      </template>
+      <template is="dom-if" if="{{!_isDetails(selectedVisualization)}}" restamp>
+        <atom-user-goals-visualization-summary goals="{{goals}}"></atom-user-goals-visualization-summary>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'atom-user-goals-visualization',
+
+      properties: {
+        productName: {
+          type: String,
+          value: '',
+        },
+
+        goals: {
+          type: Object,
+          value: {}
+        },
+
+        description: {
+          type: String
+        },
+
+        selectedVisualization: {
+          type: String,
+          value: 'summary'
+        },
+
+        backgroundImage: {
+          type: String,
+          value: 'bg.jpg'
+        },
+
+        fontSizeL1: {
+          type: String
+        },
+
+        fontSizeL2: {
+          type: String
+        },
+
+        fontSizeL3: {
+          type: String
+        },
+
+        fontSizeL4: {
+          type: String
+        },
+
+        fontFamily: {
+          type: String
+        }
+      },
+
+      _isDetails: function () {
+        return this.selectedVisualization === 'details';
+      }
+
+    });
+  </script>
+</dom-module>

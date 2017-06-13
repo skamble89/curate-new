@@ -23,7 +23,7 @@ Example:
                 padding: var(--standard-padding, 20px);
                 -webkit-box-sizing: border-box;
                 -moz-box-sizing: border-box;
-                box-sizing: border-box;                
+                box-sizing: border-box;
                 --mdb-title: {
                     margin: 0;
                     padding: 0;
@@ -31,14 +31,15 @@ Example:
                     font-size: 2em;
                 }
             }
-            
+
             .content-body {
                 margin-top: 10px;
                 padding: var(--standard-padding, 20px);
-                @apply(--layout-flex);
                 background: var(--content-bg, #fff);
-            }            
-        </style>        
+                @apply(--layout-flex);
+                @apply(--page-layout-content-body);
+            }
+        </style>
         <mdb-title help-text="[[helpText]]">[[heading]]</mdb-title>
         <div class="content-body">
             <slot name="body"></slot>
