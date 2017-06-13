@@ -22,11 +22,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 overflow: auto;
                 --page-layout-content-body: {
                     padding: 0;
+                    margin: 0;
                 }
+            }
+
+             :host page-layout {
+                padding: 0;
             }
         </style>
 
-        <page-layout heading="User Goals Visualization" help-text="User Goals Visualization">
+        <page-layout>
             <div class="banner" slot="body">
                 <atom-google-sheet-adapter key="1qdvpG4azV_oumBey9I9VW0JloMVG3tzj2TD8vOKujvw"></atom-google-sheet-adapter>
                 <template is="dom-if" if="{{dataLoaded}}">

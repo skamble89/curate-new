@@ -13,12 +13,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/atom-user-goals-visualization",
-  "version": "0.0.2",
-  "_release": "0.0.2",
+  "version": "0.0.3",
+  "_release": "0.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.2",
-    "commit": "6cb08d140cd91fb22e99a6513b3c9f9b1c1c7f40"
+    "tag": "v0.0.3",
+    "commit": "0ca66b212c7a36c07887bcad373a5b76bd53104f"
   },
   "_source": "git://github.com/makedatabetter-dev/atom-user-goals-visualization.git",
   "_target": "*",
