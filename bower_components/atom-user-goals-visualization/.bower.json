@@ -4,6 +4,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
+    "atom-google-sheet-adapter": "git://github.com/makedatabetter-dev/atom-google-sheet-adapter.git",
     "d3": "v3.4.13"
   },
   "devDependencies": {
@@ -13,12 +14,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/atom-user-goals-visualization",
-  "version": "0.0.3",
-  "_release": "0.0.3",
+  "version": "0.0.5",
+  "_release": "0.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.3",
-    "commit": "0ca66b212c7a36c07887bcad373a5b76bd53104f"
+    "tag": "v0.0.5",
+    "commit": "bffbe6b3f02a0eca3d6a94c9c08a023a76b1dbb1"
   },
   "_source": "git://github.com/makedatabetter-dev/atom-user-goals-visualization.git",
   "_target": "*",

@@ -4,6 +4,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
+    "atom-google-sheet-adapter": "git://github.com/makedatabetter-dev/atom-google-sheet-adapter.git",
     "d3": "v3.4.13"
   },
   "devDependencies": {
