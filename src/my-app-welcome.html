@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/atom-feature/atom-feature.html">
 <dom-module id="app-welcome">
   <template>
     <style include="shared-styles">
@@ -17,13 +19,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
+       :host div[slot="body"] {
+        background-color: #f3f5f9;
+      }
+
        :host img {
         width: 100%;
+      }
+
+       :host .features {
+        display: flex;
+        justify-content: center;
+        color: #aaa;
+      }
+
+       :host atom-feature {
+        flex: 1;
+        padding: var(--standard-padding, 20px);
+        --atom-feature-icon: {
+          height: 40px;
+          width: 40px;
+        }
       }
     </style>
     <page-layout heading="Welcome">
       <div slot="body">
-        <img src="../images/welcome.png" />
+        <img src="../images/welcome_1.png" />
+        <div class="features">
+          <atom-feature title="Add Your Data" button-title="Add Your Data" icon="icons:add" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."></atom-feature>
+          <atom-feature title="Curate Concepts" button-title="Curate Concepts" icon="icons:receipt" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."></atom-feature>
+          <atom-feature title="Improve Coverage" button-title="Improve Coverage" icon="editor:mode-edit" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."></atom-feature>
+          <atom-feature title="Settings" button-title="Settings" icon="icons:settings" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."></atom-feature>
+        </div>
       </div>
     </page-layout>
   </template>
