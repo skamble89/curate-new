@@ -1,0 +1,91 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/atom-google-sheet-adapter/atom-google-sheet-adapter.html">
+<link rel="import" href="../bower_components/atom-user-goals-visualization/atom-user-goals-visualization.html">
+
+<dom-module id="app-user-goals-visualization">
+    <template>
+        <style include="shared-styles">
+             :host {
+                display: block;
+                overflow: auto;
+                --page-layout-content-body: {
+                    padding: 0;
+                    margin: 0;
+                }
+            }
+
+             :host page-layout {
+                padding: 0;
+            }
+        </style>
+
+        <page-layout>
+            <div class="banner" slot="body">
+                <atom-google-sheet-adapter key="1qdvpG4azV_oumBey9I9VW0JloMVG3tzj2TD8vOKujvw"></atom-google-sheet-adapter>
+                <template is="dom-if" if="{{dataLoaded}}">
+                    <atom-user-goals-visualization></atom-user-goals-visualization>
+                </template>
+            </div>
+        </page-layout>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'app-user-goals-visualization',
+
+            properties: {
+                dataLoaded: {
+                    type: Boolean,
+                    value: false
+                }
+            },
+
+            attached: function () {
+                var that = this;
+                var adapter = this.querySelector('atom-google-sheet-adapter');
+                adapter.read('Settings')
+                    .then(function (settings) {
+                        adapter.read('Goals')
+                            .then(function (rows) {
+                                that.dataLoaded = true;
+                                setTimeout(function () {
+                                    var visualization = that.querySelector('atom-user-goals-visualization');
+
+                                    visualization.productName = settings[0].productname;
+                                    visualization.description = settings[0].description;
+                                    visualization.selectedVisualization = settings[0].defaultvisualization.toLowerCase();
+                                    visualization.set('goals', that._transform(settings, rows))
+                                }, 0);
+                            });
+                    });
+            },
+
+            _transform: function (settings, rows) {
+                var obj = { name: settings[0].productname },
+                    children = [];
+
+                for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i],
+                        user = children.find(function (e) { return e.name === row.user; }) || children.push({ name: row.user, children: [] }) && children[children.length - 1],
+                        goal = user.children.find(function (e) { return e.name === row.goal }) || user.children.push({ name: row.goal, children: [] }) && user.children[user.children.length - 1],
+                        task = goal.children.find(function (e) { return e.name === row.task }) || goal.children.push({ name: row.task, goodness: parseFloat(row.completion) }) && goal.children[goal.children.length - 1];
+                }
+
+                obj.children = children;
+                return obj;
+            }
+        });
+    </script>
+</dom-module>

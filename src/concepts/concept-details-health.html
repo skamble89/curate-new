@@ -36,9 +36,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <div>
             <mdb-metric-display-container>
-                <mdb-metric-display stat-value="0%" stat-description="of ideal health"></mdb-metric-display>
-                <mdb-metric-display stat-value="0%" stat-description="classification accuracy"></mdb-metric-display>
-                <mdb-metric-display stat-value="56" stat-description="more examples needed"></mdb-metric-display>
+                <mdb-metric-display stat-value="0%" stat-description="Classification Accuracy"></mdb-metric-display>
+                <mdb-metric-display stat-value="0%" stat-description="Predicted Columns"></mdb-metric-display>
+                <mdb-metric-display stat-value="56" stat-description="Confirmed Columns"></mdb-metric-display>
             </mdb-metric-display-container>
             <img src="../../images/health.png" />
             <atom-table items="{{items}}">
@@ -85,11 +85,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         efficacy: 'Health Improved 02 classification accuracy reduced by 3%'
                     }, {
                         lastActionTaken: '3 synonyms added',
-                        sufficientTimeElapsed: 'No',
-                        efficacy: 'Too early to tell'
+                        sufficientTimeElapsed: 'Yes',
+                        efficacy: 'Health Improved 04 classification accuracy reduced by 5%'
                     }, {
                         lastActionTaken: '3 patterns removed',
-                        sufficientTimeElapsed: 'No',
+                        sufficientTimeElapsed: 'No (4 Hrs 55 Mins more)',
                         efficacy: 'Too early to tell'
                     }]
                 }

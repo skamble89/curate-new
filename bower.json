@@ -31,6 +31,8 @@
     "mdb-example-values": "git://github.com/makedatabetter-dev/mdb-example-values.git",
     "atom-table": "git://github.com/makedatabetter-dev/atom-table.git",
     "atom-feedback": "git://github.com/makedatabetter-dev/atom-feedback.git",
+    "atom-google-sheet-adapter": "git://github.com/makedatabetter-dev/atom-google-sheet-adapter.git",
+    "atom-user-goals-visualization": "git://github.com/makedatabetter-dev/atom-user-goals-visualization.git",
     "iron-ajax": "PolymerElements/iron-ajax#^1.4.4",
     "google-sheets": "GoogleWebComponents/google-sheets#^1.0.6",
     "paper-button": "PolymerElements/paper-button#^2.0.0",

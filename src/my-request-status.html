@@ -11,6 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/atom-google-sheet-adapter/atom-google-sheet-adapter.html">
+<link rel="import" href="../bower_components/atom-table/atom-table.html">
 
 <dom-module id="request-status">
   <template>
@@ -18,11 +20,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host {
         display: block;
         padding: 10px;
+
+        --atom-table: {
+          @apply(--app-table);
+          height: 500px;
+        }
       }
     </style>
 
     <page-layout heading="Requests & Status">
       <div class="banner" slot="body">
+        <atom-google-sheet-adapter key="1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"></atom-google-sheet-adapter>
+        <template is="dom-if" if="{{dataLoaded}}">
+          <atom-table items="{{items}}">
+
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="application">Application</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.application}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="database">Database</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.database}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="schema">Schema</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.schema}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="table">Table</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.table}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="column">Column</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.column}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="status">Status</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.status}}
+              </template>
+            </vaadin-grid-column>
+
+          </atom-table>
+        </template>
+
       </div>
     </page-layout>
   </template>
@@ -30,6 +93,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     Polymer({
       is: 'request-status',
+
+      properties: {
+        dataLoaded: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      attached: function () {
+        var that = this;
+        var adapter = this.querySelector('atom-google-sheet-adapter');
+        adapter.read('mdb-data')
+          .then(function (rows) {
+
+            that.dataLoaded = true;
+            setTimeout(function () {
+              var table = that.querySelector('atom-table');
+
+              table.set('items', that._transform(rows))
+            }, 0);
+          });
+      },
+
+      _transform: function (rows) {
+        var data = [];
+        var statuses = ['Pending for review', 'Accepted as concept', 'Rejected'];
+        var columns = ['id', 'firstname', 'lastname', 'age', 'email', 'gender', 'ipaddress', 'street', 'city', 'major'];
+
+        for (var i = 0; i < rows.length; i++) {
+          data.push({
+            application: rows[i].application,
+            database: rows[i].database,
+            schema: rows[i].schema,
+            table: rows[i].table,
+            column: columns[parseInt(Math.random() * 10)],
+            status: statuses[parseInt(Math.random() * 3)]
+          });
+        }
+
+        return data;
+      }
     });
   </script>
 </dom-module>
