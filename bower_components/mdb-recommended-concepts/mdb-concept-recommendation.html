@@ -20,8 +20,10 @@
             }
 
              :host #recommendationContainer #property {
-                width: 25%;
-                word-wrap: break-word;
+                width: 20%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
                 position: absolute;
                 top: 50%;
                 transform: translate(0, -50%);
@@ -55,7 +57,7 @@
             }
         </style>
         <div id="recommendationContainer">
-            <span id="property">[[property]]</span>
+            <span id="property" title="[[property]]">[[property]]</span>
             <mdb-radio-list size="small" selected="{{recommended}}">
                 <paper-radio-button name="yes">YES</paper-radio-button>
                 <paper-radio-button name="no">NO</paper-radio-button>

@@ -1,5 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../vaadin-grid/vaadin-grid.html">
 <link rel="import" href="../vaadin-grid/vaadin-grid-sorter.html">
 <link rel="import" href="../mdb-title/mdb-title.html">
@@ -38,10 +40,10 @@ Custom property | Description | Default
         --vaadin-grid-header-cell: {
           @apply(--mdb-coverage-table-header-cell);
         }
-        --vaadin-grid-body-cell: {          
+        --vaadin-grid-body-cell: {
           @apply(--mdb-coverage-table-body-cell);
         }
-        --vaadin-grid-body-row-odd-cell: {          
+        --vaadin-grid-body-row-odd-cell: {
           @apply(--mdb-coverage-table-odd-row-cell);
         }
       }
@@ -88,8 +90,38 @@ Custom property | Description | Default
        :host .selected {
         background-color: #f3f6fb;
       }
+
+       :host .title-row {
+        display: flex;
+        justify-content: space-between;
+      }
+
+       :host .indicator-icon {
+        display: inline-block;
+        background-color: #aaa;
+        height: 13px;
+        width: 13px;
+        vertical-align: middle;
+        margin-right: 5px;
+        border-radius: 50%;
+      }
+
+       :host .indicator-icon.orange {
+        background-color: orange;
+      }
+
+       :host iron-icon {
+        color: #aaa;
+      }
     </style>
-    <mdb-title help-text="{{helpText}}" level="2">{{titleText}}</mdb-title>
+    <div class="title-row">
+      <mdb-title help-text="{{helpText}}" level="2">{{titleText}}</mdb-title>
+      <div class="title-row-icons">
+        <div class="indicator-icon"></div>
+        <div class="indicator-icon orange"></div>
+        <iron-icon icon="icons:lock-open"></iron-icon>
+      </div>
+    </div>
     <div class="table-options">
       <div class="column-options">
         Show Columns

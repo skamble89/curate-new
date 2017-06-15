@@ -50,13 +50,38 @@ Custom property | Description | Default
        :host #search-box {
         margin-top: var(--standard-padding, 20px);
       }
+
+       :host .no-recommended-concepts {
+        background-color: #fcfdff;
+        height: 100px;
+        border: 1px solid #e1e6ed;
+        position: relative;
+        margin-top: var(--standard-padding, 20px);
+      }
+
+       :host .no-recommended-concepts p {
+        font-size: 1em;
+        font-weight: 400;
+        margin: 0;
+        text-align: center;
+        padding: var(--standard-padding, 20px)
+      }
     </style>
-    <div id="recommendation-list">
-      <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
-      <template is="dom-repeat" items="[[recommendations]]">
-        <mdb-concept-recommendation property="[[item.property]]" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
-      </template>
-    </div>
+    <template is="dom-if" if="[[recommendations.length]]">
+      <div id="recommendation-list">
+        <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
+        <template is="dom-repeat" items="[[recommendations]]">
+          <mdb-concept-recommendation property="[[item.property]]" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
+        </template>
+      </div>
+    </template>
+    <template is="dom-if" if="[[!recommendations.length]]">
+      <div class="no-recommended-concepts">
+        <p>Sorry, we couldn't find any recommended concepts. If you're looking for something particular, please try searching
+          below.
+        </p>
+      </div>
+    </template>
     <div id="search-box">
       <mdb-search-box placeholder="Search for more concepts"></mdb-search-box>
     </div>

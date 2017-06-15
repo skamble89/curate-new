@@ -8,6 +8,7 @@
 <link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
 <link rel="import" href="../mdb-title/mdb-title.html">
 <link rel="import" href="../mdb-simple-list/mdb-simple-list.html">
+<link rel="import" href="../mdb-search-box/mdb-search-box.html">
 
 <!--
 `mdb-dimension-finder`
@@ -33,45 +34,16 @@ Custom property | Description | Default
     <style>
        :host {
         display: inline-block;
-        font-size: 14px;
-        --paper-input-container-color: #bbb;
-        --paper-input-container-focus-color: #bbb;
-        --paper-input-container-underline: {
-          color: transparent;
-          height: 0;
-          border: 0;
-        }
-        --paper-input-container-underline-focus: {
-          color: transparent;
-          height: 0;
-          border: 0;
-        }
-        --paper-input-container-underline-disabled: {
-          color: transparent;
-          height: 0;
-          border: 0;
-        }
-        --paper-input-container: {
+        --mdb-search-box-container: {
           padding-bottom: 0;
-          padding-top: var(--standard-padding, 20px);
-          padding-left: var(--standard-padding, 20px);
-          padding-right: var(--standard-padding, 20px);
-          border: 0;
+          margin: var(--standard-padding, 20px);
           @apply(--mdb-dimension-finder-searchbox-container);
         }
-        --paper-input-container-input: {
-          border: 1px solid #e8edf1;
-          padding: 5px;
-          width: 95%;
+        --mdb-search-box: {
           font-size: 1em;
           @apply(--mdb-dimension-finder-searchbox);
         }
-        --paper-font-caption: {
-          display: none;
-        }
         --mdb-title: {
-          /*font-family: Roboto;
-          color: #9a9a9a;*/
           font-weight: 400;
         }
         --mdb-list-item: {
@@ -79,7 +51,7 @@ Custom property | Description | Default
           padding-left: var(--standard-padding, 20px);
           padding-right: var(--standard-padding, 20px);
           @apply(--mdb-dimension-finder-list-item);
-        }        
+        }
         --mdb-simple-list-empty: {
           margin-top: var(--standard-padding, 20px);
           margin-left: var(--standard-padding, 20px);
@@ -91,9 +63,52 @@ Custom property | Description | Default
         }
       }
 
+       :host paper-item .icon {
+        display: inline-block;
+        width: 1.5em;
+      }
+
+       :host paper-item iron-icon.arrow {
+        display: none;
+      }
+
+       :host paper-item .recommendation {
+        display: inline-block;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+
+       :host paper-item[aria-selected="true"] iron-icon.arrow {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        color: #fff;
+      }
+
+       :host .db-entities .item-name {
+        max-width: 199px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+       :host iron-icon {
+        width: 15px;
+        height: 15px;
+      }
+
+       :host .face {
+        padding-right: 3px;
+      }
+
        :host .dimension-finder {
         border: 1px solid #dee7ec;
         border-top: 0;
+        overflow: auto;
       }
 
        :host .dimension-finder mdb-simple-list {
@@ -125,14 +140,33 @@ Custom property | Description | Default
         <paper-checkbox checked="{{showAllDimensions}}">ALL</paper-checkbox>
       </template>
     </div>
-    <mdb-radio-list size="small" selected="{{sort}}">
+
+    <mdb-radio-list size="small" selected="{{sortBy}}">
       <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
       <paper-radio-button name="recommendation">BY RECOMMENDATION</paper-radio-button>
     </mdb-radio-list>
     <div class="dimension-finder">
-      <paper-input placeholder="Search for [[_toLowerCase(dimension)]] name" value="{{filter}}"></paper-input>
-      <mdb-simple-list height="{{height}}" items="{{items}}" empty-message="{{emptyMessage}}">
-        <content select="template"></content>
+      <mdb-search-box placeholder="Search for [[_toLowerCase(dimension)]] name" search-path="name" source="{{items}}" search-results="{{_searchResults}}"></mdb-search-box>
+      <mdb-simple-list height="{{height}}" items="{{_searchResults}}" empty-message="{{emptyMessage}}">
+        <template>
+          <paper-item>
+            <span class="bulb icon">
+                <template is="dom-if" if="{{item.systemRecommended}}">
+                    <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
+                </template>
+            </span>
+            <span class="face icon">
+                <template is="dom-if" if="{{item.humanVerified}}">
+                    <iron-icon icon="icons:face"></iron-icon>
+                </template>
+            </span>
+            <span class="item-name" title="{{item.name}}">{{item.name}}</span>
+            <template is="dom-if" if="{{item.recommendation}}">
+              <span class="recommendation">{{item.recommendation}}%</span>
+            </template>
+            <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+          </paper-item>
+        </template>
       </mdb-simple-list>
     </div>
   </template>
@@ -143,11 +177,6 @@ Custom property | Description | Default
       is: 'mdb-dimension-finder',
 
       properties: {
-        name: {
-          type: String,
-          value: 'mdb-dimension-finder',
-        },
-
         //Type of dimension
         dimension: {
           type: String
@@ -168,28 +197,19 @@ Custom property | Description | Default
           value: 320
         },
 
-        _items: {
+        items: {
+          type: Array,
+          value: [],
+          notify: true,
+          observer: '_itemsChanged'
+        },
+
+        _searchResults: {
           type: Array,
           value: []
         },
 
-        items: {
-          type: Array,
-          value: [],
-          notify: true
-        },
-
-        searchProperty: {
-          type: String,
-          value: 'name'
-        },
-
-        filter: {
-          type: String,
-          observer: '_searchDimension'
-        },
-
-        sort: {
+        sortBy: {
           type: String,
           value: 'recommendation',
           observer: '_sortDimension'
@@ -210,11 +230,6 @@ Custom property | Description | Default
         emptyMessage: String
       },
 
-      ready: function () {
-        this.set('_items', this.items.slice());
-        this._isReady = true;
-      },
-
       attached: function () {
         var that = this;
         var list = this.querySelector('mdb-simple-list');
@@ -225,23 +240,25 @@ Custom property | Description | Default
         }
       },
 
+      _itemsChanged: function () {
+        this._sortDimension();
+      },
+
       _toLowerCase: function (str) {
         return str.toLowerCase();
       },
 
-      _searchDimension: function () {
-        var that = this;
-        if (this._isReady) {
-          this.set('items', this._items
-            .filter(function (e) {
-              return (typeof e === typeof {} ? e[that.searchProperty] : e).toLowerCase().indexOf(that.filter.toLowerCase()) > -1;
-            }));
-        }
-      },
-
       _sortDimension: function () {
-        //TODO: change sorting logic
-        return this.items;
+        var sortBy = this.sortBy;
+        var sorted = sortBy === 'recommendation' ? this.items.sort(function (a, b) {
+          return (b.recommendation || 0) - (a.recommendation || 0);
+        }) : this.items.sort(function (a, b) {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        });
+
+        this.set('_searchResults', JSON.parse(JSON.stringify(sorted)));
       }
     });
   </script>
