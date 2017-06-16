@@ -40,7 +40,7 @@ Custom property | Description | Default
         border-bottom: 1px solid #f1f5f7;
       }
 
-       :host #recommendation-list {
+       :host .recommendation-list {
         background-color: #fcfdff;
         border-top: 1px solid #f1f5f7;
         border-left: 1px solid #f1f5f7;
@@ -53,7 +53,6 @@ Custom property | Description | Default
 
        :host .no-recommended-concepts {
         background-color: #fcfdff;
-        height: 100px;
         border: 1px solid #e1e6ed;
         position: relative;
         margin-top: var(--standard-padding, 20px);
@@ -66,9 +65,13 @@ Custom property | Description | Default
         text-align: center;
         padding: var(--standard-padding, 20px)
       }
+
+       :host #search-box .recommendation-list {
+        margin-top: var(--standard-padding, 20px);
+      }
     </style>
     <template is="dom-if" if="[[recommendations.length]]">
-      <div id="recommendation-list">
+      <div class="recommendation-list">
         <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
         <template is="dom-repeat" items="[[recommendations]]">
           <mdb-concept-recommendation property="[[item.property]]" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
@@ -83,7 +86,22 @@ Custom property | Description | Default
       </div>
     </template>
     <div id="search-box">
-      <mdb-search-box placeholder="Search for more concepts"></mdb-search-box>
+      <mdb-search-box placeholder="Search for more concepts" filter="{{searchQuery}}" source="{{recommendations}}" search-results="{{_searchResults}}"
+        search-path="property"></mdb-search-box>
+      <template is="dom-if" if="{{searchQuery}}">
+        <template is="dom-if" if="[[_searchResults.length]]">
+          <div class="recommendation-list">
+            <template is="dom-repeat" items="[[_searchResults]]">
+              <mdb-concept-recommendation property="[[item.property]]" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
+            </template>
+          </div>
+        </template>
+        <template is="dom-if" if="[[!_searchResults.length]]">
+          <div class="no-recommended-concepts">
+            <p>Sorry, we couldn't find any recommended concepts.</p>
+          </div>
+        </template>
+      </template>
     </div>
   </template>
 
@@ -93,15 +111,21 @@ Custom property | Description | Default
       is: 'mdb-recommended-concepts',
 
       properties: {
-        name: {
-          type: String,
-          value: 'mdb-recommended-concepts',
-        },
-
         recommendations: {
           type: Array,
           value: [],
           observer: '_recommendationsChanged'
+        },
+
+        searchQuery: {
+          type: String,
+          value: '',
+          observer: '_searchQueryChanged'
+        },
+
+        _searchResults: {
+          type: Array,
+          value: []
         }
       },
 
@@ -119,6 +143,10 @@ Custom property | Description | Default
             }
           });
         }
+      },
+
+      _searchQueryChanged: function () {
+        this.set('_searchResults', JSON.parse(JSON.stringify(this.recommendations)))
       }
 
     });
