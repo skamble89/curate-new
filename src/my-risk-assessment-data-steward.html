@@ -12,6 +12,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="page-layout.html">
 <link rel="import" href="../bower_components/iron-icons/device-icons.html">
 <link rel="import" href="../bower_components/mdb-status-chip/mdb-status-chip.html">
+<link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
+<link rel="import" href="../bower_components/atom-table/atom-table.html">
 
 <dom-module id="risk-assessment-data-steward">
     <template>
@@ -35,6 +37,132 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <mdb-status-chip icon="device:access-time" status-label="Last Updated" status-value="20 mins ago"></mdb-status-chip>
             </div>
             <div slot="body">
+                <div class="db-entities">
+                    <!-- Tables -->
+                    <mdb-dimension-finder class="lobs" all-dimensions-allowed dimension="LOB" items="{{lobs}}" help-text="List of LOBs" selected-dimension="{{selectedTable}}">
+                    </mdb-dimension-finder>
+
+                    <!-- Applications -->
+                    <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
+                        selected-dimension="{{selectedApplication}}">
+                    </mdb-dimension-finder>
+
+                    <!-- Databases -->
+                    <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
+                        selected-dimension="{{selectedDatabase}}">
+                    </mdb-dimension-finder>
+
+                    <!-- Schemas -->
+                    <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
+                        selected-dimension="{{selectedSchema}}">
+                    </mdb-dimension-finder>
+                </div>
+                <!--<atom-table items="{{items}}">
+                    <vaadin-grid-column>
+                        <template class="header">
+                            RELEVANCE
+                        </template>
+                        <template>
+                            {{item.relevance}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="30px">
+                        <template class="header">
+                            SENSITIVITY
+                        </template>
+                        <template>
+                            {{item.sensitivity}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="100px">
+                        <template class="header">
+                            DISCOVERY
+                        </template>
+                        <template>
+                            {{item.discovery}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="30px">
+                        <template class="header">
+                            PROFILING
+                        </template>
+                        <template>
+                            {{item.profiling}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="30px">
+                        <template class="header">
+                            CLASSIFICATION
+                        </template>
+                        <template>
+                            {{item.classification}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">
+                            PII DOMAIN DETECTION
+                        </template>
+                        <template>
+                            {{item.piiDomainDetection}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">
+                            GDPR DOMAIN DETECTION
+                        </template>
+                        <template>
+                            {{item.gdprDomainDetection}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">
+                            EU STATE PERSON DETECTION
+                        </template>
+                        <template>
+                            {{item.euStatePersonDetection}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">
+                            VERIFIED BY HUMANS
+                        </template>
+                        <template>
+                            {{item.humanVerified}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">
+                            GDPR METADATA INDEXING
+                        </template>
+                        <template>
+                            {{item.gdprMetadataIndexing}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">
+                            GDPR DATA INDEXING
+                        </template>
+                        <template>
+                            {{item.gdprDataIndexing}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column>
+                        <template class="header">
+                            GDPR DATA LINEAGE
+                        </template>
+                        <template>
+                            {{item.gdprDataLineage}}
+                        </template>
+                    </vaadin-grid-column>
+                    <vaadin-grid-column width="300px">
+                        <template class="header">
+                            GDPR DATA MONITORING
+                        </template>
+                        <template>
+                            {{item.gdprDataMonitoring}}
+                        </template>
+                    </vaadin-grid-column>
+                </atom-table>-->
                 <img src="../images/report-data-steward.png" />
             </div>
         </page-layout>
