@@ -5,7 +5,8 @@
     "polymer": "Polymer/polymer#^1.4.0",
     "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
     "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git",
-    "vaadin-grid": "vaadin/vaadin-grid#^2.0.1"
+    "vaadin-grid": "vaadin/vaadin-grid#^2.0.1",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
@@ -14,12 +15,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/mdb-coverage-table",
-  "version": "0.1.3",
-  "_release": "0.1.3",
+  "version": "0.1.4",
+  "_release": "0.1.4",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.3",
-    "commit": "e1557974aa7206bbe9e1b439e2b300958838744c"
+    "tag": "v0.1.4",
+    "commit": "98cfb0d8f03c59ba32f1fee8e0689d3d22a1ae59"
   },
   "_source": "git://github.com/makedatabetter-dev/mdb-coverage-table.git",
   "_target": "*",

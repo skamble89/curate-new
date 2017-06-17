@@ -11,12 +11,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/atom-feature",
-  "version": "0.0.1",
-  "_release": "0.0.1",
+  "version": "0.0.2",
+  "_release": "0.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.1",
-    "commit": "97ac19e546eb288aeabceb21829b00e16bb8748d"
+    "tag": "v0.0.2",
+    "commit": "4c3e7e801ef88ecc706333d5808666f6596c9ad3"
   },
   "_source": "git://github.com/makedatabetter-dev/atom-feature.git",
   "_target": "*",

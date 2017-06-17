@@ -11,6 +11,7 @@ The following custom properties and mixins are also available for styling:
 Custom property | Description | Default
 ----------------|-------------|----------
 `--atom-feature-icon` | Mixin applied to feature icon | `{}`
+`--atom-feature-title` | Mixin applied to feature title | `{}`
 `--atom-feature-description` | Mixin applied to feature description | `{}`
 `--atom-feature-button` | Mixin applied to feature action button | `{}`
 
@@ -28,6 +29,10 @@ Custom property | Description | Default
 
        :host iron-icon {
         @apply(--atom-feature-icon);
+      }
+
+       :host h3 {
+        @apply(--atom-feature-title);
       }
 
        :host p {
@@ -73,7 +78,7 @@ Custom property | Description | Default
         }
       },
 
-      _handleClick: function () { 
+      _handleClick: function () {
         this.fire('execute-action')
       }
 

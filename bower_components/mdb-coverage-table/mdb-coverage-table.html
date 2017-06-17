@@ -113,6 +113,19 @@ Custom property | Description | Default
        :host iron-icon {
         color: #aaa;
       }
+
+       :host .column-status {
+        padding: 5px;
+      }
+
+       :host .column-status .flag {
+        cursor: pointer;
+        float: right;
+      }
+
+       :host .column-status .flagged {
+        color: orange;
+      }
     </style>
     <div class="title-row">
       <mdb-title help-text="{{helpText}}" level="2">{{titleText}}</mdb-title>
@@ -144,6 +157,17 @@ Custom property | Description | Default
       <template is="dom-repeat" items="{{columns}}" as="column">
         <vaadin-grid-column width="[[column.width]]px">
           <template class="header">
+            <div class="column-status">
+              <template is="dom-if" if="[[column.identified]]">
+                <iron-icon icon="icons:check"></iron-icon>
+              </template>
+              <template is="dom-if" if="[[!column.flagged]]">
+                <iron-icon icon="icons:flag" class="flag" on-tap="_flagColumn" title="Flag [[column.name]]"></iron-icon>
+              </template>
+              <template is="dom-if" if="[[column.flagged]]">
+                <iron-icon icon="icons:flag" class="flag flagged" title="Flag [[column.name]]"></iron-icon>
+              </template>
+            </div>
             <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.property)]] mdb-cell" path="[[column.property]]">
               [[column.name]]
             </mdb-vaadin-grid-column-selector>
@@ -204,6 +228,10 @@ Custom property | Description | Default
 
       _isSelected: function (selected, current) {
         return (selected === current ? 'selected' : '');
+      },
+
+      _flagColumn: function () { 
+        
       }
 
     });
