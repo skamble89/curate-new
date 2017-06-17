@@ -355,7 +355,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           margin-top: 0;
           margin-bottom: 20px;
         }
-        --mdb-coverage-table-header-cell: {
+        --mdb-coverage-table-header-cell: {          
+          @apply(--app-table-header-cell);
           border-top: 0;
         }
         --mdb-coverage-table-options: {
@@ -441,14 +442,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="[[!loadingInProgress]]">
               <template is="dom-if" if="[[tableColumns.length]]">
                 <div class="concept-identification">
-                  <mdb-coverage-table selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Coverage table" columns="[[tableColumns]]"
+                  <mdb-coverage-table lobs="[[lobs]]" selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Coverage table" columns="[[tableColumns]]"
                     items="[[tableData]]"></mdb-coverage-table>
 
                   <div class="recommended-concepts">
                     <!-- Recommended concepts -->
-                    <mdb-concept-recommendation property="[[selectedConcept]]" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
+                    <mdb-concept-recommendation property="[[selectedConcept]]" column="[[selectedColumn]]" recommendation-factor="{{selectedConceptRecommendation}}"
+                      recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
                     <template is="dom-if" if="[[!isConceptIdentified]]">
-                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}" column="{{selectedColumn}}" search-source="{{recommendedConceptsSearchSource}}"></mdb-recommended-concepts>
+                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}" column="[[selectedColumn]]" search-source="[[recommendedConceptsSearchSource]]"></mdb-recommended-concepts>
                     </template>
                     <template is="dom-if" if="[[isConceptIdentified]]">
                       <div class="concept-identified">
@@ -689,12 +691,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if (that.selectedConcept === e.detail.property) {
             that.selectedConceptRecommendation = e.detail.recommendationFactor;
             that.isSelectedConceptRecommended = e.detail.recommended;
+          } else {
+            //Update if an item from the list is changed
+            var updatedConcept = that.recommendedConcepts.find(function (i) { return i.property === e.detail.property; });
+            if (updatedConcept) updatedConcept.recommendationFactor = e.detail.recommendationFactor;
           }
 
-          //Update if an item from the list is changed
-          var updatedConcept = that.recommendedConcepts.find(function (i) { return i.property === e.detail.property; });
-          if (updatedConcept) updatedConcept.recommendationFactor = e.detail.recommendationFactor;
-
+          if (e.detail.column === that.selectedColumn) that._updateColumnIdentification(that.selectedColumn, that.isConceptIdentified);
         });
       },
 
@@ -837,9 +840,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.selectedColumn) {
           var that = this;
           this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
-            .then(function (recommendations) {              
+            .then(function (recommendations) {
               var r = recommendations[0];
-              var rf = r.recommendationFactor + 3;
+              var rf = (r ? r.recommendationFactor : 0) + 3;
               //Initial values for selected concept recommendation
               that.isSelectedConceptRecommended = 'maybe';
               that.selectedConceptRecommendation = rf < 100 ? rf : 99;
@@ -876,6 +879,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _showTable: function () {
         return this.selectedTable && !this.loadingInProgress && this.tableColumns.length > 0;
+      },
+
+      _updateColumnIdentification: function (column, identified) {
+        var item = this.tableColumns.find(function (e) { return e.name === column; }),
+          index = this.tableColumns.indexOf(item);
+
+        if (index !== -1) {
+          var updated = JSON.parse(JSON.stringify(item))
+
+          updated.identified = identified;
+          this.splice('tableColumns', index, 1, updated);
+        }
       }
     });
   </script>

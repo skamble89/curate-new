@@ -157,7 +157,7 @@
             getRecommendedConcepts: function (lob, concept, application, db, schema, table, column) {
                 var that = this;
                 return new Promise(function (resolve, reject) {
-                    resolve(that.selectedTableData.recommendedConcepts[column].map(function (e) {
+                    resolve((that.selectedTableData.recommendedConcepts[column] || []).map(function (e) {
                         //Create a copy of the object
                         return JSON.parse(JSON.stringify(e));
                     }).sort(function (a, b) {

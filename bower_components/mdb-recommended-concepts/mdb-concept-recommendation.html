@@ -82,6 +82,10 @@
                     type: String
                 },
 
+                column: {
+                    type: String
+                },
+
                 _initialRecommendationFactor: {
                     type: Number,
                     value: 0,
@@ -121,6 +125,7 @@
 
                 this.fire('recommendation-changed', {
                     property: this.property,
+                    column: this.column,
                     recommended: this.recommended,
                     recommendationFactor: this.recommendationFactor
                 });

@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../vaadin-grid/vaadin-grid.html">
@@ -78,12 +79,12 @@ Custom property | Description | Default
 
        :host mdb-vaadin-grid-column-selector {
         padding: 8px;
+        box-sizing: border-box;
       }
 
        :host .mdb-cell {
         padding: 8px;
         width: 100%;
-        height: 100%;
         @apply(--mdb-coverage-table-cell);
       }
 
@@ -116,11 +117,16 @@ Custom property | Description | Default
 
        :host .column-status {
         padding: 5px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+       :host .column-status>* {
+        flex: 1;
       }
 
        :host .column-status .flag {
         cursor: pointer;
-        float: right;
       }
 
        :host .column-status .flagged {
@@ -157,19 +163,26 @@ Custom property | Description | Default
       <template is="dom-repeat" items="{{columns}}" as="column">
         <vaadin-grid-column width="[[column.width]]px">
           <template class="header">
-            <div class="column-status">
-              <template is="dom-if" if="[[column.identified]]">
-                <iron-icon icon="icons:check"></iron-icon>
-              </template>
-              <template is="dom-if" if="[[!column.flagged]]">
-                <iron-icon icon="icons:flag" class="flag" on-tap="_flagColumn" title="Flag [[column.name]]"></iron-icon>
-              </template>
-              <template is="dom-if" if="[[column.flagged]]">
-                <iron-icon icon="icons:flag" class="flag flagged" title="Flag [[column.name]]"></iron-icon>
-              </template>
-            </div>
             <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.property)]] mdb-cell" path="[[column.property]]">
-              [[column.name]]
+              <div class="column-status">
+                <span>
+                  <template is="dom-if" if="[[column.identified]]">
+                    <iron-icon icon="icons:check"></iron-icon>
+                  </template>
+                </span>
+                <span>
+                  <template is="dom-if" if="[[!column.flagged]]">
+                    <iron-icon icon="icons:flag" class="flag" on-tap="_flagColumn" title="Flag [[column.name]]"></iron-icon>
+                  </template>
+                  
+                  <template is="dom-if" if="[[column.flagged]]">
+                    <iron-icon icon="icons:flag" class="flag flagged" title="Flag [[column.name]]"></iron-icon>
+                  </template>
+                </span>
+              </div>
+              <div>
+                [[column.name]]
+              </div>
             </mdb-vaadin-grid-column-selector>
           </template>
           <template>
@@ -230,8 +243,8 @@ Custom property | Description | Default
         return (selected === current ? 'selected' : '');
       },
 
-      _flagColumn: function () { 
-        
+      _flagColumn: function (e) {
+
       }
 
     });
