@@ -355,7 +355,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           margin-top: 0;
           margin-bottom: 20px;
         }
-        --mdb-coverage-table-header-cell: {          
+        --mdb-coverage-table-header-cell: {
           @apply(--app-table-header-cell);
           border-top: 0;
         }
@@ -392,7 +392,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <page-layout heading="Concept Coverage" help-text="Concept Coverage">
+    <page-layout>
+      <div slot="header">
+        <mdb-title help-text="Concept Coverage">Concept Coverage</mdb-title>
+      </div>
       <div slot="body">
         <mdb-metric-display-container>
           <mdb-metric-display stat-value="{{coverage}}" stat-description="Coverage across 1 application"></mdb-metric-display>
@@ -442,8 +445,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="[[!loadingInProgress]]">
               <template is="dom-if" if="[[tableColumns.length]]">
                 <div class="concept-identification">
-                  <mdb-coverage-table lobs="[[lobs]]" selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Coverage table" columns="[[tableColumns]]"
-                    items="[[tableData]]"></mdb-coverage-table>
+                  <mdb-coverage-table lobs="[[lobs]]" selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Coverage table"
+                    columns="[[tableColumns]]" items="[[tableData]]"></mdb-coverage-table>
 
                   <div class="recommended-concepts">
                     <!-- Recommended concepts -->

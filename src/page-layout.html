@@ -39,21 +39,15 @@ Example:
                 @apply(--layout-flex);
                 @apply(--page-layout-content-body);
             }
-        </style>
-        <mdb-title help-text="[[helpText]]">[[heading]]</mdb-title>
+        </style>        
+        <slot name="header"></slot>
         <div class="content-body">
             <slot name="body"></slot>
         </div>
     </template>
     <script>
         Polymer({
-            is: 'page-layout',
-
-            properties: {
-                heading: String,
-
-                helpText: String
-            }
+            is: 'page-layout'
         });
     </script>
 </dom-module>

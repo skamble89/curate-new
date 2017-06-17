@@ -10,6 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../bower_components/mdb-status-chip/mdb-status-chip.html">
+
 <dom-module id="risk-assessment-data-steward">
     <template>
         <style include="shared-styles">
@@ -17,11 +20,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 height: 100%;
             }
 
+             :host [slot="header"] {
+                display: flex;
+                justify-content: space-between;
+            }
+
              :host img {
                 width: 100%;
             }
         </style>
-        <page-layout heading="GDPR Risk Assessment">
+        <page-layout>
+            <div slot="header">
+                <mdb-title>GDPR Risk Assessment</mdb-title>
+                <mdb-status-chip icon="device:access-time" status-label="Last Updated" status-value="20 mins ago"></mdb-status-chip>
+            </div>
             <div slot="body">
                 <img src="../images/report-data-steward.png" />
             </div>
