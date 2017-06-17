@@ -22,6 +22,7 @@ Custom property | Description | Default
 `--mdb-dimension-finder-header-container` | Mixin applied to dimension finder header container | `{}`
 `--mdb-dimension-finder-list` | Mixin applied to dimension finder list | `{}`
 `--mdb-dimension-finder-list-item` | Mixin applied to dimension finder list item | `{}`
+`--mdb-dimension-finder-list-item-text` | Mixin applied to dimension finder list item text | `{}`
 `--mdb-dimension-finder-radio-button` | Mixin applied to dimension finder sorting radio buttons | `{}`
 `--mdb-dimension-finder-searchbox-container` | Mixin applied to dimension finder searchbox container | `{}`
 `--mdb-dimension-finder-searchbox` | Mixin applied to dimension finder searchbox | `{}`
@@ -89,11 +90,12 @@ Custom property | Description | Default
         color: #fff;
       }
 
-       :host .db-entities .item-name {
+       :host .item-name {
         max-width: 199px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        @apply(--mdb-dimension-finder-list-item-text);
       }
 
        :host iron-icon {

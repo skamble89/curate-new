@@ -31,20 +31,19 @@ Custom property | Description | Default
         padding-top: 10px;
         padding-bottom: 10px;
         padding-left: 20px;
-        border-bottom: 1px solid #f1f5f7;
+        border: 1px solid #f1f5f7;
         height: 50px;
+        background-color: #fcfdff;
         @apply(--mdb-recommended-concepts-title);
       }
 
        :host mdb-concept-recommendation {
-        border-bottom: 1px solid #f1f5f7;
+        border: 1px solid #f1f5f7;
+        border-top: 0;
       }
 
        :host .recommendation-list {
         background-color: #fcfdff;
-        border-top: 1px solid #f1f5f7;
-        border-left: 1px solid #f1f5f7;
-        border-right: 1px solid #f1f5f7;
       }
 
        :host #search-box {
@@ -53,9 +52,9 @@ Custom property | Description | Default
 
        :host .no-recommended-concepts {
         background-color: #fcfdff;
-        border: 1px solid #e1e6ed;
+        border: 1px solid #f1f5f7;
+        border-top: 0;
         position: relative;
-        margin-top: var(--standard-padding, 20px);
       }
 
        :host .no-recommended-concepts p {
@@ -66,13 +65,23 @@ Custom property | Description | Default
         padding: var(--standard-padding, 20px)
       }
 
+       :host #search-box .no-recommended-concepts {
+        margin-top: var(--standard-padding, 20px)
+      }
+
        :host #search-box .recommendation-list {
         margin-top: var(--standard-padding, 20px);
       }
+
+       :host #search-box mdb-concept-recommendation:first-child {
+        border-top: 1px solid #f1f5f7;
+      }
     </style>
+
+
+    <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts for {{column}} </mdb-title>
     <template is="dom-if" if="[[recommendations.length]]">
       <div class="recommendation-list">
-        <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
         <template is="dom-repeat" items="[[recommendations]]">
           <mdb-concept-recommendation property="[[item.property]]" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
         </template>
@@ -80,13 +89,15 @@ Custom property | Description | Default
     </template>
     <template is="dom-if" if="[[!recommendations.length]]">
       <div class="no-recommended-concepts">
-        <p>Sorry, we couldn't find any recommended concepts. If you're looking for something particular, please try searching
-          below.
+        <p>Sorry, we couldn't find any recommended concepts for {{column}}. If you're looking for something particular, please
+          try searching below.
         </p>
       </div>
     </template>
+
+
     <div id="search-box">
-      <mdb-search-box placeholder="Search for more concepts" filter="{{searchQuery}}" source="{{recommendations}}" search-results="{{_searchResults}}"
+      <mdb-search-box placeholder="Search for more concepts" filter="{{searchQuery}}" source="{{searchSource}}" search-results="{{_searchResults}}"
         search-path="property"></mdb-search-box>
       <template is="dom-if" if="{{searchQuery}}">
         <template is="dom-if" if="[[_searchResults.length]]">
@@ -111,6 +122,11 @@ Custom property | Description | Default
       is: 'mdb-recommended-concepts',
 
       properties: {
+        column: {
+          type: String,
+          value: ''
+        },
+
         recommendations: {
           type: Array,
           value: [],
@@ -121,6 +137,11 @@ Custom property | Description | Default
           type: String,
           value: '',
           observer: '_searchQueryChanged'
+        },
+
+        searchSource: {
+          type: Object,
+          value: {}
         },
 
         _searchResults: {

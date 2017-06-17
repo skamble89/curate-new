@@ -90,6 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
       /* Dimension finder */
+
        :host mdb-dimension-finder {
         font-size: 1em;
         --mdb-title: {
@@ -137,7 +138,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           margin: 20px;
         }
         --mdb-dimension-finder-searchbox: {
-          padding-left: 10px;          
+          padding-left: 10px;
         }
       }
 
@@ -166,6 +167,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-dimension-finder-radio-button: {
           padding-left: 12px;
           padding-right: 11px;
+        }
+        --mdb-dimension-finder-list-item-text: {
+          max-width: 145px;
         }
       }
 
@@ -208,6 +212,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-dimension-finder-radio-button: {
           padding-left: 7px;
           padding-right: 7px;
+        }
+        --mdb-dimension-finder-list-item-text: {
+          max-width: 125px;
         }
       }
 
@@ -415,7 +422,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <!-- Databases -->
             <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
-              selected-dimension="{{selectedDatabase}}">              
+              selected-dimension="{{selectedDatabase}}">
             </mdb-dimension-finder>
 
             <!-- Schemas -->
@@ -441,7 +448,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <!-- Recommended concepts -->
                     <mdb-concept-recommendation property="[[selectedConcept]]" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
                     <template is="dom-if" if="[[!isConceptIdentified]]">
-                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
+                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}" column="{{selectedColumn}}" search-source="{{recommendedConceptsSearchSource}}"></mdb-recommended-concepts>
                     </template>
                     <template is="dom-if" if="[[isConceptIdentified]]">
                       <div class="concept-identified">
@@ -604,6 +611,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Array,
           value: [],
           notify: true
+        },
+
+        recommendedConceptsSearchSource: {
+          type: Array,
+          value: []
         },
 
         isConceptIdentified: {
@@ -825,7 +837,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.selectedColumn) {
           var that = this;
           this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
-            .then(function (recommendations) {
+            .then(function (recommendations) {              
               var r = recommendations[0];
               var rf = r.recommendationFactor + 3;
               //Initial values for selected concept recommendation
@@ -833,6 +845,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               that.selectedConceptRecommendation = rf < 100 ? rf : 99;
 
               that.set('recommendedConcepts', recommendations);
+              that.set('recommendedConceptsSearchSource', that.concepts.map(function (e) { return { property: e, recommendationFactor: 50, recommended: 'maybe' } }));
             });
         }
       },
