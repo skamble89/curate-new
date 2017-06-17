@@ -86,13 +86,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
              :host .example-columns {
                 margin-top: var(--standard-padding, 20px);
-            }             
+            }
         </style>
 
         <div class="mode-selection">
-            <paper-checkbox class="pivot">
-                <mdb-title level="3" help-text="Use pivot to explore combinations of features by linking selection with others. For example, select a particular pattern to see possible synonyms and proximate domains within the set of columns having selected pattern.">Pivot</mdb-title>
-            </paper-checkbox>
+            <template is="dom-if" if="[[_isExploreMode(mode)]]">
+                <paper-checkbox class="pivot">
+                    <mdb-title level="3" help-text="Use pivot to explore combinations of features by linking selection with others. For example, select a particular pattern to see possible synonyms and proximate domains within the set of columns having selected pattern.">Pivot</mdb-title>
+                </paper-checkbox>
+            </template>
             <mdb-radio-list selected="{{mode}}">
                 <paper-radio-button name="explore">Explore</paper-radio-button>
                 <paper-radio-button name="define">Define</paper-radio-button>
@@ -242,6 +244,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         birthDt: 'Apr 26, 1916'
                     }]
                 }
+            },
+
+            _isExploreMode: function (mode) {
+                return mode === 'explore';
             }
         });
     </script>
