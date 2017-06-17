@@ -66,6 +66,7 @@ Custom property | Description | Default
       }
 
        :host #search-box .no-recommended-concepts {
+        border-top: 1px solid #f1f5f7;
         margin-top: var(--standard-padding, 20px)
       }
 
@@ -109,7 +110,7 @@ Custom property | Description | Default
         </template>
         <template is="dom-if" if="[[!_searchResults.length]]">
           <div class="no-recommended-concepts">
-            <p>Sorry, we couldn't find any recommended concepts.</p>
+            <p>Sorry, we couldn't find any recommended concepts matching "{{searchQuery}}".</p>
           </div>
         </template>
       </template>
