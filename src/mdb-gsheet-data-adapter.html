@@ -293,7 +293,11 @@
                             systemRecommended: item['gsx$sr_4']["$t"].toLowerCase() === 'y',
                             humanVerified: item['gsx$hv_4']["$t"].toLowerCase() === 'y',
                             recommendation: parseFloat(item['gsx$pc_4']["$t"]),
-                            mapping: item['gsx$tablemapping']['$t']
+                            mapping: item['gsx$tablemapping']['$t'],
+                            relevance: parseFloat(item['gsx$gr_4']['$t']) || 0,
+                            sensitivity: parseFloat(item['gsx$gs_4']['$t']) || 0,
+                            assessmentStage: parseFloat(item['gsx$as_4']['$t']) || 0,
+                            completion: parseFloat(item['gsx$sc_4']['$t']) || 0,
                         },
                     })
                 }

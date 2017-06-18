@@ -27,6 +27,77 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 justify-content: space-between;
             }
 
+             :host atom-table {
+                margin-top: var(--standard-padding, 20px);
+                --atom-table: {
+                    @apply(--app-table);
+                    height: 495px;
+                }
+                --atom-table-body-cell: {
+                    @apply(--app-table-body-cell);
+                    border: 0;
+                    padding: 0;
+                    font-size: 10px;
+                }
+                --atom-table-odd-row-cell: {
+                    @apply(--app-table-body-cell);
+                    border: 0;
+                    padding: 0;
+                    font-size: 10px;
+                }
+                --atom-table-header-cell: {
+                    @apply(--app-table-header-cell);
+                    border: 0;
+                    padding: 0;
+                    font-size: 9px;
+                }
+            }
+
+             :host .header-cell {
+                background-color: #e2e7eb;
+                margin: 1px;
+                padding: 14px 5px 14px 5px;
+                text-align: center;
+            }
+
+             :host .stage,
+             :host .cell {
+                background-color: #f2f7fd;
+                padding: 14px 1px 14px 1px;
+                margin: 1px;
+                height: 100%;
+                width: 100%;
+            }
+
+             :host .cell {
+                padding: 14px;
+            }
+
+             :host .stage.percent-lt-20 {
+                background-color: #8ae4fe;
+            }
+
+             :host .stage.percent-lt-40 {
+                background-color: #ffabb8;
+            }
+
+             :host .stage.percent-lt-60 {
+                background-color: #ffd9a8;
+            }
+
+             :host .stage.percent-lt-80 {
+                background-color: #a7ed8b;
+            }
+
+             :host .stage.percent-lt-100 {
+                background-color: #fef28c;
+            }
+
+             :host .stage.completed {
+                background-color: #fef28c;
+            }
+
+
              :host img {
                 width: 100%;
             }
@@ -57,113 +128,123 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         selected-dimension="{{selectedSchema}}">
                     </mdb-dimension-finder>
                 </div>
-                <!--<atom-table items="{{items}}">
-                    <vaadin-grid-column>
-                        <template class="header">
-                            RELEVANCE
-                        </template>
-                        <template>
-                            {{item.relevance}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column width="30px">
-                        <template class="header">
-                            SENSITIVITY
-                        </template>
-                        <template>
-                            {{item.sensitivity}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column width="100px">
-                        <template class="header">
-                            DISCOVERY
-                        </template>
-                        <template>
-                            {{item.discovery}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column width="30px">
-                        <template class="header">
-                            PROFILING
-                        </template>
-                        <template>
-                            {{item.profiling}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column width="30px">
-                        <template class="header">
-                            CLASSIFICATION
-                        </template>
-                        <template>
-                            {{item.classification}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column>
-                        <template class="header">
-                            PII DOMAIN DETECTION
-                        </template>
-                        <template>
-                            {{item.piiDomainDetection}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column>
-                        <template class="header">
-                            GDPR DOMAIN DETECTION
-                        </template>
-                        <template>
-                            {{item.gdprDomainDetection}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column>
-                        <template class="header">
-                            EU STATE PERSON DETECTION
-                        </template>
-                        <template>
-                            {{item.euStatePersonDetection}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column>
-                        <template class="header">
-                            VERIFIED BY HUMANS
-                        </template>
-                        <template>
-                            {{item.humanVerified}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column>
-                        <template class="header">
-                            GDPR METADATA INDEXING
-                        </template>
-                        <template>
-                            {{item.gdprMetadataIndexing}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column>
-                        <template class="header">
-                            GDPR DATA INDEXING
-                        </template>
-                        <template>
-                            {{item.gdprDataIndexing}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column>
-                        <template class="header">
-                            GDPR DATA LINEAGE
-                        </template>
-                        <template>
-                            {{item.gdprDataLineage}}
-                        </template>
-                    </vaadin-grid-column>
-                    <vaadin-grid-column width="300px">
-                        <template class="header">
-                            GDPR DATA MONITORING
-                        </template>
-                        <template>
-                            {{item.gdprDataMonitoring}}
-                        </template>
-                    </vaadin-grid-column>
-                </atom-table>-->
-                <img src="../images/report-data-steward.png" />
+                <template is="dom-if" if="{{tables.length}}">
+                    <atom-table id="table" items="[[tables]]">
+                        <vaadin-grid-column width="170px">
+                            <template class="header">
+                                <div class="header-cell">&nbsp;</div>
+                            </template>
+                            <template>
+                                <div class="cell">{{item.name}}</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">RELEVANCE</div>
+                            </template>
+                            <template>
+                                <div class="cell">{{item.relevance}}%</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">SENSITIVITY</div>
+                            </template>
+                            <template>
+                                <div class="cell">{{item.sensitivity}}%</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">DISCOVERY</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(1,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">PROFILING</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(2,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">CLASSIFICATION</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(3,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">PII DOMAIN DETECTION</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(4,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR DOMAIN DETECTION</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(5,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">EU STATE PERSON DETECTION</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(6,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">VERIFIED BY HUMANS</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(7,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR METADATA INDEXING</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(8,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR DATA INDEXING</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(9,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR DATA LINEAGE</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(10,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR DATA MONITORING</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(11,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                    </atom-table>
+                </template>
+                <!--<img src="../images/report-data-steward.png" />-->
             </div>
         </page-layout>
     </template>
@@ -211,6 +292,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     type: Object,
                     value: {}
                 },
+
+                tables: {
+                    type: Array,
+                    value: []
+                }
             },
 
             listeners: {
@@ -258,6 +344,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     this._setApplications([]);
                     this._setDatabases([]);
                     this._setSchemas([]);
+                    this._setTables([]);
                     this._dataSource.getConceptApplications(this.selectedLOB, this.selectedConcept)
                         .then(function (applications) {
                             that._setApplications(applications);
@@ -308,7 +395,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     this.selectedSchema = schema;
                     this._dataSource.getSchemaTables(this.selectedLOB, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
                         .then(function (tables) {
-
+                            that._setTables(tables);
                         }).catch(function (error) {
                             throw error;
                         });
@@ -326,6 +413,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             _setSchemas: function (schemas) {
                 this.$.schema.set('items', schemas);
             },
+
+            _setTables: function (tables) {
+                //this.$.table.set('items', table);
+                this.set('tables', tables)
+            },
+
+            _getCompletionStatus: function (stage, currentStage, completion) {
+                if (stage < currentStage) {
+                    return 'completed';
+                } else if (stage === currentStage) {
+                    if (this._completionBetween(completion, 0, 20)) return 'percent-lt-20';
+                    if (this._completionBetween(completion, 20, 40)) return 'percent-lt-40';
+                    if (this._completionBetween(completion, 40, 60)) return 'percent-lt-60';
+                    if (this._completionBetween(completion, 60, 80)) return 'percent-lt-80';
+                    if (this._completionBetween(completion, 80, 100)) return 'percent-lt-100';
+                } else {
+                    return 'todo';
+                }
+            },
+
+            _completionBetween: function (completion, a, b) {
+                return completion >= a && completion < b;
+
+            }
         });
     </script>
 </dom-module>
