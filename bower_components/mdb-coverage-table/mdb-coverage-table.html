@@ -115,6 +115,10 @@ Custom property | Description | Default
         color: #aaa;
       }
 
+       :host iron-icon.column-identified {
+        color: #5bca52;
+      }
+
        :host .column-status {
         padding: 5px;
         display: flex;
@@ -167,7 +171,7 @@ Custom property | Description | Default
               <div class="column-status">
                 <span>
                   <template is="dom-if" if="[[column.identified]]">
-                    <iron-icon icon="icons:check"></iron-icon>
+                    <iron-icon class="column-identified" icon="icons:check-circle"></iron-icon>
                   </template>
                 </span>
                 <span>
