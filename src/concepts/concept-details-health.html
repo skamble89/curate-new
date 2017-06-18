@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../../bower_components/mdb-metric-display/mdb-metric-display.html">
 <link rel="import" href="../../bower_components/atom-table/atom-table.html">
+<link rel="import" href="../../bower_components/google-chart/google-chart.html">
 
 <dom-module id="concept-details-health">
     <template>
@@ -32,6 +33,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 margin-top: var(--standard-padding, 20px);
                 width: 100%;
             }
+
+             :host #charts {
+                display: flex;
+                justify-content: center;
+            }
+
+             :host google-chart {}
         </style>
 
         <div>
@@ -40,9 +48,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <mdb-metric-display stat-value="0%" stat-description="Predicted Columns"></mdb-metric-display>
                 <mdb-metric-display stat-value="56" stat-description="Confirmed Columns"></mdb-metric-display>
             </mdb-metric-display-container>
-            <img src="../../images/health.png" />
-            <atom-table items="{{items}}">
+            <!--<img src="../../images/health.png" />-->
+            <div id="charts">
+                <google-chart type="line" options='{"hAxis":{"title":"Time"},"vAxis":{"title":"Classification Accuracy"}}' cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
+                    rows='[["Jan", 0],["Feb", 10],["Mar", 11],["Apr",12],["May",13],["June",14],["Jul",14],["Aug",14],["Sep",14],["Oct",14],["Nov",14],["Dec",14]]'>
+                </google-chart>
 
+                <google-chart type="line" options='{"hAxis":{"title":"Time"},"vAxis":{"title":"Landscape Scanned"}}' cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
+                    rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
+                </google-chart>
+            </div>
+
+            <atom-table items="{{items}}">
                 <vaadin-grid-column>
                     <template class="header">
                         <vaadin-grid-sorter path="lastActionTaken">Last Action Taken</vaadin-grid-sorter>
