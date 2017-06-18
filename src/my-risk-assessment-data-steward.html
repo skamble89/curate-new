@@ -33,27 +33,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <page-layout>
             <div slot="header">
-                <mdb-title>GDPR Risk Assessment</mdb-title>
+                <mdb-title>GDPR Risk Assessment Report</mdb-title>
                 <mdb-status-chip icon="device:access-time" status-label="Last Updated" status-value="20 mins ago"></mdb-status-chip>
             </div>
             <div slot="body">
                 <div class="db-entities">
                     <!-- Tables -->
-                    <mdb-dimension-finder class="lobs" all-dimensions-allowed dimension="LOB" items="{{lobs}}" help-text="List of LOBs" selected-dimension="{{selectedTable}}">
+                    <mdb-dimension-finder id="concept" class="concepts" all-dimensions-allowed dimension="Concept" help-text="List of Concepts of LOB {{selectedLOB}}">
                     </mdb-dimension-finder>
 
                     <!-- Applications -->
-                    <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
+                    <mdb-dimension-finder id="application" class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
                         selected-dimension="{{selectedApplication}}">
                     </mdb-dimension-finder>
 
                     <!-- Databases -->
-                    <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
+                    <mdb-dimension-finder id="database" class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
                         selected-dimension="{{selectedDatabase}}">
                     </mdb-dimension-finder>
 
                     <!-- Schemas -->
-                    <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
+                    <mdb-dimension-finder id="schema" class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
                         selected-dimension="{{selectedSchema}}">
                     </mdb-dimension-finder>
                 </div>
@@ -170,6 +170,162 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script>
         Polymer({
             is: 'risk-assessment-data-steward',
+
+            properties: {
+                dataSource: {
+                    type: String,
+                    value: ''
+                },
+
+                _dataSource: {
+                    type: Object,
+                    readOnly: true
+                },
+
+                dataSourceOptions: {
+                    type: Object,
+                    value: {}
+                },
+
+                selectedLob: {
+                    type: String,
+                    value: ''
+                },
+
+                selectedConcept: {
+                    type: String,
+                    value: ''
+                },
+
+                selectedApplication: {
+                    type: Object,
+                    value: {}
+                },
+
+                selectedDatabase: {
+                    type: Object,
+                    value: {}
+                },
+
+                selectedSchema: {
+                    type: Object,
+                    value: {}
+                },
+            },
+
+            listeners: {
+                'concept.selected-dimension-changed': '_conceptChanged',
+                'application.selected-dimension-changed': '_applicationChanged',
+                'database.selected-dimension-changed': '_databaseChanged',
+                'schema.selected-dimension-changed': '_schemaChanged'
+            },
+
+            ready: function () {
+                var source = document.createElement(this.dataSource);
+                for (var i in this.dataSourceOptions) {
+                    source[i] = this.dataSourceOptions[i];
+                }
+                this.appendChild(source);
+
+                //save reference of data adapter so that it can be used later on
+                this._set_dataSource(source);
+            },
+
+            attached: function () {
+                var that = this;
+                this._dataSource.getLOBs()
+                    .then(function (lobs) {
+                        var lob = lobs[0];
+                        that.selectedLOB = lob;
+                        that._dataSource.getLOBConcepts(lob)
+                            .then(function (concepts) {
+                                that.$.concept.set('items', concepts.map(function (e) {
+                                    return {
+                                        name: e.toUpperCase()
+                                    };
+                                }));
+                            }).catch(function (error) {
+                                throw error;
+                            });
+                    });
+            },
+
+            _conceptChanged: function (e) {
+                var that = this;
+                var concept = e.detail.value.name;
+                if (concept && this._dataSource) {
+                    this.selectedConcept = concept;
+                    this._setApplications([]);
+                    this._setDatabases([]);
+                    this._setSchemas([]);
+                    this._dataSource.getConceptApplications(this.selectedLOB, this.selectedConcept)
+                        .then(function (applications) {
+                            that._setApplications(applications);
+                        }).catch(function (error) {
+                            throw error;
+                        });
+                }
+            },
+
+            _applicationChanged: function (e) {
+                var that = this;
+                var application = e.detail.value;
+
+                if (application && this._dataSource) {
+                    this.selectedApplication = application;
+                    this._setDatabases([]);
+                    this._setSchemas([]);
+                    this._dataSource.getApplicationDBs(this.selectedLOB, this.selectedConcept, this.selectedApplication)
+                        .then(function (databases) {
+                            that._setDatabases(databases);
+                        }).catch(function (error) {
+                            throw error;
+                        });
+                }
+            },
+
+            _databaseChanged: function (e) {
+                var that = this;
+                var database = e.detail.value;
+
+                if (database && this._dataSource) {
+                    this.selectedDatabase = database;
+                    this._setSchemas([]);
+                    this._dataSource.getDBSchemas(this.selectedLOB, this.selectedConcept, this.selectedApplication, this.selectedDatabase)
+                        .then(function (schemas) {
+                            that._setSchemas(schemas);
+                        }).catch(function (error) {
+                            throw error;
+                        });
+                }
+            },
+
+            _schemaChanged: function (e) {
+                var that = this;
+                var schema = e.detail.value;
+
+                if (schema && this._dataSource) {
+                    this.selectedSchema = schema;
+                    this._dataSource.getSchemaTables(this.selectedLOB, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+                        .then(function (tables) {
+
+                        }).catch(function (error) {
+                            throw error;
+                        });
+                }
+            },
+
+            _setApplications: function (applications) {
+                this.$.application.set('items', applications);
+            },
+
+            _setDatabases: function (databases) {
+                this.$.database.set('items', databases);
+            },
+
+            _setSchemas: function (schemas) {
+                this.$.schema.set('items', schemas);
+            },
         });
     </script>
 </dom-module>

@@ -35,16 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-recommended-concepts-property-name: {
           color: #aaa;
         }
-        /*--stat-value: {
-          font-size: 3em;
-          font-weight: lighter;
-        }
-        --stat-description: {
-          font-size: 1.5em;
-          font-weight: 100;
-          margin: 0;
-          color: #afafaf;
-        }*/
       }
 
       [slot='body'] {
@@ -310,22 +300,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         dataSource: String,
-
-        dataSourceOptions: Object,
-
+        
         _dataSource: {
           type: Object,
           readOnly: true
         },
+
+        dataSourceOptions: Object,
 
         _selectedTab: {
           type: Number,
           value: 0,
           notify: true,
           observer: '_tabChanged'
-        },
-
-        dataSource: String,
+        },        
 
         selectedLob: {
           type: String,

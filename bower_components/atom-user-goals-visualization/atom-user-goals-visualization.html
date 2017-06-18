@@ -102,7 +102,7 @@
         </mdb-radio-list>
       </div>
     </div>
-    <div id="tree-container" style="height:638px;width:1349px;">
+    <div id="tree-container">
       <atom-google-sheet-adapter key="{{key}}"></atom-google-sheet-adapter>
       <template is="dom-if" if="{{_isDetails(selectedVisualization)}}" restamp>
         <atom-user-goals-visualization-details goals="{{goals}}"></atom-user-goals-visualization-details>
@@ -188,7 +188,7 @@
                     that.description = settings[0].description;
                     that.selectedVisualization = settings[0].defaultvisualization.toLowerCase();
                     that.set('goals', that._transform(settings, rows))
-                    
+
                   }, 0);
                 });
             });
@@ -201,9 +201,22 @@
 
         for (var i = 0; i < rows.length; i++) {
           var row = rows[i],
-            user = children.find(function (e) { return e.name === row.user; }) || children.push({ name: row.user, children: [] }) && children[children.length - 1],
-            goal = user.children.find(function (e) { return e.name === row.goal }) || user.children.push({ name: row.goal, children: [] }) && user.children[user.children.length - 1],
-            task = goal.children.find(function (e) { return e.name === row.task }) || goal.children.push({ name: row.task, goodness: parseFloat(row.completion) }) && goal.children[goal.children.length - 1];
+            user = children.find(function (e) { return e.name === row.user; }) || children.push({ name: row.user, children: [] }) && children[children.length - 1];
+            
+          var goal;
+          if (row.goal) {
+            goal = user.children.find(function (e) { return e.name === row.goal });
+            if (goal) {
+              if (row.task) {
+                goal.children.push({ name: row.task, goodness: parseFloat(row.completion) || 0 })
+              }
+            } else {
+              goal = user.children.push({ name: row.goal, children: [] }) && user.children[user.children.length - 1];
+              if (row.task) {
+                goal.children.push({ name: row.task, goodness: parseFloat(row.completion) || 0 })
+              }
+            }
+          }
         }
 
         obj.children = children;
