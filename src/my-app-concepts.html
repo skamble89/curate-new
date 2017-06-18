@@ -16,6 +16,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="./concepts/concept-list.html">
 <link rel="import" href="./concepts/concept-details.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../bower_components/mdb-status-chip/mdb-status-chip.html">
 
 <dom-module id="app-concepts">
   <template>
@@ -29,11 +31,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           border-bottom: 1px solid #ddd;
         }
       }
+
+       :host [slot="header"] {
+        display: flex;
+        justify-content: space-between;
+      }
     </style>
 
     <page-layout>
       <div slot="header">
         <mdb-title help-text="Concepts">Concepts</mdb-title>
+        <mdb-status-chip icon="image:landscape" status-label="Landscape scanned" status-value="38%"></mdb-status-chip>
       </div>
       <div class="banner" slot="body">
         <paper-tabs selected="{{selectedTab}}">
