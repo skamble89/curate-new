@@ -36,10 +36,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
              :host #charts {
                 display: flex;
-                justify-content: center;
+                justify-content: space-between;
             }
 
-             :host google-chart {}
+             :host google-chart {
+                width: 500px;
+                height: 500px;
+            }
         </style>
 
         <div>
@@ -50,12 +53,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </mdb-metric-display-container>
             <!--<img src="../../images/health.png" />-->
             <div id="charts">
-                <google-chart type="line" options='{"hAxis":{"title":"Time"},"vAxis":{"title":"Classification Accuracy"}}' cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
-                    rows='[["Jan", 0],["Feb", 10],["Mar", 11],["Apr",12],["May",13],["June",14],["Jul",14],["Aug",14],["Sep",14],["Oct",14],["Nov",14],["Dec",14]]'>
+                <google-chart type="area" options='{"height": 500, "width": 500,"hAxis":{"title":"Time"},"vAxis":{"title":"Classification Accuracy"}}'
+                    cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]' rows='[["Jan", 0],["Feb", 10],["Mar", 11],["Apr",12],["May",13],["June",14],["Jul",14],["Aug",14],["Sep",14],["Oct",14],["Nov",14],["Dec",14]]'>
                 </google-chart>
 
-                <google-chart type="line" options='{"hAxis":{"title":"Time"},"vAxis":{"title":"Landscape Scanned"}}' cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
-                    rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
+                <google-chart type="area" options='{"height": 500, "width": 500,"hAxis":{"title":"Time"},"vAxis":{"title":"Landscape Scanned"}}'
+                    cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]' rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
                 </google-chart>
             </div>
 
