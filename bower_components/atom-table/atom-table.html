@@ -38,10 +38,10 @@ Custom property | Description | Default
         --vaadin-grid-header-cell: {
           @apply(--atom-table-header-cell);
         }
-        --vaadin-grid-body-cell: {          
+        --vaadin-grid-body-cell: {
           @apply(--atom-table-body-cell);
         }
-        --vaadin-grid-body-row-odd-cell: {          
+        --vaadin-grid-body-row-odd-cell: {
           @apply(--atom-table-odd-row-cell);
         }
       }
@@ -88,7 +88,7 @@ Custom property | Description | Default
       </template>
     </div>
     <div class="grid">
-      <vaadin-grid items="{{items}}">
+      <vaadin-grid items="{{currentPageItems}}">
         <content></content>
       </vaadin-grid>
     </div>
@@ -100,10 +100,10 @@ Custom property | Description | Default
           <option>20</option>
           <option>50</option>
         </select>
-        <span class="pageNum">[[_getStart()]]-[[_getEnd()]] of [[_getTotalRecordsCount()]]</span>
+        <span class="pageNum">[[_getStart(pageNum)]]-[[_getEnd(pageNum)]] of [[_getTotalRecordsCount()]]</span>
         <div class="pagingButtons">
-          <paper-icon-button id="prevPage" icon="icons:chevron-left"></paper-icon-button>
-          <paper-icon-button id="nextPage" icon="icons:chevron-right"></paper-icon-button>
+          <paper-icon-button id="prevPage" icon="icons:chevron-left" on-tap="_prevPage"></paper-icon-button>
+          <paper-icon-button id="nextPage" icon="icons:chevron-right" on-tap="_nextPage"></paper-icon-button>
         </div>
       </template>
     </div>
@@ -147,24 +147,56 @@ Custom property | Description | Default
         },
         items: {
           type: Array,
+          value: [],
+          observer: '_itemsChanged'
+        },
+        currentPageItems: {
+          type: Array,
           value: []
         }
       },
 
-      _pageSizeChanged: function () {
+      _itemsChanged: function () {
+        this._setCurrentPageItems();
+      },
 
+      _pageSizeChanged: function () {
+        this._setCurrentPageItems();
       },
 
       _pageNumChanged: function () {
-
+        this._setCurrentPageItems();
       },
 
-      _getStart: function () {
-        return 1;
+      _setCurrentPageItems: function () {
+        if (this.items && this.items.length) {
+          if (this.allowPaging) {
+            this.currentPageItems = this.items.slice(this._getStart() - 1, this._getEnd());
+          } else {
+            this.currentPageItems = this.items.slice();
+          }
+        }
       },
 
-      _getEnd: function () {
-        return 10;
+      _prevPage: function () {
+        if (this._getStart() > 1) {
+          this.pageNum = this.pageNum - 1;
+        }
+      },
+
+      _nextPage: function () {
+        if (this._getEnd() < this._getTotalRecordsCount()) {
+          this.pageNum = this.pageNum + 1;
+        }
+      },
+
+      _getStart: function (pageNum) {
+        return ((this.pageNum - 1) * this.pageSize) + 1;
+      },
+
+      _getEnd: function (pageNum) {
+        var end = this.pageNum * this.pageSize;
+        return end <= this.items.length ? end : this.items.length;
       },
 
       _getTotalRecordsCount: function () {
