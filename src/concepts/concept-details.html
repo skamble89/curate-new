@@ -13,9 +13,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="./concept-details-health.html">
 <link rel="import" href="./concept-details-curate.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/atom-table/atom-table.html">
 
 <dom-module id="concept-details">
@@ -27,10 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
              :host atom-table {
                 overflow: hidden;
-                --atom-table-header-cell: {
-                    @apply(--app-table-header-cell);
-                    border-top: 0;
-                }
+                margin-top: var(--standard-padding, 20px);
             }
 
              :host paper-tabs {
@@ -39,7 +39,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
 
         <div>
-            <atom-table items="{{items}}">
+            <paper-icon-button id="back" icon="icons:arrow-back" on-tap="_goBack" title="Back"></paper-icon-button>
+            <atom-table items="[[_getTableItem(item)]]">
                 <vaadin-grid-column>
                     <template class="header">
                         Concept Name
@@ -124,26 +125,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     value: 0
                 },
 
-                items: {
-                    type: Array,
-                    value: [{
-                        "concept": "Date of Birth",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
-                        "owner": "Angela",
-                        "impactArea": [
-                            "GDPR",
-                            "Credit Risk"
-                        ],
-                        "applications": [
-                            "Credit Risk Assessment",
-                            "Sales Account Management",
-                            "Sales Campaign Management",
-                            "Enterprise Data Warehouse"
-                        ]
-                    }]
+                item: {
+                    type: Object,
+                    value: {}
                 }
+            },
+
+            _getTableItem: function () {
+                return [this.item];
+            },
+
+            _goBack: function () {
+                this.fire('show-list');
             }
         });
     </script>

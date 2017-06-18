@@ -21,9 +21,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              :host {
                 display: block;
             }
+
+             :host atom-table {
+                --atom-table-body-cell: {
+                    @apply(--app-table-body-cell);
+                    cursor: pointer;
+                }
+            }
         </style>
 
-        <atom-table allow-global-search allow-add-new allow-paging items="{{items}}">
+        <atom-table allow-global-search allow-add-new allow-paging items="{{items}}" active-item="{{activeItem}}">
             <vaadin-grid-column>
                 <template class="header">
                     Concept Name
@@ -352,6 +359,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             "Enterprise Data Warehouse"
                         ]
                     }]
+                },
+
+                activeItem: {
+                    notify: true
                 }
             }
         });
