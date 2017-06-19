@@ -168,6 +168,7 @@ Custom property | Description | Default
         right: 0;
         background-color: #444;
         opacity: 0.5;
+        z-index: 100;
       }
     </style>
     <div class="title-row">
@@ -231,7 +232,7 @@ Custom property | Description | Default
       </template>
     </vaadin-grid>
     <template is="dom-if" if="[[_isModalOpen(_modalOpen)]]">
-      <div id="overlay">
+      <div id="overlay" on-tap="_closeModal">
       </div>
     </template>
     <paper-dialog id="modal">
