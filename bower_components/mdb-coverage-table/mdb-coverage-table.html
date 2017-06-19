@@ -147,9 +147,27 @@ Custom property | Description | Default
         display: block;
       }
 
+       :host #modal #buttons {
+        display: flex;
+        justify-content: flex-end;
+      }
+
        :host #modal paper-button {
-        color: #fff;
-        background-color: #00b7f5;
+        --paper-button: {
+          vertical-align: text-bottom;
+          color: #5caadb;
+          font-weight: 600;
+        }
+      }
+
+       :host #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #444;
+        opacity: 0.5;
       }
     </style>
     <div class="title-row">
@@ -191,7 +209,7 @@ Custom property | Description | Default
                 </span>
                 <span>
                   <template is="dom-if" if="[[!column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag" on-tap="_openDialog" title="Flag [[column.name]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" title="Flag [[column.name]]"></iron-icon>
                   </template>
                   
                   <template is="dom-if" if="[[column.flagged]]">
@@ -212,6 +230,10 @@ Custom property | Description | Default
         </vaadin-grid-column>
       </template>
     </vaadin-grid>
+    <template is="dom-if" if="[[_isModalOpen(_modalOpen)]]">
+      <div id="overlay">
+      </div>
+    </template>
     <paper-dialog id="modal">
       <h3>Select LOB to flag {{selectedColumn}} in</h3>
       <div id="radio-list">
@@ -222,7 +244,7 @@ Custom property | Description | Default
         </paper-radio-group>
       </div>
       <div id="buttons">
-        <paper-button id="cancel" on-tap="_cancel">Cancel</paper-button>
+        <paper-button id="cancel" on-tap="_closeModal">Cancel</paper-button>
         <paper-button id="flag" on-tap="_flag">Flag</paper-button>
       </div>
     </paper-dialog>
@@ -262,6 +284,11 @@ Custom property | Description | Default
         lobs: {
           type: Array,
           value: []
+        },
+
+        _modalOpen: {
+          type: Boolean,
+          value: false
         }
       },
 
@@ -281,13 +308,9 @@ Custom property | Description | Default
         return (selected === current ? 'selected' : '');
       },
 
-      _openDialog: function (e) {
+      _openModal: function (e) {
+        this._modalOpen = true;
         this.$.modal.open();
-      },
-
-      _cancel: function () {
-        this._clearFlaggingRadioButton();
-        this.$.modal.close();
       },
 
       _flag: function () {
@@ -298,15 +321,20 @@ Custom property | Description | Default
 
         this.set('columns.' + index + '.flagged', true);
         this.set('columns.' + index + '.flaggedIn', lob);
-        this._clearFlaggingRadioButton();
-        this.$.modal.close();
+        this._closeModal();
       },
 
-      _clearFlaggingRadioButton: function () {
+      _closeModal: function () {
         this.querySelectorAll('#modal paper-radio-button')
           .forEach(function (e) {
             e.checked = false;
           });
+        this._modalOpen = false;
+        this.$.modal.close();
+      },
+
+      _isModalOpen: function (open) {
+        return open;
       }
 
     });

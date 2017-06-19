@@ -36,11 +36,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
              :host #charts {
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
             }
 
              :host google-chart {
-                width: 500px;
+                width: 1000px;
                 height: 500px;
             }
         </style>
@@ -51,14 +51,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <mdb-metric-display stat-value="0%" stat-description="Predicted Columns"></mdb-metric-display>
                 <mdb-metric-display stat-value="56" stat-description="Confirmed Columns"></mdb-metric-display>
             </mdb-metric-display-container>
-            <!--<img src="../../images/health.png" />-->
-            <div id="charts">
-                <google-chart type="area" options='{"height": 500, "width": 500,"hAxis":{"title":"Time"},"vAxis":{"title":"Classification Accuracy"}}'
-                    cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]' rows='[["Jan", 0],["Feb", 10],["Mar", 11],["Apr",12],["May",13],["June",14],["Jul",14],["Aug",14],["Sep",14],["Oct",14],["Nov",14],["Dec",14]]'>
-                </google-chart>
 
-                <google-chart type="area" options='{"height": 500, "width": 500,"hAxis":{"title":"Time"},"vAxis":{"title":"Landscape Scanned"}}'
-                    cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]' rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
+            <div id="chart">
+                <google-chart type="area" options='{"height": 500, "width": 1000,"hAxis":{"title":"Time"},"vAxis":{"title":"Values in Percentage"}}'
+                    data='[["Month", "Classification Accuracy", "Landscape Scanned"], ["Jan", 25, 31], ["Feb", 28, 32], ["Mar", 31, 58], ["Apr", 31, 58], ["May", 31, 58], ["Jun", 31, 58], ["Jul", 31, 58], ["Aug", 31, 58], ["Sep", 31, 58], ["Oct", 31, 58], ["Nov", 31, 58], ["Dec", 31, 58]]'>
                 </google-chart>
             </div>
 
