@@ -1,6 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../vaadin-grid/vaadin-grid.html">
@@ -136,6 +138,19 @@ Custom property | Description | Default
        :host .column-status .flagged {
         color: orange;
       }
+
+       :host #modal #radio-list {
+        overflow: auto;
+      }
+
+       :host #modal paper-radio-button {
+        display: block;
+      }
+
+       :host #modal paper-button {
+        color: #fff;
+        background-color: #00b7f5;
+      }
     </style>
     <div class="title-row">
       <mdb-title help-text="{{helpText}}" level="2">{{titleText}}</mdb-title>
@@ -176,11 +191,11 @@ Custom property | Description | Default
                 </span>
                 <span>
                   <template is="dom-if" if="[[!column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag" on-tap="_flagColumn" title="Flag [[column.name]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag" on-tap="_openDialog" title="Flag [[column.name]]"></iron-icon>
                   </template>
                   
                   <template is="dom-if" if="[[column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag flagged" title="Flag [[column.name]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag flagged" title="[[column.name]] flagged in [[column.flaggedIn]]"></iron-icon>
                   </template>
                 </span>
               </div>
@@ -197,6 +212,20 @@ Custom property | Description | Default
         </vaadin-grid-column>
       </template>
     </vaadin-grid>
+    <paper-dialog id="modal">
+      <h3>Select LOB to flag {{selectedColumn}} in</h3>
+      <div id="radio-list">
+        <paper-radio-group>
+          <template is="dom-repeat" items="[[lobs]]">
+            <paper-radio-button name="[[item]]">[[item]]</paper-radio-button>
+          </template>
+        </paper-radio-group>
+      </div>
+      <div id="buttons">
+        <paper-button id="cancel" on-tap="_cancel">Cancel</paper-button>
+        <paper-button id="flag" on-tap="_flag">Flag</paper-button>
+      </div>
+    </paper-dialog>
   </template>
 
   <script>
@@ -228,6 +257,11 @@ Custom property | Description | Default
           type: String,
           notify: true,
           reflectToAttribute: true
+        },
+
+        lobs: {
+          type: Array,
+          value: []
         }
       },
 
@@ -247,8 +281,32 @@ Custom property | Description | Default
         return (selected === current ? 'selected' : '');
       },
 
-      _flagColumn: function (e) {
+      _openDialog: function (e) {
+        this.$.modal.open();
+      },
 
+      _cancel: function () {
+        this._clearFlaggingRadioButton();
+        this.$.modal.close();
+      },
+
+      _flag: function () {
+        var that = this,
+          lob = this.querySelector('#modal paper-radio-group').selected,
+          column = this.columns.find(function (e) { return that.selectedColumn === e.name; }),
+          index = this.columns.indexOf(column);
+
+        this.set('columns.' + index + '.flagged', true);
+        this.set('columns.' + index + '.flaggedIn', lob);
+        this._clearFlaggingRadioButton();
+        this.$.modal.close();
+      },
+
+      _clearFlaggingRadioButton: function () {
+        this.querySelectorAll('#modal paper-radio-button')
+          .forEach(function (e) {
+            e.checked = false;
+          });
       }
 
     });

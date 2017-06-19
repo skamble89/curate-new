@@ -15,12 +15,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/mdb-coverage-table",
-  "version": "0.1.6",
-  "_release": "0.1.6",
+  "version": "0.1.7",
+  "_release": "0.1.7",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.6",
-    "commit": "63f9844507a4b6da93ba1038006ca91a59fd630f"
+    "tag": "v0.1.7",
+    "commit": "3d31deaf7be63cb1e3f01197c1b2f019f07bf161"
   },
   "_source": "git://github.com/makedatabetter-dev/mdb-coverage-table.git",
   "_target": "*",
