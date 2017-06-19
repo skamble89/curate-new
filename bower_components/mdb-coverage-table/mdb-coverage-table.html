@@ -210,11 +210,11 @@ Custom property | Description | Default
                 </span>
                 <span>
                   <template is="dom-if" if="[[!column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" title="Flag [[column.name]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" column$="[[column.name]]" title="Flag [[column.name]]"></iron-icon>
                   </template>
                   
                   <template is="dom-if" if="[[column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag flagged" title="[[column.name]] flagged in [[column.flaggedIn]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag flagged" on-tap="_openModal" column$="[[column.name]]" title="[[column.name]] flagged in [[column.flaggedIn]]"></iron-icon>
                   </template>
                 </span>
               </div>
@@ -310,8 +310,18 @@ Custom property | Description | Default
       },
 
       _openModal: function (e) {
-        this._modalOpen = true;
-        this.$.modal.open();
+        var name = e.currentTarget.attributes.getNamedItem('column').value,
+          column = this.columns.find(function (e) { return name === e.name; });
+
+        if (column) {
+          this._modalOpen = true;
+          this.$.modal.open();
+
+          var radioGroup = this.querySelector('#modal paper-radio-group');
+          if (radioGroup) {
+            radioGroup.selected = column.flaggedIn;
+          }
+        }
       },
 
       _flag: function () {
@@ -326,10 +336,7 @@ Custom property | Description | Default
       },
 
       _closeModal: function () {
-        this.querySelectorAll('#modal paper-radio-button')
-          .forEach(function (e) {
-            e.checked = false;
-          });
+        this.querySelectorAll('#modal paper-radio-group').selected = undefined;
         this._modalOpen = false;
         this.$.modal.close();
       },
