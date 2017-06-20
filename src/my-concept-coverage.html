@@ -79,7 +79,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           background-color: #5caadb;
         }
       }
-      
       /*Recommended Concepts*/
 
        :host mdb-recommended-concepts {
@@ -300,7 +299,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         dataSource: String,
-        
+
         _dataSource: {
           type: Object,
           readOnly: true
@@ -313,7 +312,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 0,
           notify: true,
           observer: '_tabChanged'
-        },        
+        },
 
         selectedLob: {
           type: String,
@@ -565,7 +564,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _conceptChanged: function () {
-        this._resetEmptyMessage('mdb-dimension-finder.applications');
+        this._resetEmptyMessage('mdb-dimension-finder.applications');        
         this.set('applications', []);
 
         if (this.selectedConcept) {
@@ -573,50 +572,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           //Get applications for the selected concept
           this._dataSource.getConceptApplications(this.selectedLob, this.selectedConcept)
             .then(function (applications) {
+              that.querySelector('mdb-dimension-finder.applications').dataLoaded = true;
               that.set('applications', applications);
-              that.querySelector('mdb-dimension-finder.applications').emptyMessage = applications.length === 0 ? 'No applications found for the selected concept.' : '';
             });
         }
       },
 
       _applicationChanged: function () {
-        this._resetEmptyMessage('mdb-dimension-finder.databases');
+        this._resetEmptyMessage('mdb-dimension-finder.databases');        
         this.set('databases', []);
 
         if (this.selectedApplication) {
           var that = this;
           this._dataSource.getApplicationDBs(this.selectedLob, this.selectedConcept, this.selectedApplication)
             .then(function (dbs) {
+              that.querySelector('mdb-dimension-finder.databases').dataLoaded = true;
               that.set('databases', dbs);
-              that.querySelector('mdb-dimension-finder.databases').emptyMessage = dbs.length === 0 ? 'No databases found for the selected application.' : '';
             });
         }
       },
 
       _databaseChanged: function () {
-        this._resetEmptyMessage('mdb-dimension-finder.schemas');
+        this._resetEmptyMessage('mdb-dimension-finder.schemas');        
         this.set('schemas', []);
 
         if (this.selectedDatabase) {
           var that = this;
           this._dataSource.getDBSchemas(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase)
             .then(function (schemas) {
+              that.querySelector('mdb-dimension-finder.schemas').dataLoaded = true;
               that.set('schemas', schemas);
-              that.querySelector('mdb-dimension-finder.schemas').emptyMessage = schemas.length === 0 ? 'No schemas found for the selected database.' : '';
             });
         }
       },
 
       _schemaChanged: function () {
-        this._resetEmptyMessage('mdb-dimension-finder.tables');
+        this._resetEmptyMessage('mdb-dimension-finder.tables');        
         this.set('tables', []);
 
         if (this.selectedSchema) {
           var that = this;
           this._dataSource.getSchemaTables(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
             .then(function (tables) {
+              that.querySelector('mdb-dimension-finder.tables').dataLoaded = true;
               that.set('tables', tables);
-              that.querySelector('mdb-dimension-finder.tables').emptyMessage = tables.length === 0 ? 'No tables found for the selected schema.' : '';
             });
         }
       },
@@ -667,7 +666,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _resetEmptyMessage: function (selector) {
         var component = this.querySelector(selector);
-        if (component) component.emptyMessage = '';
+        if (component) {
+          component.emptyMessage = ''
+          component.dataLoaded = false;
+        };
       },
 
       _undoConceptIdentification: function () {

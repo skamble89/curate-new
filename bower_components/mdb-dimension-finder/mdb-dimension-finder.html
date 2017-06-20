@@ -221,7 +221,8 @@ Custom property | Description | Default
           type: Boolean,
           value: false,
           reflectToAttribute: true,
-          notify: true
+          notify: true,
+          observer: '_showAllDimensionsChanged'
         },
 
         allDimensionsAllowed: {
@@ -229,7 +230,12 @@ Custom property | Description | Default
           value: false
         },
 
-        emptyMessage: String
+        emptyMessage: String,
+
+        dataLoaded: {
+          type: Boolean,
+          value: false
+        }
       },
 
       attached: function () {
@@ -246,13 +252,20 @@ Custom property | Description | Default
         this._sortDimension();
       },
 
+      _showAllDimensionsChanged: function () {
+        this._sortDimension();
+      },
+
       _toLowerCase: function (str) {
         return str.toLowerCase();
       },
 
       _sortDimension: function () {
         var sortBy = this.sortBy;
-        var sorted = sortBy === 'recommendation' ? this.items.sort(function (a, b) {
+        var items = !this.showAllDimensions ? this.items.filter(function (e) {
+          return e.systemRecommended;
+        }) : this.items;
+        var sorted = sortBy === 'recommendation' ? items.sort(function (a, b) {
           return (b.recommendation || 0) - (a.recommendation || 0);
         }) : this.items.sort(function (a, b) {
           if (a.name < b.name) return -1;
@@ -261,6 +274,7 @@ Custom property | Description | Default
         });
 
         this.set('_searchResults', JSON.parse(JSON.stringify(sorted)));
+        this.emptyMessage = this.dataLoaded ? !sorted.length ? 'No ' + (!this.showAllDimensions ? 'system recommended ' : '') + this.dimension + 's found.' : '' : '';
       }
     });
   </script>
