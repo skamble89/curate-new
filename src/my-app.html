@@ -126,7 +126,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </app-header>
 
         <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-          <app-welcome name="app-welcome"></app-welcome>
+          <app-welcome-data-steward name="app-welcome-data-steward"></app-welcome-data-steward>
+          <app-welcome-cdo name="app-welcome-cdo"></app-welcome-cdo>
+          <app-welcome-info-architect name="app-welcome-info-architect"></app-welcome-info-architect>
+          <app-welcome-citizen name="app-welcome-citizen"></app-welcome-citizen>
           <concept-coverage name="concept-coverage" data-source="mdb-gsheet-data-adapter" data-source-options='{"key":"1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"}'
             w-1024$="[[w-1024]]" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]"
             w-1680$="[[w-1680]]" w-1920$="[[w-1920]]" w-2560$="[[w-2560]]"></concept-coverage>
@@ -164,7 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         pageList: {
           type: Array,
           value: [{
-            name: 'app-welcome',
+            name: 'app-welcome-data-steward',
             title: 'WELCOME',
             role: 'Data Steward'
           }, {
@@ -180,7 +183,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             title: 'GDPR Risk Assessment',
             role: 'Data Steward'
           }, {
-            name: 'app-welcome',
+            name: 'app-welcome-info-architect',
             title: 'WELCOME',
             role: 'Information Architect'
           }, {
@@ -196,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             title: 'REVIEW & CLASSIFY',
             role: 'Information Architect'
           }, {
-            name: 'app-welcome',
+            name: 'app-welcome-cdo',
             title: 'WELCOME',
             role: 'Chief Data Officer'
           }, {
@@ -204,7 +207,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             title: 'GDPR Risk Assessment',
             role: 'Chief Data Officer'
           }, {
-            name: 'app-welcome',
+            name: 'app-welcome-citizen',
             title: 'WELCOME',
             role: 'Citizen'
           }, {
@@ -257,7 +260,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var that = this;
         var pages = this._getPageList(this.role);
         if (!pages.find(function (e) { return that.page === e.name; })) {
-          this.page = 'app-welcome';
+          this.page = pages.find(function (e) { return e.name.indexOf('app-welcome') > -1 }).name || 'view404';
           this.set('route.path', '/' + this.page);
         }
       }
