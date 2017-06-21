@@ -33,15 +33,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <atom-table allow-global-search allow-add-new allow-paging items="{{items}}" active-item="{{activeItem}}">
             <vaadin-grid-column>
                 <template class="header">
-                    Concept Name
+                    <vaadin-grid-sorter path="concept">Concept Name</vaadin-grid-sorter>
                 </template>
                 <template>
                     {{item.concept}}
                 </template>
             </vaadin-grid-column>
-            <vaadin-grid-column width="30px">
+            <vaadin-grid-column width="50px">
                 <template class="header">
-                    # Mapping
+                    <vaadin-grid-sorter path="mappingCount"># Mapping</vaadin-grid-sorter>
                 </template>
                 <template>
                     {{item.mappingCount}}
@@ -49,23 +49,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </vaadin-grid-column>
             <vaadin-grid-column width="100px">
                 <template class="header">
-                    Classification Accuracy
+                    <vaadin-grid-sorter path="health">Classification Accuracy</vaadin-grid-sorter>
                 </template>
                 <template>
-                    {{item.health}}
+                    {{item.health}}%
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="30px">
                 <template class="header">
-                    Coverage
+                    <vaadin-grid-sorter path="coverage">Coverage</vaadin-grid-sorter>
                 </template>
                 <template>
-                    {{item.coverage}}
+                    {{item.coverage}}%
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="30px">
                 <template class="header">
-                    Owner
+                    <vaadin-grid-sorter path="owner">Owner</vaadin-grid-sorter>
                 </template>
                 <template>
                     {{item.owner}}
@@ -73,6 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </vaadin-grid-column>
             <vaadin-grid-column>
                 <template class="header">
+                    <!--<vaadin-grid-sorter path="impactArea">Impact Area</vaadin-grid-sorter>-->
                     Impact Area
                 </template>
                 <template>
@@ -106,9 +107,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     type: Array,
                     value: [{
                         "concept": "FICO-Score",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 5,
+                        "health": 10,
+                        "coverage": .001,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -123,9 +124,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Account-Number",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 8,
+                        "health": 5,
+                        "coverage": .03,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -140,9 +141,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Customer-Code",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 2,
+                        "health": 28,
+                        "coverage": 0.7,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -157,9 +158,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Customer-Type",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 6,
+                        "health": 31,
+                        "coverage": 0.2,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -174,9 +175,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Product-Code",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 10,
+                        "health": 48,
+                        "coverage": 0.3,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -191,9 +192,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Product-Name",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 15,
+                        "health": 50,
+                        "coverage": 0.8,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -208,9 +209,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Market-Segment",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 3,
+                        "health": 50,
+                        "coverage": .001,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -225,9 +226,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "CUSIP",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 8,
+                        "health": 5,
+                        "coverage": .001,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -242,9 +243,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Instrument-ID",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 21,
+                        "health": 50,
+                        "coverage": .001,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -259,9 +260,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Gender",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 5,
+                        "health": 50,
+                        "coverage": .001,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -293,9 +294,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Religion",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 5,
+                        "health": 50,
+                        "coverage": .001,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -310,9 +311,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Salary",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 5,
+                        "health": 60,
+                        "coverage": .051,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -327,9 +328,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Weight",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 5,
+                        "health": 50,
+                        "coverage": .001,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",
@@ -344,9 +345,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     {
                         "concept": "Photo",
-                        "mappingCount": "5",
-                        "health": "50%",
-                        "coverage": ".001%",
+                        "mappingCount": 5,
+                        "health": 50,
+                        "coverage": .001,
                         "owner": "Angela",
                         "impactArea": [
                             "GDPR",

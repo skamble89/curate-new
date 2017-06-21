@@ -159,6 +159,10 @@ Custom property | Description | Default
         }
       },
 
+      clearCache: function () {
+        this.$.grid.clearCache();
+      },
+
       _itemsChanged: function () {
         this._setCurrentPageItems();
       },
