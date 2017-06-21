@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/mdb-status-chip/mdb-status-chip.html">
 <link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
 <link rel="import" href="../bower_components/atom-table/atom-table.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 
 <dom-module id="risk-assessment-data-steward">
     <template>
@@ -25,6 +27,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              :host [slot="header"] {
                 display: flex;
                 justify-content: space-between;
+            }
+
+             :host paper-tabs {
+                justify-content: center;
             }
 
              :host atom-table {
@@ -96,11 +102,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              :host .stage.completed {
                 background-color: #fef28c;
             }
-
-
-             :host img {
+            /*:host img {
                 width: 100%;
-            }
+            }*/
         </style>
         <page-layout>
             <div slot="header">
@@ -108,14 +112,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <mdb-status-chip icon="device:access-time" status-label="Last Updated" status-value="20 mins ago"></mdb-status-chip>
             </div>
             <div slot="body">
+                <paper-tabs selected="{{_selectedTab}}">
+                    <paper-tab>APPLICATIONS</paper-tab>
+                    <paper-tab>DATABASES</paper-tab>
+                    <paper-tab>SCHEMAS</paper-tab>
+                    <paper-tab>TABLES</paper-tab>
+                </paper-tabs>
                 <div class="db-entities">
                     <!-- Tables -->
                     <mdb-dimension-finder id="concept" class="concepts" all-dimensions-allowed dimension="Concept" help-text="List of Concepts of LOB {{selectedLOB}}">
                     </mdb-dimension-finder>
 
                     <!-- Applications -->
-                    <mdb-dimension-finder id="application" class="applications" dimension="Application" all-dimensions-allowed items="{{applications}}" help-text="List of Applications"
-                        selected-dimension="{{selectedApplication}}">
+                    <mdb-dimension-finder id="application" class="applications" dimension="Application" all-dimensions-allowed items="{{applications}}"
+                        help-text="List of Applications" selected-dimension="{{selectedApplication}}">
                     </mdb-dimension-finder>
 
                     <!-- Databases -->
@@ -268,6 +278,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     value: {}
                 },
 
+                _selectedTab: {
+                    type: Number,
+                    value: 0,
+                    notify: true,
+                    observer: '_tabChanged'
+                },
+
                 selectedLob: {
                     type: String,
                     value: ''
@@ -399,10 +416,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 var that = this;
                 var schema = e.detail.value;
 
-                if (schema && this._dataSource) {                    
+                if (schema && this._dataSource) {
                     this.selectedSchema = schema;
                     this._dataSource.getSchemaTables(this.selectedLOB, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
-                        .then(function (tables) {                            
+                        .then(function (tables) {
                             that._setTables(tables);
                         }).catch(function (error) {
                             throw error;
@@ -422,7 +439,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 this.$.schema.set('items', schemas);
             },
 
-            _setTables: function (tables) {                
+            _setTables: function (tables) {
                 this.set('tables', tables)
             },
 
@@ -433,7 +450,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     if (this._completionBetween(completion, 0, 20)) return 'percent-lt-20';
                     if (this._completionBetween(completion, 21, 40)) return 'percent-lt-40';
                     if (this._completionBetween(completion, 41, 60)) return 'percent-lt-60';
-                    if (this._completionBetween(completion, 61, 80)) return 'percent-lt-80';                    
+                    if (this._completionBetween(completion, 61, 80)) return 'percent-lt-80';
                 } else {
                     return 'todo';
                 }
@@ -442,6 +459,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             _completionBetween: function (completion, a, b) {
                 return completion >= a && completion <= b;
 
+            },
+
+            _tabChanged: function () {
+                console.log('Tab Changed');
             }
         });
     </script>
