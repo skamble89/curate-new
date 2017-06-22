@@ -2,6 +2,8 @@
 <link rel="import" href="../mdb-title/mdb-title.html">
 <link rel="import" href="../mdb-simple-list/mdb-simple-list.html">
 <link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
 
 <!--
 `mdb-example-values`
@@ -13,8 +15,8 @@ The following custom properties and mixins are available for styling:
 Custom property | Description | Default
 ----------------|-------------|----------
 `--mdb-example-values` | Mixin applied to all example values | `{}`
-`--mdb-example-background-color` | Mixin applied to all example values | `#eaeff3`
-`--mdb-example-font-color` | Mixin applied to all example values | `#a5a8ad`
+`--mdb-example-background-color` | Background color of example values | `#eaeff3`
+`--mdb-font-color` | Default font color of application | ``
 
 @demo demo/index.html 
 -->
@@ -24,8 +26,7 @@ Custom property | Description | Default
     <style>
        :host {
         display: block;
-        --mdb-example-background-color: #eaeff3;
-        --mdb-example-font-color: #a5a8ad;
+        --mdb-example-background-color: #eaeff3;        
       }
 
        :host mdb-simple-list {
@@ -36,28 +37,49 @@ Custom property | Description | Default
         --mdb-list-item: {
           float: left;
           background-color: var(--mdb-example-background-color);
-          color: var(--mdb-example-font-color);
-          border-radius: 1em;
-          padding: 0 10px 0 10px;
+          color: var(--mdb-font-color);
+          border-radius: 3em;
+          padding: 10px;
           margin: 5px 5px 5px 0;
           @apply(--mdb-example-values);
         }
         --mdb-list-item-focused: {
-          border-radius: 1em;
+          border-radius: 3em;
           background-color: var(--mdb-example-background-color);
-          color: var(--mdb-example-font-color);
+          color: var(--mdb-font-color);
         }
         --mdb-list-item-selected: {
-          border-radius: 1em;
+          border-radius: 3em;
           background-color: var(--mdb-example-background-color);
-          color: var(--mdb-example-font-color);
+          color: var(--mdb-font-color);
         }
+      }
+
+       :host mdb-radio-list {
+        margin-left: 10px;
+      }
+
+       :host paper-radio-button {
+        background-color: #fff;
       }
     </style>
     <mdb-title help-text="{{helpText}}" level="3">[[title]]</mdb-title>
     <mdb-simple-list items="{{examples}}">
       <template>
-        <paper-item class="example">[[this]]</paper-item>
+        <paper-item class="example">
+          [[item.example]]
+          <mdb-radio-list size="small" data-facet$="[[item.name]]" selected="{{item.recommended}}"/>
+            <paper-radio-button name="yes" title="YES">
+              &#x2713;
+            </paper-radio-button>
+            <paper-radio-button name="no" title="NO">
+              &#x2717;
+            </paper-radio-button>
+            <paper-radio-button name="maybe" title="MAYBE">
+              ?
+            </paper-radio-button>
+          </mdb-radio-list>
+        </paper-item>
       </template>
     </mdb-simple-list>
   </template>
@@ -83,6 +105,10 @@ Custom property | Description | Default
           value: []
         }
       },
+
+      _facetRecommendationChanged: function (e) {
+
+      }
 
     });
   </script>

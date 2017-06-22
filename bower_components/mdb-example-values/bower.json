@@ -4,6 +4,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "mdb-simple-list": "git://github.com/makedatabetter-dev/mdb-simple-list.git",
+    "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
     "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git"
   },
   "devDependencies": {

@@ -1,0 +1,98 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/atom-feature/atom-feature.html">
+<dom-module id="app-welcome-data-steward">
+  <template>
+    <style include="shared-styles">
+       :host {
+        height: 100%;
+      }
+
+       :host div[slot="body"] {
+        background-color: #f3f5f9;
+      }
+
+       :host img {
+        width: 100%;
+      }
+
+       :host .features {
+        display: flex;
+        justify-content: center;
+        color: #aaa;
+      }
+
+       :host atom-feature {
+        flex: 1;
+        padding: var(--standard-padding, 20px);
+        --atom-feature-icon: {
+          height: 40px;
+          width: 40px;
+        }
+        --atom-feature-title: {
+          font-weight: 300;
+          color: #696b6d;
+          font-size: 14px;
+        }
+        --atom-feature-description: {
+          font-weight: 300;
+          line-height: 18px;
+        }
+      }
+    </style>
+    <page-layout>
+      <div slot="header">
+        <mdb-title>Welcome</mdb-title>
+      </div>
+      <div slot="body">
+        <img src="../images/welcome_1.png" />
+        <div class="features">
+          <atom-feature id="coverage" title="Improve Coverage" button-title="Improve Coverage" icon="editor:mode-edit" description="Comb through various applications, databases, schemas and tables to go through columns and identify them as being a particular concept or not. As you make more identifications you help train the system, improve classification accuracy and make data better."></atom-feature>
+          <atom-feature id="flag" title="Flag Columns" button-title="Flag Columns" icon="icons:flag" description="See all the columns that you and other data stewards have flagged as potential concepts, columns containing personal identifiable information, under which line of business these have been flagged and track the current status of the flagging requests."></atom-feature>
+          <atom-feature id="gdpr" title="Assess GDPR Risk" button-title="Assess GDPR Risk" icon="icons:receipt" description="Get a line of business, application, database or schema level view of the risk assessment pipeline. View any bottlenecks that may be holding back the risk assessment effort. Gauge your progress towards having a complete picture of your GDPR risk."></atom-feature>          
+          <atom-feature id="goals" title="Know the goals " button-title="Know the goals " icon="icons:settings" description="Take a look at the various user roles involved with GDPR risk assessment and mitigation. Realise what all the software is designed to help you accomplish and provide feedback if you feel any of your key goals are currently not being met!"></atom-feature>
+        </div>
+      </div>
+    </page-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'app-welcome-data-steward',
+
+      listeners: {
+        'coverage.execute-action': '_gotoImproveCoverage',
+        'flag.execute-action': '_gotoFlagColumns',
+        'gdpr.execute-action': '_gotoAssessGDPRRisk',
+        'goals.execute-action': '_gotoGoalsVisualization'
+      },
+
+      _gotoImproveCoverage: function () {
+        window.location = '#/concept-coverage'
+      },
+
+      _gotoFlagColumns: function () {
+        window.location = '#/request-status'
+      },
+
+      _gotoAssessGDPRRisk: function () {
+        window.location = '#/risk-assessment-data-steward'
+      },
+
+      _gotoGoalsVisualization: function () {
+        window.location = '#/goals-visualization'
+      }
+    });
+  </script>
+</dom-module>

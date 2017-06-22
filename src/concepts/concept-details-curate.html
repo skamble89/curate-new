@@ -27,7 +27,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 --mdb-example-values: {
                     font-size: 0.6em;
                     height: 1.7em;
-                    border-radius: 2em;
                 }
             }
 
@@ -86,13 +85,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
              :host .example-columns {
                 margin-top: var(--standard-padding, 20px);
-            }             
+            }
         </style>
 
         <div class="mode-selection">
-            <paper-checkbox class="pivot">
-                <mdb-title level="3" help-text="Use pivot to explore combinations of features by linking selection with others. For example, select a particular pattern to see possible synonyms and proximate domains within the set of columns having selected pattern.">Pivot</mdb-title>
-            </paper-checkbox>
+            <template is="dom-if" if="[[_isExploreMode(mode)]]">
+                <paper-checkbox class="pivot">
+                    <mdb-title level="3" help-text="Use pivot to explore combinations of features by linking selection with others. For example, select a particular pattern to see possible synonyms and proximate domains within the set of columns having selected pattern.">Pivot</mdb-title>
+                </paper-checkbox>
+            </template>
             <mdb-radio-list selected="{{mode}}">
                 <paper-radio-button name="explore">Explore</paper-radio-button>
                 <paper-radio-button name="define">Define</paper-radio-button>
@@ -110,7 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="example-values">
             <mdb-example-values help-text="Use example values to see examples of values found in columns matching your selected set of synonyms, patterns, and proximate domains."
-                examples='["21/03/2007","08/07/2006","18/03/2007","22/03/1936","Jan 5, 1999","12-13-1956","12-30-1988","3-18-1922","Feb 8, 1923","Feb 14, 1955","01/01/1914","08/03/1999","08/07/1997","03/06/1960","04/10/1936","08/13/1955","03/06/1960","Jun 12, 1987","Jun 8, 1999","Feb 12, 1967","Mar 3, 1960","04-10-1944","04-11-1977","08-15-1999","12-13-1999","08/17/1927"]'></mdb-example-values>
+                examples="{{examples}}"></mdb-example-values>
         </div>
         <div class="example-columns">
             <mdb-title help-text="Use example columns to see samples of columns matching your selected set of synonyms, patters, and proximate domains">Example Columns</mdb-title>
@@ -241,7 +242,120 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         date: '1461911293',
                         birthDt: 'Apr 26, 1916'
                     }]
+                },
+
+                examples: {
+                    type: Array,
+                    value: [
+                        {
+                            "example": "21/03/2007",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "08/07/2006",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "18/03/2007",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "22/03/1936",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "Jan 5, 1999",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "12-13-1956",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "12-30-1988",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "3-18-1922",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "Feb 8, 1923",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "Feb 14, 1955",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "01/01/1914",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "08/03/1999",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "08/07/1997",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "03/06/1960",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "04/10/1936",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "08/13/1955",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "03/06/1960",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "Jun 12, 1987",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "Jun 8, 1999",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "Feb 12, 1967",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "Mar 3, 1960",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "04-10-1944",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "04-11-1977",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "08-15-1999",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "12-13-1999",
+                            "recommended": "maybe"
+                        },
+                        {
+                            "example": "08/17/1927",
+                            "recommended": "maybe"
+                        }]
                 }
+            },
+
+            _isExploreMode: function (mode) {
+                return mode === 'explore';
             }
         });
     </script>

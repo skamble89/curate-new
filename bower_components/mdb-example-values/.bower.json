@@ -4,6 +4,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "mdb-simple-list": "git://github.com/makedatabetter-dev/mdb-simple-list.git",
+    "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
     "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git"
   },
   "devDependencies": {
@@ -13,12 +14,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/makedatabetter-dev/mdb-example-values",
-  "version": "0.0.3",
-  "_release": "0.0.3",
+  "version": "0.0.6",
+  "_release": "0.0.6",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.3",
-    "commit": "e0a160d0d11f1f5f7659fd029ae264c15aff355e"
+    "tag": "v0.0.6",
+    "commit": "00530fe2457c59c83f5a406e2240b2e26d84c78d"
   },
   "_source": "git://github.com/makedatabetter-dev/mdb-example-values.git",
   "_target": "*",

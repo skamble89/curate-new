@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../../bower_components/mdb-metric-display/mdb-metric-display.html">
 <link rel="import" href="../../bower_components/atom-table/atom-table.html">
+<link rel="import" href="../../bower_components/google-chart/google-chart.html">
 
 <dom-module id="concept-details-health">
     <template>
@@ -32,17 +33,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 margin-top: var(--standard-padding, 20px);
                 width: 100%;
             }
+
+             :host #charts {
+                display: flex;
+                justify-content: center;
+            }
+
+             :host google-chart {
+                width: 1000px;
+                height: 500px;
+            }
         </style>
 
         <div>
             <mdb-metric-display-container>
-                <mdb-metric-display stat-value="0%" stat-description="Classification Accuracy"></mdb-metric-display>
-                <mdb-metric-display stat-value="0%" stat-description="Predicted Columns"></mdb-metric-display>
+                <mdb-metric-display stat-value="88%" stat-description="Classification Accuracy"></mdb-metric-display>
+                <mdb-metric-display stat-value="300" stat-description="Predicted Columns"></mdb-metric-display>
                 <mdb-metric-display stat-value="56" stat-description="Confirmed Columns"></mdb-metric-display>
             </mdb-metric-display-container>
-            <img src="../../images/health.png" />
-            <atom-table items="{{items}}">
+   
+            <div id="chart">
+                <google-chart type="line" options='{"height": 500, "width": 1000,"hAxis":{"title":"Time"},"vAxis":{"title":"Values in Percentage"}}'
+                    data='[["Month", "Classification Accuracy", "Landscape Scanned"], ["Jan", 30, 10], ["Feb", 38, 15], ["Mar", 44, 18], ["Apr", 50, 24], ["May", 55, 32], ["Jun", 65, 43], ["Jul", 53, 38], ["Aug", 67, 45], ["Sep", 75, 49], ["Oct", 83, 57], ["Nov", 85, 59], ["Dec", 88, 64]]'>
+                </google-chart>
+            </div>
 
+            <atom-table items="{{items}}">
                 <vaadin-grid-column>
                     <template class="header">
                         <vaadin-grid-sorter path="lastActionTaken">Last Action Taken</vaadin-grid-sorter>
@@ -90,6 +106,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }, {
                         lastActionTaken: '3 patterns removed',
                         sufficientTimeElapsed: 'No (4 Hrs 55 Mins more)',
+                        efficacy: 'Too early to tell'
+                    }, {
+                        lastActionTaken: '500 columns added with 90% accuracy',
+                        sufficientTimeElapsed: 'No (2 Hrs 10 Mins more)',
                         efficacy: 'Too early to tell'
                     }]
                 }

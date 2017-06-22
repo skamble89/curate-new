@@ -20,26 +20,8 @@
 </head>
 
 <body>
-  <dom-module id="my-demo">
-    <template>
-      <atom-user-goals-visualization product-name="theBeats" description="This poster is a model that represents the people involved in the DMC quotation process, their key goals, and the tasks we
-          feel they should be undertaking in an ideal system."></atom-user-goals-visualization>
-    </template>
-    <script>
-      Polymer({
-        is: 'my-demo',
-
-        attached: function () {
-          var that = this;
-          d3.json('flare.json', function (err, data) {
-            var chart = that.querySelector('atom-user-goals-visualization');
-            chart.set('goals', data);
-          });
-        }
-      });
-    </script>
-  </dom-module>
-  <my-demo></my-demo>
+  <atom-user-goals-visualization product-name="theBeats" description="This poster is a model that represents the people involved in the DMC quotation process, their key goals, and the tasks we
+          feel they should be undertaking in an ideal system." key="1qdvpG4azV_oumBey9I9VW0JloMVG3tzj2TD8vOKujvw"></atom-user-goals-visualization>
 </body>
 
 </html>

@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="page-layout.html">
 <link rel="import" href="../bower_components/atom-google-sheet-adapter/atom-google-sheet-adapter.html">
 <link rel="import" href="../bower_components/atom-table/atom-table.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 
 <dom-module id="review-classify">
   <template>
@@ -26,13 +27,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           height: 500px;
         }
       }
+
+
+       :host #modal #buttons {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+       :host #modal paper-button {
+        --paper-button: {
+          vertical-align: text-bottom;
+          color: #5caadb;
+          font-weight: 600;
+        }
+      }
+
+       :host #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #444;
+        opacity: 0.5;
+        z-index: 100;
+      }
+
+       :host #reason {
+        width: 100%;
+        box-sizing: border-box;
+      }
     </style>
 
-    <page-layout heading="Review & Classify">
+    <page-layout>
+      <div slot="header">
+        <mdb-title>Review & Classify</mdb-title>
+      </div>
       <div class="banner" slot="body">
         <atom-google-sheet-adapter key="1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"></atom-google-sheet-adapter>
         <template is="dom-if" if="{{dataLoaded}}">
-          <atom-table items="{{items}}">
+          <atom-table items="{{items}}" id="grid">
             <vaadin-grid-column>
               <template class="header">
                 <vaadin-grid-sorter path="requestedBy">Requested By</vaadin-grid-sorter>
@@ -86,11 +120,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <vaadin-grid-sorter path="status">Status</vaadin-grid-sorter>
               </template>
               <template>
-                {{item.status}}
+                <template is="dom-if" if="[[!item.reason]]">
+                  <select value="{{item.status}}" on-change="_statusChanged">
+                  <option>Pending for review</option>
+                  <option>Accepted as concept</option>
+                  <option>Rejected</option>
+                </select>
+                </template>
+                <template is="dom-if" if="[[item.reason]]">
+                  <select value="{{item.status}}" on-change="_statusChanged" title="{{item.reason}}">
+                  <option>Pending for review</option>
+                  <option>Accepted as concept</option>
+                  <option>Rejected</option>
+                </select>
+                </template>
+
               </template>
             </vaadin-grid-column>
 
           </atom-table>
+          <template is="dom-if" if="[[_isModalOpen(_modalOpen)]]">
+            <div id="overlay" on-tap="_closeModal">
+            </div>
+          </template>
+          <paper-dialog id="modal">
+            <h3>Want to tell us why the concept was rejected?</h3>
+            <div id="modal-body">
+              <textarea id="reason" rows="10"></textarea>
+            </div>
+            <div id="buttons">
+              <paper-button id="cancel" on-tap="_closeModal">Cancel</paper-button>
+              <paper-button id="flag" on-tap="_save">Save</paper-button>
+            </div>
+          </paper-dialog>
         </template>
 
       </div>
@@ -103,6 +165,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         dataLoaded: {
+          type: Boolean,
+          value: false
+        },
+
+        activeItem: {
+          type: Object
+        },
+
+        _modalOpen: {
           type: Boolean,
           value: false
         }
@@ -121,6 +192,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               table.set('items', that._transform(rows))
             }, 0);
           });
+      },
+
+      _statusChanged: function (e) {
+        var status = e.target.value;
+        if (status === 'Rejected') {
+          this.activeItem = e.model.item;
+          this.activeItem.status = status;
+          this._modalOpen = true;
+          this.querySelector('#modal').open();
+        }
+      },
+
+      _save: function (e) {
+        this.activeItem.reason = this.querySelector('#reason').value;
+        this.querySelector('#grid').clearCache();
+        this._closeModal();
+      },
+
+      _isModalOpen: function (open) {
+        return open;
+      },
+
+      _closeModal: function () {
+        this._modalOpen = false;
+        this.querySelector('#reason').value = '';
+        this.querySelector('#modal').close();
       },
 
       _transform: function (rows) {

@@ -35,16 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-recommended-concepts-property-name: {
           color: #aaa;
         }
-        /*--stat-value: {
-          font-size: 3em;
-          font-weight: lighter;
-        }
-        --stat-description: {
-          font-size: 1.5em;
-          font-weight: 100;
-          margin: 0;
-          color: #afafaf;
-        }*/
       }
 
       [slot='body'] {
@@ -88,223 +78,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: #fff;
           background-color: #5caadb;
         }
-      }
-      /* Dimension finder */
-
-       :host paper-item .icon {
-        display: inline-block;
-        width: 1.5em;
-      }
-
-       :host paper-item iron-icon.arrow {
-        display: none;
-      }
-
-       :host paper-item .recommendation {
-        display: inline-block;
-        position: absolute;
-        right: 30px;
-        top: 50%;
-        transform: translate(0, -50%);
-      }
-
-       :host paper-item[aria-selected="true"] iron-icon.arrow {
-        display: inline-block;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translate(0, -50%);
-        color: #fff;
-      }
-
-       :host mdb-dimension-finder {
-        font-size: 1em;
-        --mdb-title: {
-          font-size: 1.5em;
-          color: #adadad;
-        }
-        --mdb-dimension-finder-header-container: {
-          margin-bottom: 20px;
-        }
-        --mdb-dimension-finder-list: {
-          height: 168px;
-          overflow: auto;
-        }
-        --mdb-dimension-finder-list-item: {
-          min-height: 25px;
-          height: auto;
-          padding-top: 0;
-          padding-bottom: 0;
-          line-height: initial;
-          padding-left: 20px;
-        }
-      }
-
-       :host .db-entities {
-        border: 1px solid #e3eaee;
-        overflow-y: auto;
-        overflow-x: hidden;
-        margin-top: var(--standard-padding, 20px);
-        padding-bottom: var(--standard-padding, 20px);
-        padding-top: var(--standard-padding, 20px);
-        font-size: 0;
-        display: flex;
-        justify-content: center;
-        flex-wrap: nowrap;
-      }
-
-       :host .db-entities mdb-dimension-finder {
-        font-size: 0.7rem;
-        padding: 0 15px 0 15px;
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 14.5px;
-          padding-right: 14.5px;
-        }
-        --mdb-dimension-finder-searchbox-container: {
-          padding: 20px;
-        }
-        --mdb-dimension-finder-searchbox: {
-          padding-left: 10px;
-          width: 93%;
-        }
-      }
-
-       :host .db-entities .item-name {
-        max-width: 199px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-       :host[w-1024] .db-entities {
-        margin-top: 20px;
-        padding-bottom: 20px;
-        padding-top: 20px;
-      }
-
-       :host[w-1024] .db-entities mdb-dimension-finder {
-        padding: 0 10px 0 10px;
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 10px;
-          padding-right: 10px;
-        }
-      }
-
-       :host[w-1280] .db-entities {
-        margin-top: 20px;
-        padding-bottom: 20px;
-        padding-top: 20px;
-      }
-
-       :host[w-1280] .db-entities mdb-dimension-finder {
-        padding: 0 10px 0 10px;
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 12px;
-          padding-right: 11px;
-        }
-      }
-
-       :host[w-1360] .db-entities {
-        margin-top: 20px;
-        padding-bottom: 20px;
-        padding-top: 20px;
-      }
-
-       :host[w-1360] .db-entities mdb-dimension-finder {
-        padding: 0 10px 0 10px;
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 18px;
-          padding-right: 18px;
-        }
-      }
-
-       :host[w-1366] .db-entities {
-        margin-top: 20px;
-        padding-bottom: 20px;
-        padding-top: 20px;
-      }
-
-       :host[w-1366] .db-entities mdb-dimension-finder {
-        padding: 0 10px 0 10px;
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 17px;
-          padding-right: 18px;
-        }
-      }
-
-       :host[w-1440] .db-entities {
-        margin-top: 20px;
-        padding-bottom: 20px;
-        padding-top: 20px;
-      }
-
-       :host[w-1440] .db-entities mdb-dimension-finder {
-        padding: 0 10px 0 10px;
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 7px;
-          padding-right: 7px;
-        }
-      }
-
-       :host[w-1600] .db-entities {
-        margin-top: 30px;
-        padding-bottom: 30px;
-        padding-top: 30px;
-      }
-
-       :host[w-1600] .db-entities mdb-dimension-finder {
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 14px;
-          padding-right: 14px;
-        }
-      }
-
-       :host[w-1680] .db-entities {
-        margin-top: 30px;
-        padding-bottom: 30px;
-        padding-top: 30px;
-      }
-
-       :host[w-1680] .db-entities mdb-dimension-finder {
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 19px;
-          padding-right: 19px;
-        }
-      }
-
-       :host[w-1920] .db-entities {
-        margin-top: 30px;
-        padding-bottom: 30px;
-        padding-top: 30px;
-      }
-
-       :host[w-1920] .db-entities mdb-dimension-finder {
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 34px;
-          padding-right: 34px;
-        }
-      }
-
-       :host[w-2560] .db-entities {
-        margin-top: 30px;
-        padding-bottom: 30px;
-        padding-top: 30px;
-      }
-
-       :host[w-2560] .db-entities mdb-dimension-finder {
-        --mdb-dimension-finder-radio-button: {
-          padding-left: 74px;
-          padding-right: 74px;
-        }
-      }
-
-       :host mdb-dimension-finder iron-icon {
-        width: 15px;
-        height: 15px;
-      }
-
-       :host .face {
-        padding-right: 3px;
       }
       /*Recommended Concepts*/
 
@@ -374,7 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-button: {
           font-size: 0.6em;
           vertical-align: text-bottom;
-          color: #5caadb;
+          color: var(--mdb-link-font-color, #5caadb);
           font-weight: 600;
         }
       }
@@ -393,6 +166,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           margin-bottom: 20px;
         }
         --mdb-coverage-table-header-cell: {
+          @apply(--app-table-header-cell);
           border-top: 0;
         }
         --mdb-coverage-table-options: {
@@ -428,10 +202,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <page-layout heading="Concept Coverage" help-text="Concept Coverage">
+    <page-layout>
+      <div slot="header">
+        <mdb-title help-text="Concept Coverage">Concept Coverage</mdb-title>
+      </div>
       <div slot="body">
         <mdb-metric-display-container>
-          <mdb-metric-display stat-value="{{coverage}}" stat-description="Coverage across 1 application"></mdb-metric-display>
+          <mdb-metric-display stat-value="{{coverage}}" stat-description="Coverage"></mdb-metric-display>
           <mdb-metric-display stat-value="{{eta}}" stat-description="ETA (based on yesterday)"></mdb-metric-display>
           <mdb-metric-display stat-value="{{confirmedColumns}}" stat-description="Confirmed Columns"></mdb-metric-display>
         </mdb-metric-display-container>
@@ -446,7 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- List of concetps -->
           <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
             <template>
-              <paper-item>{{this}}</paper-item>
+              <paper-item>{{item.name}}</paper-item>
             </template>
           </mdb-simple-list>
 
@@ -455,84 +232,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!-- Applications -->
             <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
               selected-dimension="{{selectedApplication}}">
-              <template>
-                <paper-item>
-                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
-                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                </paper-item>
-              </template>
             </mdb-dimension-finder>
 
             <!-- Databases -->
             <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
               selected-dimension="{{selectedDatabase}}">
-              <template>
-                <paper-item>
-                  <span class="bulb icon">
-                      <template is="dom-if" if="{{item.systemRecommended}}">
-                          <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
-                      </template>
-                  </span>
-                  <span class="face icon">
-                      <template is="dom-if" if="{{item.humanVerified}}">
-                          <iron-icon icon="icons:face"></iron-icon>
-                      </template>
-                  </span>
-                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
-                  <template is="dom-if" if="{{item.recommendation}}">
-                    <span class="recommendation">{{item.recommendation}}%</span>
-                  </template>
-                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                </paper-item>
-              </template>
             </mdb-dimension-finder>
 
             <!-- Schemas -->
             <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
               selected-dimension="{{selectedSchema}}">
-              <template>
-                <paper-item>
-                  <span class="bulb icon">
-                      <template is="dom-if" if="{{item.systemRecommended}}">
-                          <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
-                      </template>                            
-                  </span>
-                  <span class="face icon">
-                      <template is="dom-if" if="{{item.humanVerified}}">
-                          <iron-icon icon="icons:face"></iron-icon>
-                      </template>
-                  </span>
-                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
-                  <template is="dom-if" if="{{item.recommendation}}">
-                    <span class="recommendation">{{item.recommendation}}%</span>
-                  </template>
-                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                </paper-item>
-              </template>
             </mdb-dimension-finder>
 
             <!-- Tables -->
             <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables"
               selected-dimension="{{selectedTable}}">
-              <template>
-                <paper-item>
-                  <span class="bulb icon">
-                      <template is="dom-if" if="{{item.systemRecommended}}">
-                          <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
-                      </template>                            
-                  </span>
-                  <span class="face icon">
-                      <template is="dom-if" if="{{item.humanVerified}}">
-                          <iron-icon icon="icons:face"></iron-icon>
-                      </template>
-                  </span>
-                  <span class="item-name" title="{{item.name}}">{{item.name}}</span>
-                  <template is="dom-if" if="{{item.recommendation}}">
-                    <span class="recommendation">{{item.recommendation}}%</span>
-                  </template>
-                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                </paper-item>
-              </template>
             </mdb-dimension-finder>
           </div>
 
@@ -541,14 +255,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="[[!loadingInProgress]]">
               <template is="dom-if" if="[[tableColumns.length]]">
                 <div class="concept-identification">
-                  <mdb-coverage-table selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Coverage table" columns="[[tableColumns]]"
-                    items="[[tableData]]"></mdb-coverage-table>
+                  <mdb-coverage-table lobs="[[lobs]]" selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Coverage table"
+                    columns="[[tableColumns]]" items="[[tableData]]"></mdb-coverage-table>
 
                   <div class="recommended-concepts">
                     <!-- Recommended concepts -->
-                    <mdb-concept-recommendation property="[[selectedConcept]]" recommendation-factor="{{selectedConceptRecommendation}}" recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
+                    <mdb-concept-recommendation property="[[selectedConcept.name]]" column="[[selectedColumn]]" recommendation-factor="{{selectedConceptRecommendation}}"
+                      recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
                     <template is="dom-if" if="[[!isConceptIdentified]]">
-                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
+                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}" column="[[selectedColumn]]" search-source="[[recommendedConceptsSearchSource]]"></mdb-recommended-concepts>
                     </template>
                     <template is="dom-if" if="[[isConceptIdentified]]">
                       <div class="concept-identified">
@@ -585,12 +300,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         dataSource: String,
 
-        dataSourceOptions: Object,
-
         _dataSource: {
           type: Object,
           readOnly: true
         },
+
+        dataSourceOptions: Object,
 
         _selectedTab: {
           type: Number,
@@ -598,8 +313,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true,
           observer: '_tabChanged'
         },
-
-        dataSource: String,
 
         selectedLob: {
           type: String,
@@ -713,6 +426,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         },
 
+        recommendedConceptsSearchSource: {
+          type: Array,
+          value: []
+        },
+
         isConceptIdentified: {
           type: Boolean,
           value: false,
@@ -781,15 +499,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
 
           //Update if selected concept recommendation changed
-          if (that.selectedConcept === e.detail.property) {
+          if (that.selectedConcept.name === e.detail.property) {
             that.selectedConceptRecommendation = e.detail.recommendationFactor;
             that.isSelectedConceptRecommended = e.detail.recommended;
+          } else {
+            //Update if an item from the list is changed
+            var updatedConcept = that.recommendedConcepts.find(function (i) { return i.property === e.detail.property; });
+            if (updatedConcept) updatedConcept.recommendationFactor = e.detail.recommendationFactor;
           }
 
-          //Update if an item from the list is changed
-          var updatedConcept = that.recommendedConcepts.find(function (i) { return i.property === e.detail.property; });
-          if (updatedConcept) updatedConcept.recommendationFactor = e.detail.recommendationFactor;
-
+          if (e.detail.column === that.selectedColumn) that._updateColumnIdentification(that.selectedColumn, that.isConceptIdentified);
         });
       },
 
@@ -837,7 +556,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 delete list.customStyle['--concept-list-height'];
               }
 
-              that.set('concepts', concepts);
+              that.set('concepts', concepts.map(function (e) { return { name: e }; }));
               list.emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
               list.updateStyles();
             });
@@ -848,13 +567,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._resetEmptyMessage('mdb-dimension-finder.applications');
         this.set('applications', []);
 
-        if (this.selectedConcept) {
+        if (this.selectedConcept.name) {
           var that = this;
           //Get applications for the selected concept
-          this._dataSource.getConceptApplications(this.selectedLob, this.selectedConcept)
+          this._dataSource.getConceptApplications(this.selectedLob, this.selectedConcept.name)
             .then(function (applications) {
+              that.querySelector('mdb-dimension-finder.applications').dataLoaded = true;
               that.set('applications', applications);
-              that.querySelector('mdb-dimension-finder.applications').emptyMessage = applications.length === 0 ? 'No applications found for the selected concept.' : '';
             });
         }
       },
@@ -865,11 +584,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.selectedApplication) {
           var that = this;
-          this._dataSource.getApplicationDBs(this.selectedLob, this.selectedConcept, this.selectedApplication)
-            .then(function (dbs) {
-              that.set('databases', dbs);
-              that.querySelector('mdb-dimension-finder.databases').emptyMessage = dbs.length === 0 ? 'No databases found for the selected application.' : '';
-            });
+          if (!this.selectedApplication.checked) {
+            this._dataSource.getApplicationDBs(this.selectedLob, this.selectedConcept.name, this.selectedApplication)
+              .then(function (dbs) {
+                that.querySelector('mdb-dimension-finder.databases').dataLoaded = true;
+                that.set('databases', dbs);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedApplication;
+            this._dataSource.getApplicationColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication)
+              .then(function (tableData) {
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
         }
       },
 
@@ -879,11 +614,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.selectedDatabase) {
           var that = this;
-          this._dataSource.getDBSchemas(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase)
-            .then(function (schemas) {
-              that.set('schemas', schemas);
-              that.querySelector('mdb-dimension-finder.schemas').emptyMessage = schemas.length === 0 ? 'No schemas found for the selected database.' : '';
-            });
+          if (!this.selectedDatabase.checked) {
+            this._dataSource.getDBSchemas(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase)
+              .then(function (schemas) {
+                that.querySelector('mdb-dimension-finder.schemas').dataLoaded = true;
+                that.set('schemas', schemas);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedDatabase;
+            this._dataSource.getApplicationColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase)
+              .then(function (tableData) {                
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
         }
       },
 
@@ -893,11 +644,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.selectedSchema) {
           var that = this;
-          this._dataSource.getSchemaTables(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
-            .then(function (tables) {
-              that.set('tables', tables);
-              that.querySelector('mdb-dimension-finder.tables').emptyMessage = tables.length === 0 ? 'No tables found for the selected schema.' : '';
-            });
+          if (!this.selectedSchema.checked) {
+            this._dataSource.getSchemaTables(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+              .then(function (tables) {
+                that.querySelector('mdb-dimension-finder.tables').dataLoaded = true;
+                that.set('tables', tables);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedSchema;
+            this._dataSource.getSchemaColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+              .then(function (tableData) {                
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
         }
       },
 
@@ -910,7 +677,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.selectedTable) {
           var that = this;
           this.loadingInProgress = true;
-          this._dataSource.getTableData(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
+          this._dataSource.getTableData(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
             .then(function (tableData) {
               that.set('tableColumns', tableData.columns);
               that.set('tableData', tableData.rows);
@@ -931,22 +698,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.selectedColumn) {
           var that = this;
-          this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
+          this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
             .then(function (recommendations) {
               var r = recommendations[0];
-              var rf = r.recommendationFactor + 3;
+              var rf = (r ? r.recommendationFactor : 0) + 3;
               //Initial values for selected concept recommendation
               that.isSelectedConceptRecommended = 'maybe';
               that.selectedConceptRecommendation = rf < 100 ? rf : 99;
 
               that.set('recommendedConcepts', recommendations);
+              that.set('recommendedConceptsSearchSource', that.concepts.map(function (e) { return { property: e, recommendationFactor: 50, recommended: 'maybe' } }));
             });
         }
       },
 
       _resetEmptyMessage: function (selector) {
         var component = this.querySelector(selector);
-        if (component) component.emptyMessage = '';
+        if (component) {
+          component.emptyMessage = ''
+          component.dataLoaded = false;
+        };
       },
 
       _undoConceptIdentification: function () {
@@ -956,7 +727,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.isConceptIdentified = false;
         this.identifiedConcept = undefined;
 
-        if (concept.trim() === this.selectedConcept) {
+        if (concept.trim() === this.selectedConcept.name) {
           this.isSelectedConceptRecommended = 'maybe';
         }
 
@@ -970,6 +741,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _showTable: function () {
         return this.selectedTable && !this.loadingInProgress && this.tableColumns.length > 0;
+      },
+
+      _updateColumnIdentification: function (column, identified) {
+        var item = this.tableColumns.find(function (e) { return e.name === column; }),
+          index = this.tableColumns.indexOf(item);
+
+        if (index !== -1) {
+          var updated = JSON.parse(JSON.stringify(item))
+
+          updated.identified = identified;
+          this.splice('tableColumns', index, 1, updated);
+        }
       }
     });
   </script>

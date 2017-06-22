@@ -29,15 +29,18 @@
     "mdb-recommended-concepts": "git://github.com/makedatabetter-dev/mdb-recommended-concepts.git",
     "mdb-facet-discovery": "git://github.com/makedatabetter-dev/mdb-facet-discovery.git",
     "mdb-example-values": "git://github.com/makedatabetter-dev/mdb-example-values.git",
+    "mdb-status-chip": "git://github.com/makedatabetter-dev/mdb-status-chip.git",
     "atom-table": "git://github.com/makedatabetter-dev/atom-table.git",
     "atom-feedback": "git://github.com/makedatabetter-dev/atom-feedback.git",
+    "atom-feature": "git://github.com/makedatabetter-dev/atom-feature.git",
     "atom-google-sheet-adapter": "git://github.com/makedatabetter-dev/atom-google-sheet-adapter.git",
     "atom-user-goals-visualization": "git://github.com/makedatabetter-dev/atom-user-goals-visualization.git",
     "iron-ajax": "PolymerElements/iron-ajax#^1.4.4",
     "google-sheets": "GoogleWebComponents/google-sheets#^1.0.6",
     "paper-button": "PolymerElements/paper-button#^2.0.0",
     "paper-menu-button": "PolymerElements/paper-menu-button#^2.0.0",
-    "paper-menu": "PolymerElements/paper-menu#^1.3.0"
+    "paper-menu": "PolymerElements/paper-menu#^1.3.0",
+    "google-chart": "GoogleWebComponents/google-chart#^1.1.2"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

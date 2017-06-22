@@ -28,7 +28,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <page-layout heading="Requests & Status">
+    <page-layout>
+      <div slot="header">
+        <mdb-title>Requests & Status</mdb-title>
+      </div>
       <div class="banner" slot="body">
         <atom-google-sheet-adapter key="1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"></atom-google-sheet-adapter>
         <template is="dom-if" if="{{dataLoaded}}">

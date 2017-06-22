@@ -20,8 +20,10 @@
             }
 
              :host #recommendationContainer #property {
-                width: 25%;
-                word-wrap: break-word;
+                width: 30%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
                 position: absolute;
                 top: 50%;
                 transform: translate(0, -50%);
@@ -30,7 +32,7 @@
 
              :host mdb-radio-list {
                 position: relative;
-                left: 25%;
+                left: 35%;
             }
 
              :host paper-radio-button {
@@ -55,7 +57,7 @@
             }
         </style>
         <div id="recommendationContainer">
-            <span id="property">[[property]]</span>
+            <span id="property" title="[[property]]">[[property]]</span>
             <mdb-radio-list size="small" selected="{{recommended}}">
                 <paper-radio-button name="yes">YES</paper-radio-button>
                 <paper-radio-button name="no">NO</paper-radio-button>
@@ -77,6 +79,10 @@
                 },
 
                 property: {
+                    type: String
+                },
+
+                column: {
                     type: String
                 },
 
@@ -119,6 +125,7 @@
 
                 this.fire('recommendation-changed', {
                     property: this.property,
+                    column: this.column,
                     recommended: this.recommended,
                     recommendationFactor: this.recommendationFactor
                 });

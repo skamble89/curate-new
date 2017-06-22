@@ -47,7 +47,7 @@ Custom property | Description | Default
         }
       }
     </style>
-    <paper-input no-label-float placeholder="{{placeholder}}">
+    <paper-input no-label-float placeholder="{{placeholder}}" value="{{filter}}">
       <content></content>
     </paper-input>
   </template>
@@ -58,10 +58,11 @@ Custom property | Description | Default
       is: 'mdb-search-box',
 
       properties: {
-        name: {
+        filter: {
           type: String,
-          value: 'mdb-search-box',
-          readOnly: true
+          value: '',
+          observer: '_filterChanged',
+          notify: true
         },
 
         placeholder: {
@@ -70,7 +71,45 @@ Custom property | Description | Default
           reflectToAttribute: true,
           notify: true
         },
+
+        source: {
+          type: Object,
+          observer: '_sourceChanged'
+        },
+
+        searchPath: {
+          type: String
+        },
+
+        searchResults: {
+          type: Array,
+          value: [],
+          readOnly: true,
+          notify: true
+        }
       },
+
+      _filterChanged: function () {
+        var prop = this.searchPath,
+          filter = this.filter.toLowerCase();
+
+
+        if (this.source instanceof Array) {
+          if (filter) {
+            this._setSearchResults(this.source.filter(function (e) {
+              return typeof e === typeof {} ? e[prop].toLowerCase().indexOf(filter) > -1 : e.toLowerCase().indexOf(filter) > -1;
+            }));
+          } else {
+            this._setSearchResults(this.source);
+          }
+        } else {
+          this._setSearchResults([]);
+        }
+      },
+
+      _sourceChanged: function (source) {
+        this._source = source;
+      }
 
     });
   </script>

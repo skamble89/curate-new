@@ -14,27 +14,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="shared-styles">
   <template>
     <style>
-      /*.card {
-        margin: 24px;
-        padding: 16px;
-        color: #757575;
-        border-radius: 5px;
-        background-color: #fff;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      }
-
-      .circle {
-        display: inline-block;
-        width: 64px;
-        height: 64px;
-        text-align: center;
-        color: #555;
-        border-radius: 50%;
-        background: #ddd;
-        font-size: 30px;
-        line-height: 64px;
-      }*/
-
       .app-blue {
         color: var(--app-primary-color);
       }
@@ -43,7 +22,197 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 16px 0;
         color: #212121;
         font-size: 22px;
-      }      
+      }
+
+       :host [slot="header"] mdb-title {
+        --mdb-title: {
+          color: #000;
+        }
+      }
+      /* Dimension finder */
+
+       :host mdb-dimension-finder {
+        font-size: 1em;
+        --mdb-title: {
+          font-size: 1.5em;
+          color: #adadad;
+        }
+        --mdb-dimension-finder-header-container: {
+          margin-bottom: 20px;
+        }
+        --mdb-dimension-finder-list: {
+          height: 168px;
+          overflow: auto;
+        }
+        --mdb-dimension-finder-list-item: {
+          min-height: 25px;
+          height: auto;
+          padding-top: 0;
+          padding-bottom: 0;
+          line-height: initial;
+          padding-left: 20px;
+          color: #312d2b;
+        }
+      }
+
+       :host .db-entities {
+        border: 1px solid #e3eaee;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-top: var(--standard-padding, 20px);
+        padding-bottom: var(--standard-padding, 20px);
+        padding-top: var(--standard-padding, 20px);
+        font-size: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+
+       :host .db-entities mdb-dimension-finder {
+        font-size: 0.7rem;
+        padding: 0 15px 0 15px;
+        --mdb-dimension-finder-list-item-text: {
+          max-width: 150px;
+        }
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 14.5px;
+          padding-right: 14.5px;
+        }
+        --mdb-dimension-finder-searchbox-container: {
+          margin: 20px;
+        }
+        --mdb-dimension-finder-searchbox: {
+          padding-left: 10px;
+        }
+      }
+
+       :host[w-1024] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1024] .db-entities mdb-dimension-finder {
+        padding: 0 10px 0 10px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+
+       :host[w-1280] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1280] .db-entities mdb-dimension-finder {
+        padding: 0 10px 0 10px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 12px;
+          padding-right: 11px;
+        }
+        --mdb-dimension-finder-list-item-text: {
+          max-width: 145px;
+        }
+      }
+
+       :host[w-1360] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1360] .db-entities mdb-dimension-finder {
+        padding: 0 10px 0 10px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+      }
+
+       :host[w-1366] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1366] .db-entities mdb-dimension-finder {
+        padding: 0 10px 0 10px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 17px;
+          padding-right: 18px;
+        }
+      }
+
+       :host[w-1440] .db-entities {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+       :host[w-1440] .db-entities mdb-dimension-finder {
+        padding: 0 10px 0 10px;
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+        --mdb-dimension-finder-list-item-text: {
+          max-width: 125px;
+        }
+      }
+
+       :host[w-1600] .db-entities {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+
+       :host[w-1600] .db-entities mdb-dimension-finder {
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+      }
+
+       :host[w-1680] .db-entities {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+
+       :host[w-1680] .db-entities mdb-dimension-finder {
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 19px;
+          padding-right: 19px;
+        }
+      }
+
+       :host[w-1920] .db-entities {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+
+       :host[w-1920] .db-entities mdb-dimension-finder {
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 34px;
+          padding-right: 34px;
+        }
+      }
+
+       :host[w-2560] .db-entities {
+        margin-top: 30px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+
+       :host[w-2560] .db-entities mdb-dimension-finder {
+        --mdb-dimension-finder-radio-button: {
+          padding-left: 74px;
+          padding-right: 74px;
+        }
+      }
     </style>
   </template>
 </dom-module>

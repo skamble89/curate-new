@@ -11,11 +11,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="page-layout.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="./concepts/concept-list.html">
 <link rel="import" href="./concepts/concept-details.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../bower_components/mdb-status-chip/mdb-status-chip.html">
 
 <dom-module id="app-concepts">
   <template>
@@ -29,23 +28,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           border-bottom: 1px solid #ddd;
         }
       }
+
+       :host [slot="header"] {
+        display: flex;
+        justify-content: space-between;
+      }
     </style>
 
-    <page-layout heading="Concepts" help-text="Concepts">
+    <page-layout>
+      <div slot="header">
+        <mdb-title help-text="Concepts">Concepts</mdb-title>
+        <mdb-status-chip icon="image:landscape" status-label="Landscape scanned" status-value="38%"></mdb-status-chip>
+      </div>
       <div class="banner" slot="body">
-        <paper-tabs selected="{{selectedTab}}">
-          <paper-tab>LIST</paper-tab>
-          <paper-tab>DETAILS</paper-tab>
-        </paper-tabs>
-
-        <iron-pages selected="{{selectedTab}}">
-          <div>
-            <concept-list></concept-list>
-          </div>
-          <div>
-            <concept-details></concept-details>
-          </div>
-        </iron-pages>
+        <template is="dom-if" if="[[_showList(view)]]">
+          <concept-list on-active-item-changed="_activeItemChanged"></concept-list>
+        </template>
+        <template is="dom-if" if="[[!_showList(view)]]">
+          <concept-details item="{{selectedItem}}"></concept-details>
+        </template>
       </div>
     </page-layout>
   </template>
@@ -55,10 +56,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'app-concepts',
 
       properties: {
-        selectedTab: {
-          type: Number,
-          value: 0
+        view: {
+          type: String,
+          value: 'list'
+        },
+
+        selectedItem: {
+          type: Object
         }
+      },
+
+      attached: function () {
+        var that = this;
+        this.addEventListener('show-list', function () {
+          that.set('selectedItem', undefined);
+          that.view = 'list';
+        });
+      },
+
+      _activeItemChanged: function (e) {
+        if (e && e.detail && e.detail.value) {
+          this.set('selectedItem', e.detail.value);
+          this.view = 'detail';
+        }
+      },
+
+      _showList: function () {
+        return this.view === 'list';
       }
     });
   </script>
