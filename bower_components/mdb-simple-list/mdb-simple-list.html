@@ -62,14 +62,14 @@ Custom property | Description | Default
         }
         --paper-item-selected-weight:var(--mdb-list-item-font-weight, 200);
       }
-      
+
        :host paper-listbox {
         outline: 0;
         padding: 0;
         color: #a1a2a4;
         @apply(--mdb-simple-list)
       }
-      
+
        :host .empty-message {
         @apply(--mdb-simple-list-empty)
       }
@@ -125,8 +125,6 @@ Custom property | Description | Default
         }
       },
 
-      behaviors: [Polymer.Templatizer],
-
       _renderList: function () {
         this.selected = undefined;
         var template = this.queryEffectiveChildren('template');
@@ -136,22 +134,13 @@ Custom property | Description | Default
           if (list) {
             list = Polymer.dom(list);
             this.dataHost = this;
-            this.templatize(template);
+            //this.templatize(template);
             this._emptyList();
 
-            var items = this.items;
-            for (var i = 0; i < items.length; i++) {
-              var item = items[i];
-              var clone = this.stamp({});
-
-              if (typeof item === typeof '') {
-                clone['this'] = item;
-              } else {
-                clone['item'] = item;
-              }
-
-              list.appendChild(clone.root);
-            }
+            var repeat = document.createElement('template', 'dom-repeat');
+            list.appendChild(repeat);
+            repeat.templatize(template);
+            repeat.items = this.items;
           }
         }
       },

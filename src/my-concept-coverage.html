@@ -147,7 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-button: {
           font-size: 0.6em;
           vertical-align: text-bottom;
-          color: #5caadb;
+          color: var(--mdb-link-font-color, #5caadb);
           font-weight: 600;
         }
       }
@@ -208,7 +208,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div slot="body">
         <mdb-metric-display-container>
-          <mdb-metric-display stat-value="{{coverage}}" stat-description="Coverage across 1 application"></mdb-metric-display>
+          <mdb-metric-display stat-value="{{coverage}}" stat-description="Coverage"></mdb-metric-display>
           <mdb-metric-display stat-value="{{eta}}" stat-description="ETA (based on yesterday)"></mdb-metric-display>
           <mdb-metric-display stat-value="{{confirmedColumns}}" stat-description="Confirmed Columns"></mdb-metric-display>
         </mdb-metric-display-container>
@@ -223,7 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- List of concetps -->
           <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
             <template>
-              <paper-item>{{this}}</paper-item>
+              <paper-item>{{item.name}}</paper-item>
             </template>
           </mdb-simple-list>
 
@@ -260,7 +260,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                   <div class="recommended-concepts">
                     <!-- Recommended concepts -->
-                    <mdb-concept-recommendation property="[[selectedConcept]]" column="[[selectedColumn]]" recommendation-factor="{{selectedConceptRecommendation}}"
+                    <mdb-concept-recommendation property="[[selectedConcept.name]]" column="[[selectedColumn]]" recommendation-factor="{{selectedConceptRecommendation}}"
                       recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
                     <template is="dom-if" if="[[!isConceptIdentified]]">
                       <mdb-recommended-concepts recommendations="{{recommendedConcepts}}" column="[[selectedColumn]]" search-source="[[recommendedConceptsSearchSource]]"></mdb-recommended-concepts>
@@ -499,7 +499,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
 
           //Update if selected concept recommendation changed
-          if (that.selectedConcept === e.detail.property) {
+          if (that.selectedConcept.name === e.detail.property) {
             that.selectedConceptRecommendation = e.detail.recommendationFactor;
             that.isSelectedConceptRecommended = e.detail.recommended;
           } else {
@@ -556,7 +556,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 delete list.customStyle['--concept-list-height'];
               }
 
-              that.set('concepts', concepts);
+              that.set('concepts', concepts.map(function (e) { return { name: e }; }));
               list.emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
               list.updateStyles();
             });
@@ -564,13 +564,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _conceptChanged: function () {
-        this._resetEmptyMessage('mdb-dimension-finder.applications');        
+        this._resetEmptyMessage('mdb-dimension-finder.applications');
         this.set('applications', []);
 
-        if (this.selectedConcept) {
+        if (this.selectedConcept.name) {
           var that = this;
           //Get applications for the selected concept
-          this._dataSource.getConceptApplications(this.selectedLob, this.selectedConcept)
+          this._dataSource.getConceptApplications(this.selectedLob, this.selectedConcept.name)
             .then(function (applications) {
               that.querySelector('mdb-dimension-finder.applications').dataLoaded = true;
               that.set('applications', applications);
@@ -579,44 +579,92 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _applicationChanged: function () {
-        this._resetEmptyMessage('mdb-dimension-finder.databases');        
+        this._resetEmptyMessage('mdb-dimension-finder.databases');
         this.set('databases', []);
 
         if (this.selectedApplication) {
           var that = this;
-          this._dataSource.getApplicationDBs(this.selectedLob, this.selectedConcept, this.selectedApplication)
-            .then(function (dbs) {
-              that.querySelector('mdb-dimension-finder.databases').dataLoaded = true;
-              that.set('databases', dbs);
-            });
+          if (!this.selectedApplication.checked) {
+            this._dataSource.getApplicationDBs(this.selectedLob, this.selectedConcept.name, this.selectedApplication)
+              .then(function (dbs) {
+                that.querySelector('mdb-dimension-finder.databases').dataLoaded = true;
+                that.set('databases', dbs);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedApplication;
+            this._dataSource.getApplicationColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication)
+              .then(function (tableData) {
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
         }
       },
 
       _databaseChanged: function () {
-        this._resetEmptyMessage('mdb-dimension-finder.schemas');        
+        this._resetEmptyMessage('mdb-dimension-finder.schemas');
         this.set('schemas', []);
 
         if (this.selectedDatabase) {
           var that = this;
-          this._dataSource.getDBSchemas(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase)
-            .then(function (schemas) {
-              that.querySelector('mdb-dimension-finder.schemas').dataLoaded = true;
-              that.set('schemas', schemas);
-            });
+          if (!this.selectedDatabase.checked) {
+            this._dataSource.getDBSchemas(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase)
+              .then(function (schemas) {
+                that.querySelector('mdb-dimension-finder.schemas').dataLoaded = true;
+                that.set('schemas', schemas);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedDatabase;
+            this._dataSource.getApplicationColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase)
+              .then(function (tableData) {                
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
         }
       },
 
       _schemaChanged: function () {
-        this._resetEmptyMessage('mdb-dimension-finder.tables');        
+        this._resetEmptyMessage('mdb-dimension-finder.tables');
         this.set('tables', []);
 
         if (this.selectedSchema) {
           var that = this;
-          this._dataSource.getSchemaTables(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
-            .then(function (tables) {
-              that.querySelector('mdb-dimension-finder.tables').dataLoaded = true;
-              that.set('tables', tables);
-            });
+          if (!this.selectedSchema.checked) {
+            this._dataSource.getSchemaTables(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+              .then(function (tables) {
+                that.querySelector('mdb-dimension-finder.tables').dataLoaded = true;
+                that.set('tables', tables);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedSchema;
+            this._dataSource.getSchemaColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+              .then(function (tableData) {                
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
         }
       },
 
@@ -629,7 +677,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.selectedTable) {
           var that = this;
           this.loadingInProgress = true;
-          this._dataSource.getTableData(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
+          this._dataSource.getTableData(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
             .then(function (tableData) {
               that.set('tableColumns', tableData.columns);
               that.set('tableData', tableData.rows);
@@ -650,7 +698,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.selectedColumn) {
           var that = this;
-          this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
+          this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
             .then(function (recommendations) {
               var r = recommendations[0];
               var rf = (r ? r.recommendationFactor : 0) + 3;
@@ -679,7 +727,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.isConceptIdentified = false;
         this.identifiedConcept = undefined;
 
-        if (concept.trim() === this.selectedConcept) {
+        if (concept.trim() === this.selectedConcept.name) {
           this.isSelectedConceptRecommended = 'maybe';
         }
 

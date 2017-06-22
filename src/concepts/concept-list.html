@@ -21,12 +21,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              :host {
                 display: block;
             }
-            
+
              :host atom-table {
                 --atom-table-body-cell: {
                     @apply(--app-table-body-cell);
                     cursor: pointer;
                 }
+            }
+
+             :host .concept-name {
+                color: var(--mdb-link-font-color, #5caadb);
             }
         </style>
 
@@ -36,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <vaadin-grid-sorter path="concept">Concept Name</vaadin-grid-sorter>
                 </template>
                 <template>
-                    {{item.concept}}
+                    <span class="concept-name">{{item.concept}}</span>
                 </template>
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">

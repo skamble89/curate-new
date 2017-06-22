@@ -58,10 +58,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div slot="body">
         <img src="../images/welcome_1.png" />
         <div class="features">
-          <atom-feature id="add-data" title="Add Your Data" button-title="Add Your Data" icon="icons:add" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."></atom-feature>
-          <atom-feature id="curate-concepts" title="Curate Concepts" button-title="Curate Concepts" icon="icons:receipt" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."></atom-feature>
-          <atom-feature id="improve-coverage" title="Improve Coverage" button-title="Improve Coverage" icon="editor:mode-edit" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."></atom-feature>
-          <atom-feature id="settings" title="Settings" button-title="Settings" icon="icons:settings" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."></atom-feature>
+          <atom-feature id="coverage" title="Improve Coverage" button-title="Improve Coverage" icon="editor:mode-edit" description="Comb through various applications, databases, schemas and tables to go through columns and identify them as being a particular concept or not. As you make more identifications you help train the system, improve classification accuracy and make data better."></atom-feature>
+          <atom-feature id="flag" title="Flag Columns" button-title="Flag Columns" icon="icons:add" description="See all the columns that you and other data stewards have flagged as potential concepts, columns containing personal identifiable information, under which line of business these have been flagged and track the current status of the flagging requests."></atom-feature>
+          <atom-feature id="gdpr" title="Assess GDPR Risk" button-title="Assess GDPR Risk" icon="icons:receipt" description="Get a line of business, application, database or schema level view of the risk assessment pipeline. View any bottlenecks that may be holding back the risk assessment effort. Gauge your progress towards having a complete picture of your GDPR risk."></atom-feature>          
+          <atom-feature id="goals" title="Know the goals " button-title="Know the goals " icon="icons:settings" description="Take a look at the various user roles involved with GDPR risk assessment and mitigation. Realise what all the software is designed to help you accomplish and provide feedback if you feel any of your key goals are currently not being met!"></atom-feature>
         </div>
       </div>
     </page-layout>
@@ -72,7 +72,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'app-welcome-data-steward',
 
       listeners: {
-        'settings.execute-action': '_gotoGoalsVisualization'
+        'coverage.execute-action': '_gotoImproveCoverage',
+        'flag.execute-action': '_gotoFlagColumns',
+        'gdpr.execute-action': '_gotoAssessGDPRRisk',
+        'goals.execute-action': '_gotoGoalsVisualization'
+      },
+
+      _gotoImproveCoverage: function () {
+        window.location = '#/concept-coverage'
+      },
+
+      _gotoFlagColumns: function () {
+        window.location = '#/request-status'
+      },
+
+      _gotoAssessGDPRRisk: function () {
+        window.location = '#/risk-assessment-data-steward'
       },
 
       _gotoGoalsVisualization: function () {

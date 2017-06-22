@@ -152,6 +152,7 @@ Custom property | Description | Default
       <mdb-simple-list height="{{height}}" items="{{_searchResults}}" empty-message="{{emptyMessage}}">
         <template>
           <paper-item>
+            <paper-checkbox checked="{{item.checked}}"></paper-checkbox>
             <span class="bulb icon">
                 <template is="dom-if" if="{{item.systemRecommended}}">
                     <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
@@ -236,6 +237,10 @@ Custom property | Description | Default
           type: Boolean,
           value: false
         }
+      },
+
+      ready: function () {
+        this.showAllDimensions = this.allDimensionsAllowed ? this.showAllDimensions : true
       },
 
       attached: function () {
