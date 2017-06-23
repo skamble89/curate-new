@@ -1,0 +1,13 @@
+{
+  "name": "mdb-assessment-summary",
+  "homepage": "https://github.com/makedatabetter-dev/mdb-assessment-summary",
+  "_release": "bc6a3852aa",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "bc6a3852aa66d70257c1cdc1efcfb22532ba1d40"
+  },
+  "_source": "git://github.com/makedatabetter-dev/mdb-assessment-summary.git",
+  "_target": "*",
+  "_originalSource": "git://github.com/makedatabetter-dev/mdb-assessment-summary.git"
+}
