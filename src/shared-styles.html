@@ -24,6 +24,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 22px;
       }
 
+       :host {
+        --mdb-help-text-font-size: 0.8rem;
+      }
+
        :host [slot="header"] mdb-title {
         --mdb-title: {
           color: #000;
@@ -41,7 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
        :host .welcome-page .features {
         display: flex;
-        justify-content: center;
+        justify-content: left;
         color: #aaa;
       }
 
@@ -87,8 +91,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
        :host .db-entities {
         border: 1px solid #e3eaee;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow-y: visible;
+        overflow-x: visible;
         margin-top: var(--standard-padding, 20px);
         padding-bottom: var(--standard-padding, 20px);
         padding-top: var(--standard-padding, 20px);

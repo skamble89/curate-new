@@ -76,15 +76,16 @@ Custom property | Description | Default
 
        :host #search-box mdb-concept-recommendation:first-child {
         border-top: 1px solid #f1f5f7;
-      } 
+      }
     </style>
 
 
-    <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts for {{column}} </mdb-title>
+    <mdb-title help-text="[[helpText]]" level="2">Recommended Concepts for {{column}} </mdb-title>
     <template is="dom-if" if="[[recommendations.length]]">
       <div class="recommendation-list">
         <template is="dom-repeat" items="[[recommendations]]">
-          <mdb-concept-recommendation property="[[item.property]]" column="[[column]]" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
+          <mdb-concept-recommendation property="[[item.property]]" column="[[column]]" recommendation-factor="{{item.recommendationFactor}}"
+            recommended="{{item.recommended}}"></mdb-concept-recommendation>
         </template>
       </div>
     </template>
@@ -104,7 +105,8 @@ Custom property | Description | Default
         <template is="dom-if" if="[[_searchResults.length]]">
           <div class="recommendation-list">
             <template is="dom-repeat" items="[[_searchResults]]">
-              <mdb-concept-recommendation property="[[item.property]]" column="[[column]]" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
+              <mdb-concept-recommendation property="[[item.property]]" column="[[column]]" recommendation-factor="{{item.recommendationFactor}}"
+                recommended="{{item.recommended}}"></mdb-concept-recommendation>
             </template>
           </div>
         </template>
@@ -143,6 +145,11 @@ Custom property | Description | Default
         searchSource: {
           type: Object,
           value: {}
+        },
+
+        helpText: {
+          type: String,
+          value: ''
         },
 
         _searchResults: {
