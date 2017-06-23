@@ -27,9 +27,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              :host {
                 display: block;
             }
+
              :host atom-table {
                 overflow: hidden;
                 margin-top: var(--standard-padding, 20px);
+                --atom-table-header-cell: {
+                    @apply(--app-table-header-cell);
+                    white-space: normal;
+                }
             }
 
              :host paper-tabs {
@@ -50,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </vaadin-grid-column>
                 <vaadin-grid-column width="30px">
                     <template class="header">
-                        # Mapping
+                        Predicted Columns
                     </template>
                     <template>
                         {{item.mappingCount}}

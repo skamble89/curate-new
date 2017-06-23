@@ -11,6 +11,7 @@ The following custom properties and mixins are also available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
+`--mdb-radio-list-container` | Mixin applied to the radio list container | `{}`
 `--mdb-radio-list-button` | Mixin applied to the radio list buttons | `{}`
 `--mdb-radio-list-selected-button-border-color` | Border color of selected radio button | `#71b3e1`
 `--mdb-radio-list-selected-button-label-color` | Font color of selected radio button | `#464646`
@@ -28,6 +29,7 @@ Custom property | Description | Default
 
        :host paper-radio-group {
         white-space: nowrap;
+        @apply(--mdb-radio-list-container);
       }
 
        :host ::content paper-radio-button {

@@ -20,6 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <style include="shared-styles">
              :host {
                 height: 100%;
+                --mdb-dimension-finder-header-container: {
+                    margin-bottom: 20px;
+                }
             }
 
              :host [slot="header"] {
@@ -54,12 +57,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     border: 0;
                     padding: 0;
                     font-size: 9px;
+                    white-space: normal;
+                    margin: 1px;
+                    margin-top: 0;
+                    background-color: #e2e7eb;
                 }
             }
 
              :host .header-cell {
-                background-color: #e2e7eb;
-                margin: 1px;
                 padding: 14px 5px 14px 5px;
                 text-align: center;
             }
@@ -109,15 +114,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <mdb-title>GDPR Risk Assessment Report</mdb-title>
                 <mdb-status-chip icon="device:access-time" status-label="Last Updated" status-value="20 mins ago"></mdb-status-chip>
             </div>
-            <div slot="body">                
+            <div slot="body">
                 <div class="db-entities">
                     <!-- Tables -->
                     <mdb-dimension-finder id="concept" class="concepts" dimension="Concept" help-text="List of Concepts of LOB {{selectedLOB}}">
                     </mdb-dimension-finder>
 
                     <!-- Applications -->
-                    <mdb-dimension-finder id="application" class="applications" dimension="Application" items="{{applications}}"
-                        help-text="List of Applications" selected-dimension="{{selectedApplication}}">
+                    <mdb-dimension-finder id="application" class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
+                        selected-dimension="{{selectedApplication}}">
                     </mdb-dimension-finder>
 
                     <!-- Databases -->
@@ -126,8 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </mdb-dimension-finder>
 
                     <!-- Schemas -->
-                    <mdb-dimension-finder id="schema" class="schemas" dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
-                        selected-dimension="{{selectedSchema}}">
+                    <mdb-dimension-finder id="schema" class="schemas" dimension="Schema" items="{{schemas}}" help-text="List of Schemas" selected-dimension="{{selectedSchema}}">
                     </mdb-dimension-finder>
                 </div>
                 <template is="dom-if" if="{{tables.length}}">

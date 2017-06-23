@@ -23,6 +23,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
 
              :host atom-table {
+                --atom-table-header-cell: {
+                    @apply(--app-table-header-cell);
+                    white-space: normal;
+                }
                 --atom-table-body-cell: {
                     @apply(--app-table-body-cell);
                     cursor: pointer;
@@ -45,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </vaadin-grid-column>
             <vaadin-grid-column width="50px">
                 <template class="header">
-                    <vaadin-grid-sorter path="mappingCount"># Mapping</vaadin-grid-sorter>
+                    <vaadin-grid-sorter path="mappingCount">Predicted Columns</vaadin-grid-sorter>
                 </template>
                 <template>
                     {{item.mappingCount}}
@@ -59,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     {{item.health}}%
                 </template>
             </vaadin-grid-column>
-            <vaadin-grid-column width="30px">
+            <vaadin-grid-column width="50px">
                 <template class="header">
                     <vaadin-grid-sorter path="coverage">Coverage</vaadin-grid-sorter>
                 </template>
@@ -127,7 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         ]
                     },
                     {
-                        "concept": "Account-Number",
+                        "concept": "Date of Birth",
                         "mappingCount": 8,
                         "health": 5,
                         "coverage": .03,

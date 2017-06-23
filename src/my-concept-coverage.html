@@ -204,7 +204,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <page-layout>
       <div slot="header">
-        <mdb-title help-text="Concept Coverage">Concept Coverage</mdb-title>
+        <mdb-title help-text="Your coverage for a concept increases as the number of unconfirmed columns decreases.  Unconfirmed columns are those which have been identified by the system as having some probability of  representing the concept you are reviewing. Your estimated ETA is based on your progress so far and the number of columns yet to be confirmed.">Concept Coverage</mdb-title>
       </div>
       <div slot="body">
         <mdb-metric-display-container>
@@ -230,22 +230,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="db-entities">
 
             <!-- Applications -->
-            <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
+            <mdb-dimension-finder class="applications" dimension="Application" all-dimensions-allowed allow-sorting show-system-recommendation
+              show-human-verification items="{{applications}}" help-text="This is a list of applications that are associated with the chosen concept, within the given Line of Business. A bulb icon indicates that the application contains some columns that the system thinks may represent the given concept. A face icon indicates that humans have verified all potential column matches corresponding to the given concept. The number to the right of certain applications indicates the number of potential columns representing the given concept within the application."
               selected-dimension="{{selectedApplication}}">
             </mdb-dimension-finder>
 
             <!-- Databases -->
-            <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
+            <mdb-dimension-finder class="databases" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Database" items="{{databases}}" help-text="This is a list of databases that are associated with the chosen concept, within the given application. A bulb icon indicates that the database contains some columns that the system thinks may represent the given concept. A face icon indicates that humans have verified all potential column matches corresponding to the given concept. The number to the right of certain databases indicates the number of potential columns representing the given concept within the database."
               selected-dimension="{{selectedDatabase}}">
             </mdb-dimension-finder>
 
             <!-- Schemas -->
-            <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
+            <mdb-dimension-finder class="schemas" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Schema" items="{{schemas}}" help-text="This is a list of schemas that are associated with the chosen concept, within the given database. A bulb icon indicates that the schema contains some columns that the system thinks may represent the given concept. A face icon indicates that humans have verified all potential column matches corresponding to the given concept. The number to the right of certain schemas indicates the number of potential columns representing the given concept within the schema."
               selected-dimension="{{selectedSchema}}">
             </mdb-dimension-finder>
 
             <!-- Tables -->
-            <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables"
+            <mdb-dimension-finder class="tables" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Table" items="{{tables}}" help-text="This is a list of tables that are associated with the chosen concept, within the given schema. A bulb icon indicates that the table contains some columns that the system thinks may represent the given concept. A face icon indicates that humans have verified all potential column matches corresponding to the given concept. The number to the right of certain tables indicates the number of potential columns representing the given concept within the table."
               selected-dimension="{{selectedTable}}">
             </mdb-dimension-finder>
           </div>
@@ -255,7 +259,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="[[!loadingInProgress]]">
               <template is="dom-if" if="[[tableColumns.length]]">
                 <div class="concept-identification">
-                  <mdb-coverage-table lobs="[[lobs]]" selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Coverage table"
+                  <mdb-coverage-table lobs="[[lobs]]" selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Select RECOMMENDED to show just the columns recommended by the system as potentially representing the concept you have chosen to review. You can sequence columns in the order of those most likely to represent the concept you are reviewing by selecting sort by RELEVANCE.  Sort by RECENCY to see the columns most recently identified by the system as potentially representing the concept you are reviewing. You may discover columns that represent key information, but have not yet been defined as concepts in the system. You can flag these columns for review and then review status on the ‘Requests and Status’ page."
                     columns="[[tableColumns]]" items="[[tableData]]"></mdb-coverage-table>
 
                   <div class="recommended-concepts">
@@ -263,7 +267,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <mdb-concept-recommendation property="[[selectedConcept.name]]" column="[[selectedColumn]]" recommendation-factor="{{selectedConceptRecommendation}}"
                       recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
                     <template is="dom-if" if="[[!isConceptIdentified]]">
-                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}" column="[[selectedColumn]]" search-source="[[recommendedConceptsSearchSource]]"></mdb-recommended-concepts>
+                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}" column="[[selectedColumn]]" search-source="[[recommendedConceptsSearchSource]]"
+                        help-text="You associate columns with concepts by selecting YES. Likewise you can also mark columns as NO. Your actions help train the system to find and classify other similar data."></mdb-recommended-concepts>
                     </template>
                     <template is="dom-if" if="[[isConceptIdentified]]">
                       <div class="concept-identified">
@@ -624,7 +629,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.loadingInProgress = true;
             this.selectedTable = this.selectedDatabase;
             this._dataSource.getApplicationColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase)
-              .then(function (tableData) {                
+              .then(function (tableData) {
                 that.set('tableColumns', tableData.columns);
                 that.set('tableData', tableData.rows);
                 that.selectedColumn = tableData.columns[0].name
@@ -654,7 +659,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.loadingInProgress = true;
             this.selectedTable = this.selectedSchema;
             this._dataSource.getSchemaColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
-              .then(function (tableData) {                
+              .then(function (tableData) {
                 that.set('tableColumns', tableData.columns);
                 that.set('tableData', tableData.rows);
                 that.selectedColumn = tableData.columns[0].name
@@ -677,7 +682,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.selectedTable) {
           var that = this;
           this.loadingInProgress = true;
-          this._dataSource.getTableData(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
+          this._dataSource.getTable(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
             .then(function (tableData) {
               that.set('tableColumns', tableData.columns);
               that.set('tableData', tableData.rows);

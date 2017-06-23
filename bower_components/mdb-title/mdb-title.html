@@ -37,8 +37,7 @@ Custom property | Description | Default
         display: table-cell;
         vertical-align: middle;
         position: relative;
-        font-size: 0;
-        --mdb-help-text-font-size: 1rem;
+        font-size: var(--mdb-help-text-font-size, 1em);
       }
 
        :host[level="1"] mdb-help-text {
