@@ -18,51 +18,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host {
         height: 100%;
       }
-
-       :host div[slot="body"] {
-        background-color: #f3f5f9;
-      }
-
-       :host img {
-        width: 100%;
-      }
-
-       :host .features {
-        display: flex;
-        justify-content: center;
-        color: #aaa;
-      }
-
-       :host atom-feature {
-        flex: 1;
-        padding: var(--standard-padding, 20px);
-        --atom-feature-icon: {
-          height: 40px;
-          width: 40px;
-        }
-        --atom-feature-title: {
-          font-weight: 300;
-          color: #696b6d;
-          font-size: 14px;
-        }
-        --atom-feature-description: {
-          font-weight: 300;
-          line-height: 18px;
-        }
-      }
     </style>
     <page-layout>
       <div slot="header">
         <mdb-title>Welcome</mdb-title>
       </div>
-      <div slot="body">        
+      <div slot="body" class="welcome-page">
+        <img src="../images/welcome_1.png" />
+        <div class="features">
+          <atom-feature id="data" title="See my data" button-title="See my data" icon="icons:add" description="Laws like GDPR empower citizens; and empowerment is results, not processes. Skip lengthy complicated processes and directly get to the point that matters - seeing your data! Get a complete picture of your data held by an organisation, presented in ways that are easy to understand."></atom-feature>
+          <atom-feature id="goals" title="Know the goals " button-title="Know the goals " icon="icons:settings" description="Take a look at the various user roles involved with GDPR risk assessment and mitigation. Realise what all the software is designed to help you accomplish and provide feedback if you feel any of your key goals are currently not being met!"></atom-feature>
+        </div>
       </div>
     </page-layout>
   </template>
 
   <script>
     Polymer({
-      is: 'app-welcome-citizen'
+      is: 'app-welcome-citizen',
+
+      listeners: {
+        'data.execute-action': '_gotoData',        
+        'goals.execute-action': '_gotoGoalsVisualization'
+      },
+
+      _gotoData: function () {
+        window.location = '#/citizen-data'
+      },
+
+      _gotoGoalsVisualization: function () {
+        window.location = '#/goals-visualization'
+      }
     });
   </script>
 </dom-module>

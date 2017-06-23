@@ -18,50 +18,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host {
         height: 100%;
       }
-
-       :host div[slot="body"] {
-        background-color: #f3f5f9;
-      }
-
-       :host img {
-        width: 100%;
-      }
-
-       :host .features {
-        display: flex;
-        justify-content: center;
-        color: #aaa;
-      }
-
-       :host atom-feature {
-        flex: 1;
-        padding: var(--standard-padding, 20px);
-        --atom-feature-icon: {
-          height: 40px;
-          width: 40px;
-        }
-        --atom-feature-title: {
-          font-weight: 300;
-          color: #696b6d;
-          font-size: 14px;
-        }
-        --atom-feature-description: {
-          font-weight: 300;
-          line-height: 18px;
-        }
-      }
     </style>
     <page-layout>
       <div slot="header">
         <mdb-title>Welcome</mdb-title>
       </div>
-      <div slot="body">
+      <div slot="body" class="welcome-page">
         <img src="../images/welcome_1.png" />
         <div class="features">
           <atom-feature id="add" title="Add Your Data" button-title="Add Your Data" icon="icons:add" description="Connect to databases so that data stewards in your line of business can begin improving coverage of concepts within. You and other information architects in your line of business can add or remove databases. Your credentials will be securely stored for access."></atom-feature>
           <atom-feature id="curate" title="Curate Concepts" button-title="Curate Concepts" icon="icons:receipt" description="Train the system by identifying synonyms, patterns, related concepts, example values and columns for concepts under your care. Improve existing definitions to boost classification accuracy of concepts. Gauge your progress over time in making data better."></atom-feature>
-          <atom-feature id="review" title="Review and Classify" button-title="Review and Classify" icon="editor:mode-edit"
-            description="Review columns that are suggested by data stewards as potential concepts or as having personal identifiable information. Enrich the data vocabulary of your organisation by confirming new concepts and help mitigate GDPR risk."></atom-feature>
+          <atom-feature id="review" title="Review and Classify" button-title="Review and Classify" icon="editor:mode-edit" description="Review columns that are suggested by data stewards as potential concepts or as having personal identifiable information. Enrich the data vocabulary of your organisation by confirming new concepts and help mitigate GDPR risk."></atom-feature>
           <atom-feature id="goals" title="Know the goals " button-title="Know the goals " icon="icons:settings" description="Take a look at the various user roles involved with GDPR risk assessment and mitigation. Realise what all the software is designed to help you accomplish and provide feedback if you feel any of your key goals are currently not being met!"></atom-feature>
         </div>
       </div>
@@ -80,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _gotoAddData: function () {
-        //window.location = '#/goals-visualization'
+        window.location = '#/add-data'
       },
 
       _gotoCurateConcepts: function () {

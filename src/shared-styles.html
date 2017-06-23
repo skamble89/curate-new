@@ -29,6 +29,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: #000;
         }
       }
+      /*Welcome page*/
+
+       :host .welcome-page div[slot="body"] {
+        background-color: #f3f5f9;
+      }
+
+       :host .welcome-page img {
+        width: 100%;
+      }
+
+       :host .welcome-page .features {
+        display: flex;
+        justify-content: center;
+        color: #aaa;
+      }
+
+       :host .welcome-page atom-feature {
+        flex: 0 0 20%;
+        padding: var(--standard-padding, 20px);
+        --atom-feature-icon: {
+          height: 40px;
+          width: 40px;
+        }
+        --atom-feature-title: {
+          font-weight: 300;
+          color: #696b6d;
+          font-size: 14px;
+        }
+        --atom-feature-description: {
+          font-weight: 300;
+          line-height: 18px;
+        }
+      }
       /* Dimension finder */
 
        :host mdb-dimension-finder {
@@ -36,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --mdb-title: {
           font-size: 1.5em;
           color: #adadad;
-        }        
+        }
         --mdb-dimension-finder-list: {
           height: 168px;
           overflow: auto;
