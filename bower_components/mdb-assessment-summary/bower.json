@@ -12,16 +12,5 @@
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
-  },
-  "homepage": "https://github.com/makedatabetter-dev/mdb-assessment-summary",
-  "version": "0.0.1",
-  "_release": "0.0.1",
-  "_resolution": {
-    "type": "version",
-    "tag": "v0.0.1",
-    "commit": "3fec4a68bf56fd0fc13cb8834695e729c19761fb"
-  },
-  "_source": "git://github.com/makedatabetter-dev/mdb-assessment-summary.git",
-  "_target": "*",
-  "_originalSource": "git://github.com/makedatabetter-dev/mdb-assessment-summary.git"
+  }
 }
