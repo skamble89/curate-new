@@ -230,23 +230,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="db-entities">
 
             <!-- Applications -->
-            <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
-              selected-dimension="{{selectedApplication}}">
+            <mdb-dimension-finder class="applications" dimension="Application" all-dimensions-allowed allow-sorting show-system-recommendation
+              show-human-verification items="{{applications}}" help-text="List of Applications" selected-dimension="{{selectedApplication}}">
             </mdb-dimension-finder>
 
             <!-- Databases -->
-            <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
-              selected-dimension="{{selectedDatabase}}">
+            <mdb-dimension-finder class="databases" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Database" items="{{databases}}" help-text="List of Databases" selected-dimension="{{selectedDatabase}}">
             </mdb-dimension-finder>
 
             <!-- Schemas -->
-            <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
-              selected-dimension="{{selectedSchema}}">
+            <mdb-dimension-finder class="schemas" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Schema" items="{{schemas}}" help-text="List of Schemas" selected-dimension="{{selectedSchema}}">
             </mdb-dimension-finder>
 
             <!-- Tables -->
-            <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables"
-              selected-dimension="{{selectedTable}}">
+            <mdb-dimension-finder class="tables" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Table" items="{{tables}}" help-text="List of Tables" selected-dimension="{{selectedTable}}">
             </mdb-dimension-finder>
           </div>
 
@@ -624,7 +624,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.loadingInProgress = true;
             this.selectedTable = this.selectedDatabase;
             this._dataSource.getApplicationColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase)
-              .then(function (tableData) {                
+              .then(function (tableData) {
                 that.set('tableColumns', tableData.columns);
                 that.set('tableData', tableData.rows);
                 that.selectedColumn = tableData.columns[0].name
@@ -654,7 +654,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.loadingInProgress = true;
             this.selectedTable = this.selectedSchema;
             this._dataSource.getSchemaColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
-              .then(function (tableData) {                
+              .then(function (tableData) {
                 that.set('tableColumns', tableData.columns);
                 that.set('tableData', tableData.rows);
                 that.selectedColumn = tableData.columns[0].name
@@ -677,7 +677,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.selectedTable) {
           var that = this;
           this.loadingInProgress = true;
-          this._dataSource.getTableData(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
+          this._dataSource.getTable(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
             .then(function (tableData) {
               that.set('tableColumns', tableData.columns);
               that.set('tableData', tableData.rows);

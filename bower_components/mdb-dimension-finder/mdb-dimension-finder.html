@@ -62,6 +62,10 @@ Custom property | Description | Default
           color: #9a9a9a;
           position: absolute;
         }
+        --mdb-radio-list-container: {
+          position: relative;
+          width: 100%;
+        }
       }
 
        :host paper-item .icon {
@@ -109,8 +113,11 @@ Custom property | Description | Default
 
        :host .dimension-finder {
         border: 1px solid #dee7ec;
-        border-top: 0;
         overflow: auto;
+      }
+
+       :host[allow-sorting] .dimension-finder {
+        border-top: 0;
       }
 
        :host .dimension-finder mdb-simple-list {
@@ -132,7 +139,19 @@ Custom property | Description | Default
 
        :host paper-radio-button {
         text-align: center;
+        position: absolute;
+        width: 49.5%;
+        padding-left: 0;
+        padding-right: 0;
         @apply(--mdb-dimension-finder-radio-button)
+      }
+
+       :host paper-radio-button:last-child {
+        right: 0;
+      }
+
+       :host[allow-sorting] mdb-search-box {
+        margin-top: 40px;
       }
     </style>
 
@@ -143,29 +162,37 @@ Custom property | Description | Default
       </template>
     </div>
 
-    <mdb-radio-list size="small" selected="{{sortBy}}">
-      <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
-      <paper-radio-button name="recommendation">BY RECOMMENDATION</paper-radio-button>
-    </mdb-radio-list>
+    <template is="dom-if" if="[[allowSorting]]">
+      <mdb-radio-list size="small" selected="{{sortBy}}">
+        <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
+        <paper-radio-button name="recommendation">BY RECOMMENDATION</paper-radio-button>
+      </mdb-radio-list>
+    </template>
     <div class="dimension-finder">
       <mdb-search-box placeholder="Search for [[_toLowerCase(dimension)]] name" search-path="name" source="{{items}}" search-results="{{_searchResults}}"></mdb-search-box>
       <mdb-simple-list height="{{height}}" items="{{_searchResults}}" empty-message="{{emptyMessage}}">
         <template>
           <paper-item>
             <paper-checkbox checked="{{item.checked}}"></paper-checkbox>
-            <span class="bulb icon">
+            <template is="dom-if" if="[[showSystemRecommendation]]">
+              <span class="bulb icon">
                 <template is="dom-if" if="{{item.systemRecommended}}">
                     <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
                 </template>
             </span>
-            <span class="face icon">
+            </template>
+            <template is="dom-if" if="[[showHumanVerification]]">
+              <span class="face icon">
                 <template is="dom-if" if="{{item.humanVerified}}">
                     <iron-icon icon="icons:face"></iron-icon>
                 </template>
             </span>
+            </template>
             <span class="item-name" title="{{item.name}}">{{item.name}}</span>
-            <template is="dom-if" if="{{item.recommendation}}">
-              <span class="recommendation">{{item.recommendation}}%</span>
+            <template is="dom-if" if="[[showSystemRecommendation]]">
+              <template is="dom-if" if="{{item.recommendation}}">
+                <span class="recommendation">{{item.recommendation}}</span>
+              </template>
             </template>
             <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
           </paper-item>
@@ -189,6 +216,21 @@ Custom property | Description | Default
           type: String,
           value: '',
           notify: true
+        },
+
+        allowSorting: {
+          type: Boolean,
+          value: false
+        },
+
+        showSystemRecommendation: {
+          type: Boolean,
+          value: false
+        },
+
+        showHumanVerification: {
+          type: Boolean,
+          value: false
         },
 
         helpText: {

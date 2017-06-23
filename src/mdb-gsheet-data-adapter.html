@@ -108,6 +108,7 @@
                                 .then(function (data) {
                                     that.selectedTable = appLower;
                                     that.selectedTableData = data;
+                                    that.cache[application.name] = data;
                                     resolve(data);
                                 }).catch(function (error) {
                                     reject(error);
@@ -138,6 +139,7 @@
                                 .then(function (data) {
                                     that.selectedTable = appLower;
                                     that.selectedTableData = data;
+                                    that.cache[database.name] = data;
                                     resolve(data);
                                 }).catch(function (error) {
                                     reject(error);
@@ -170,6 +172,7 @@
                                 .then(function (data) {
                                     that.selectedTable = appLower;
                                     that.selectedTableData = data;
+                                    that.cache[schema.name] = data;
                                     resolve(data);
                                 }).catch(function (error) {
                                     reject(error);
@@ -275,11 +278,26 @@
                 });
             },
 
+            getTable: function (lob, concept, application, db, schema, table) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that.getTableData(lob, concept, application, db, schema, table)
+                        .then(function (data) {
+                            that.selectedTable = table.mapping;
+                            that.selectedTableData = data;
+                            resolve(data);
+                        }).catch(function (error) {
+                            reject(error);
+                        });
+                });
+            },
+
             getTableData: function (lob, concept, application, db, schema, table) {
                 var that = this;
                 return new Promise(function (resolve, reject) {
                     that.cache = that.cache || {};
-                    if (!that.cache[table.mapping]) {
+                    var cached = that.cache[table.mapping] || that.cache[table.name];
+                    if (!cached) {
                         var tabIndex = that._getTabIndex(table.mapping);
 
                         if (tabIndex !== null && tabIndex !== undefined) {
@@ -292,7 +310,7 @@
                             reject('Table not found.');
                         }
                     } else {
-                        resolve(that.cache[table.mapping]);
+                        resolve(cached);
                     }
                 });
             },
@@ -302,12 +320,12 @@
                 return new Promise(function (resolve, reject) {
                     that.getTableData(lob, concept, application, db, schema, table)
                         .then(function (data) {
-                            resolve(data.recommendedConcepts[column] || []).map(function (e) {
+                            resolve((data.recommendedConcepts[column] || []).map(function (e) {
                                 //Create a copy of the object
                                 return JSON.parse(JSON.stringify(e));
                             }).sort(function (a, b) {
                                 return b.recommendationFactor - a.recommendationFactor;
-                            });
+                            }));
                         });
                 });
             },
