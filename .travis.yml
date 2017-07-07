@@ -5,4 +5,5 @@ os:
   - linux
 install:
   - npm install -g bower
+script:
   - bower install
