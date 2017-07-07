@@ -48,6 +48,7 @@
   },
   "private": true,
   "resolutions": {
-    "paper-checkbox": "^1.4.2"
+    "paper-checkbox": "^1.4.2",
+    "paper-icon-button": "~1.1.0"
   }
 }
