@@ -5,7 +5,7 @@ os:
   - linux
 install:
   - npm install -g bower
-script:
+before_deploy:
   - bower install
 deploy:
   provider: pages
