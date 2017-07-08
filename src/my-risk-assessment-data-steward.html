@@ -1,0 +1,465 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../bower_components/mdb-status-chip/mdb-status-chip.html">
+<link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
+<link rel="import" href="../bower_components/atom-table/atom-table.html">
+
+<dom-module id="risk-assessment-data-steward">
+    <template>
+        <style include="shared-styles">
+             :host {
+                height: 100%;
+                --mdb-dimension-finder-header-container: {
+                    margin-bottom: 20px;
+                }
+            }
+
+             :host [slot="header"] {
+                display: flex;
+                justify-content: space-between;
+            }
+
+             :host paper-tabs {
+                justify-content: center;
+            }
+
+             :host atom-table {
+                margin-top: var(--standard-padding, 20px);
+                --atom-table: {
+                    @apply(--app-table);
+                    height: 495px;
+                }
+                --atom-table-body-cell: {
+                    @apply(--app-table-body-cell);
+                    border: 0;
+                    padding: 0;
+                    font-size: 10px;
+                }
+                --atom-table-odd-row-cell: {
+                    @apply(--app-table-body-cell);
+                    border: 0;
+                    padding: 0;
+                    font-size: 10px;
+                }
+                --atom-table-header-cell: {
+                    @apply(--app-table-header-cell);
+                    border: 0;
+                    padding: 0;
+                    font-size: 9px;
+                    white-space: normal;
+                    margin: 1px;
+                    margin-top: 0;
+                    background-color: #e2e7eb;
+                }
+            }
+
+             :host .header-cell {
+                padding: 14px 5px 14px 5px;
+                text-align: center;
+            }
+
+             :host .stage,
+             :host .cell {
+                background-color: #f2f7fd;
+                padding: 14px 1px 14px 1px;
+                margin: 1px;
+                height: 100%;
+                width: 100%;
+            }
+
+             :host .cell {
+                padding: 14px;
+            }
+
+             :host .stage.percent-lt-20 {
+                background-color: #c8e6c9;
+            }
+
+             :host .stage.percent-lt-40 {
+                background-color: #a5d6a7;
+            }
+
+             :host .stage.percent-lt-60 {
+                background-color: #81c784;
+            }
+
+             :host .stage.percent-lt-80 {
+                background-color: #66bb6a;
+            }
+
+             :host .stage.percent-lt-100 {
+                background-color: #4caf50;
+            }
+
+             :host .stage.completed {
+                background-color: #fef28c;
+            }
+            /*:host img {
+                width: 100%;
+            }*/
+        </style>
+        <page-layout>
+            <div slot="header">
+                <mdb-title>GDPR Risk Assessment Report</mdb-title>
+                <mdb-status-chip icon="device:access-time" status-label="Last Updated" status-value="20 mins ago"></mdb-status-chip>
+            </div>
+            <div slot="body">
+                <div class="db-entities">
+                    <!-- Tables -->
+                    <mdb-dimension-finder id="concept" class="concepts" dimension="Concept" help-text="List of Concepts of LOB {{selectedLOB}}">
+                    </mdb-dimension-finder>
+
+                    <!-- Applications -->
+                    <mdb-dimension-finder id="application" class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
+                        selected-dimension="{{selectedApplication}}">
+                    </mdb-dimension-finder>
+
+                    <!-- Databases -->
+                    <mdb-dimension-finder id="database" class="databases" dimension="Database" items="{{databases}}" help-text="List of Databases"
+                        selected-dimension="{{selectedDatabase}}">
+                    </mdb-dimension-finder>
+
+                    <!-- Schemas -->
+                    <mdb-dimension-finder id="schema" class="schemas" dimension="Schema" items="{{schemas}}" help-text="List of Schemas" selected-dimension="{{selectedSchema}}">
+                    </mdb-dimension-finder>
+                </div>
+                <template is="dom-if" if="{{tables.length}}">
+                    <atom-table id="table" items="[[tables]]">
+                        <vaadin-grid-column width="170px">
+                            <template class="header">
+                                <div class="header-cell">&nbsp;</div>
+                            </template>
+                            <template>
+                                <div class="cell">{{item.name}}</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">RELEVANCE</div>
+                            </template>
+                            <template>
+                                <div class="cell">{{item.relevance}}%</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">SENSITIVITY</div>
+                            </template>
+                            <template>
+                                <div class="cell">{{item.sensitivity}}%</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">DISCOVERY</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(1,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">PROFILING</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(2,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">CLASSIFICATION</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(3,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">PII DOMAIN DETECTION</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(4,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR DOMAIN DETECTION</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(5,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">EU STATE PERSON DETECTION</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(6,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">VERIFIED BY HUMANS</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(7,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR METADATA INDEXING</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(8,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR DATA INDEXING</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(9,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR DATA LINEAGE</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(10,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                        <vaadin-grid-column width="80px">
+                            <template class="header">
+                                <div class="header-cell">GDPR DATA MONITORING</div>
+                            </template>
+                            <template>
+                                <div class$="stage [[_getCompletionStatus(11,item.assessmentStage,item.completion)]]">&nbsp;</div>
+                            </template>
+                        </vaadin-grid-column>
+                    </atom-table>
+                </template>
+                <!--<img src="../images/report-data-steward.png" />-->
+            </div>
+        </page-layout>
+    </template>
+    <script>
+        Polymer({
+            is: 'risk-assessment-data-steward',
+
+            properties: {
+                dataSource: {
+                    type: String,
+                    value: ''
+                },
+
+                _dataSource: {
+                    type: Object,
+                    readOnly: true
+                },
+
+                dataSourceOptions: {
+                    type: Object,
+                    value: {}
+                },
+
+                _selectedTab: {
+                    type: Number,
+                    value: 0,
+                    notify: true,
+                    observer: '_tabChanged'
+                },
+
+                selectedLob: {
+                    type: String,
+                    value: ''
+                },
+
+                selectedConcept: {
+                    type: String,
+                    value: ''
+                },
+
+                selectedApplication: {
+                    type: Object,
+                    value: {}
+                },
+
+                selectedDatabase: {
+                    type: Object,
+                    value: {}
+                },
+
+                selectedSchema: {
+                    type: Object,
+                    value: {}
+                },
+
+                tables: {
+                    type: Array,
+                    value: []
+                }
+            },
+
+            listeners: {
+                'concept.selected-dimension-changed': '_conceptChanged',
+                'application.selected-dimension-changed': '_applicationChanged',
+                'database.selected-dimension-changed': '_databaseChanged',
+                'schema.selected-dimension-changed': '_schemaChanged'
+            },
+
+            ready: function () {
+                var source = document.createElement(this.dataSource);
+                for (var i in this.dataSourceOptions) {
+                    source[i] = this.dataSourceOptions[i];
+                }
+                this.appendChild(source);
+
+                //save reference of data adapter so that it can be used later on
+                this._set_dataSource(source);
+            },
+
+            attached: function () {
+                var that = this;
+                this.$.concept.dataLoaded = true;
+                this._dataSource.getLOBs()
+                    .then(function (lobs) {
+                        var lob = lobs[0];
+                        that.selectedLOB = lob;
+                        that._dataSource.getLOBConcepts(lob)
+                            .then(function (concepts) {
+                                that.$.concept.dataLoaded = true;
+                                that.$.concept.set('items', concepts.map(function (e) {
+                                    return {
+                                        name: e.toUpperCase()
+                                    };
+                                }));
+                            }).catch(function (error) {
+                                throw error;
+                            });
+                    });
+            },
+
+            _conceptChanged: function (e) {
+                var that = this;
+                var concept = e.detail.value.name;
+                if (concept && this._dataSource) {
+                    this.selectedConcept = concept;
+                    this.$.application.dataLoaded = false;
+                    this._setApplications([]);
+                    this._setDatabases([]);
+                    this._setSchemas([]);
+                    this._setTables([]);
+                    this._dataSource.getConceptApplications(this.selectedLOB, this.selectedConcept)
+                        .then(function (applications) {
+                            that.$.application.dataLoaded = true;
+                            that._setApplications(applications);
+                        }).catch(function (error) {
+                            throw error;
+                        });
+                }
+            },
+
+            _applicationChanged: function (e) {
+                var that = this;
+                var application = e.detail.value;
+
+                if (application && this._dataSource) {
+                    this.selectedApplication = application;
+                    this.$.database.dataLoaded = false;
+                    this._setDatabases([]);
+                    this._setSchemas([]);
+                    this._dataSource.getApplicationDBs(this.selectedLOB, this.selectedConcept, this.selectedApplication)
+                        .then(function (databases) {
+                            that.$.database.dataLoaded = true;
+                            that._setDatabases(databases);
+                        }).catch(function (error) {
+                            throw error;
+                        });
+                }
+            },
+
+            _databaseChanged: function (e) {
+                var that = this;
+                var database = e.detail.value;
+
+                if (database && this._dataSource) {
+                    this.selectedDatabase = database;
+                    this.$.schema.dataLoaded = false;
+                    this._setSchemas([]);
+                    this._dataSource.getDBSchemas(this.selectedLOB, this.selectedConcept, this.selectedApplication, this.selectedDatabase)
+                        .then(function (schemas) {
+                            that.$.schema.dataLoaded = true;
+                            that._setSchemas(schemas);
+                        }).catch(function (error) {
+                            throw error;
+                        });
+                }
+            },
+
+            _schemaChanged: function (e) {
+                var that = this;
+                var schema = e.detail.value;
+
+                if (schema && this._dataSource) {
+                    this.selectedSchema = schema;
+                    this._dataSource.getSchemaTables(this.selectedLOB, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+                        .then(function (tables) {
+                            that._setTables(tables);
+                        }).catch(function (error) {
+                            throw error;
+                        });
+                }
+            },
+
+            _setApplications: function (applications) {
+                this.$.application.set('items', applications);
+            },
+
+            _setDatabases: function (databases) {
+                this.$.database.set('items', databases);
+            },
+
+            _setSchemas: function (schemas) {
+                this.$.schema.set('items', schemas);
+            },
+
+            _setTables: function (tables) {
+                this.set('tables', tables)
+            },
+
+            _getCompletionStatus: function (stage, currentStage, completion) {
+                if (stage < currentStage) {
+                    return 'percent-lt-100';
+                } else if (stage === currentStage) {
+                    if (this._completionBetween(completion, 0, 20)) return 'percent-lt-20';
+                    if (this._completionBetween(completion, 21, 40)) return 'percent-lt-40';
+                    if (this._completionBetween(completion, 41, 60)) return 'percent-lt-60';
+                    if (this._completionBetween(completion, 61, 80)) return 'percent-lt-80';
+                } else {
+                    return 'todo';
+                }
+            },
+
+            _completionBetween: function (completion, a, b) {
+                return completion >= a && completion <= b;
+
+            },
+
+            _tabChanged: function () {
+                console.log('Tab Changed');
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,54 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/atom-feature/atom-feature.html">
+<dom-module id="app-welcome-citizen">
+  <template>
+    <style include="shared-styles">
+       :host {
+        height: 100%;
+      }
+    </style>
+    <page-layout>
+      <div slot="header">
+        <mdb-title>Welcome</mdb-title>
+      </div>
+      <div slot="body" class="welcome-page">
+        <img src="../images/welcome_1.png" />
+        <div class="features">
+          <atom-feature id="data" title="See my data" button-title="See my data" icon="icons:add" description="Laws like GDPR empower citizens; and empowerment is results, not processes. Skip lengthy complicated processes and directly get to the point that matters - seeing your data! Get a complete picture of your data held by an organisation, presented in ways that are easy to understand."></atom-feature>
+          <atom-feature id="goals" title="Know the goals " button-title="Know the goals " icon="icons:settings" description="Take a look at the various user roles involved with GDPR risk assessment and mitigation. Realise what all the software is designed to help you accomplish and provide feedback if you feel any of your key goals are currently not being met!"></atom-feature>
+        </div>
+      </div>
+    </page-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'app-welcome-citizen',
+
+      listeners: {
+        'data.execute-action': '_gotoData',        
+        'goals.execute-action': '_gotoGoalsVisualization'
+      },
+
+      _gotoData: function () {
+        window.location = '#/citizen-data'
+      },
+
+      _gotoGoalsVisualization: function () {
+        window.location = '#/goals-visualization'
+      }
+    });
+  </script>
+</dom-module>

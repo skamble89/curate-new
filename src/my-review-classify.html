@@ -1,0 +1,276 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/atom-google-sheet-adapter/atom-google-sheet-adapter.html">
+<link rel="import" href="../bower_components/atom-table/atom-table.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+
+<dom-module id="review-classify">
+  <template>
+    <style include="shared-styles">
+       :host {
+        display: block;
+        padding: 10px;
+
+        --atom-table: {
+          @apply(--app-table);
+          height: 500px;
+        }
+      }
+
+
+       :host #modal #buttons {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+       :host #modal paper-button {
+        --paper-button: {
+          vertical-align: text-bottom;
+          color: #5caadb;
+          font-weight: 600;
+        }
+      }
+
+       :host #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #444;
+        opacity: 0.5;
+        z-index: 100;
+      }
+
+       :host #reason {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    </style>
+
+    <page-layout>
+      <div slot="header">
+        <mdb-title>Review & Classify</mdb-title>
+      </div>
+      <div class="banner" slot="body">
+        <atom-google-sheet-adapter key="1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"></atom-google-sheet-adapter>
+        <template is="dom-if" if="{{dataLoaded}}">
+          <atom-table items="{{items}}" id="grid">
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="requestedBy">Requested By</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.requestedBy}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="application">Application</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.application}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="database">Database</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.database}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="schema">Schema</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.schema}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="table">Table</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.table}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="column">Column</vaadin-grid-sorter>
+              </template>
+              <template>
+                {{item.column}}
+              </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+              <template class="header">
+                <vaadin-grid-sorter path="status">Status</vaadin-grid-sorter>
+              </template>
+              <template>
+                <template is="dom-if" if="[[!item.reason]]">
+                  <select value="{{item.status}}" on-change="_statusChanged">
+                  <option>Pending for review</option>
+                  <option>Accepted as concept</option>
+                  <option>Rejected</option>
+                </select>
+                </template>
+                <template is="dom-if" if="[[item.reason]]">
+                  <select value="{{item.status}}" on-change="_statusChanged" title="{{item.reason}}">
+                  <option>Pending for review</option>
+                  <option>Accepted as concept</option>
+                  <option>Rejected</option>
+                </select>
+                </template>
+
+              </template>
+            </vaadin-grid-column>
+
+          </atom-table>
+          <template is="dom-if" if="[[_isModalOpen(_modalOpen)]]">
+            <div id="overlay" on-tap="_closeModal">
+            </div>
+          </template>
+          <paper-dialog id="modal">
+            <h3>Please let us know why you didn't accept the concept</h3>
+            <div id="modal-body">
+              <textarea id="reason" rows="10"></textarea>
+            </div>
+            <div id="buttons">
+              <paper-button id="cancel" on-tap="_closeModal">Cancel</paper-button>
+              <paper-button id="flag" on-tap="_save">Save</paper-button>
+            </div>
+          </paper-dialog>
+        </template>
+
+      </div>
+    </page-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'review-classify',
+
+      properties: {
+        dataLoaded: {
+          type: Boolean,
+          value: false
+        },
+
+        activeItem: {
+          type: Object
+        },
+
+        _modalOpen: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      attached: function () {
+        var that = this;
+        var adapter = this.querySelector('atom-google-sheet-adapter');
+        adapter.read('mdb-data')
+          .then(function (rows) {
+
+            that.dataLoaded = true;
+            setTimeout(function () {
+              var table = that.querySelector('atom-table');
+
+              table.set('items', that._transform(rows))
+            }, 0);
+          });
+      },
+
+      _statusChanged: function (e) {
+        var status = e.target.value;
+        if (status === 'Rejected') {
+          this.activeItem = e.model.item;
+          this.activeItem.status = status;
+          this._modalOpen = true;
+          this.querySelector('#modal').open();
+        }
+      },
+
+      _save: function (e) {
+        this.activeItem.reason = this.querySelector('#reason').value;
+        this.querySelector('#grid').clearCache();
+        this._closeModal();
+      },
+
+      _isModalOpen: function (open) {
+        return open;
+      },
+
+      _closeModal: function () {
+        this._modalOpen = false;
+        this.querySelector('#reason').value = '';
+        this.querySelector('#modal').close();
+      },
+
+      _transform: function (rows) {
+        var data = [];
+        var names = [
+          'Retta',
+          'Colleen',
+          'Saul',
+          'Armando',
+          'Zack',
+          'Toshia',
+          'Shameka',
+          'Naoma',
+          'Eleonor',
+          'Deangelo',
+          'Cecelia',
+          'Clement',
+          'Genia',
+          'Normand',
+          'Mikel',
+          'Kelli',
+          'Shante',
+          'Lavada',
+          'Jaquelyn',
+          'Debby',
+          'Charis',
+          'Dwayne',
+          'Susan',
+          'Candie',
+          'Amy',
+          'Joette',
+          'Elia',
+          'Magen',
+          'Inell',
+          'Alina',
+        ];
+        var statuses = ['Pending for review', 'Accepted as concept', 'Rejected'];
+        var columns = ['id', 'firstname', 'lastname', 'age', 'email', 'gender', 'ipaddress', 'street', 'city', 'major'];
+
+        for (var i = 0; i < rows.length; i++) {
+          data.push({
+            requestedBy: names[parseInt(Math.random() * 10)],
+            application: rows[i].application,
+            database: rows[i].database,
+            schema: rows[i].schema,
+            table: rows[i].table,
+            column: columns[parseInt(Math.random() * 10)],
+            status: statuses[parseInt(Math.random() * 3)]
+          });
+        }
+
+        return data;
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,379 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/atom-table/atom-table.html">
+
+<dom-module id="concept-list">
+    <template>
+        <style include="shared-styles">
+             :host {
+                display: block;
+            }
+
+             :host atom-table {
+                --atom-table-header-cell: {
+                    @apply(--app-table-header-cell);
+                    white-space: normal;
+                }
+                --atom-table-body-cell: {
+                    @apply(--app-table-body-cell);
+                    cursor: pointer;
+                }
+            }
+
+             :host .concept-name {
+                color: var(--mdb-link-font-color, #5caadb);
+            }
+        </style>
+
+        <atom-table allow-global-search allow-add-new allow-paging items="{{items}}" active-item="{{activeItem}}">
+            <vaadin-grid-column>
+                <template class="header">
+                    <vaadin-grid-sorter path="concept">Concept Name</vaadin-grid-sorter>
+                </template>
+                <template>
+                    <span class="concept-name">{{item.concept}}</span>
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">
+                    <vaadin-grid-sorter path="mappingCount">Predicted Columns</vaadin-grid-sorter>
+                </template>
+                <template>
+                    {{item.mappingCount}}
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="100px">
+                <template class="header">
+                    <vaadin-grid-sorter path="health">Classification Accuracy</vaadin-grid-sorter>
+                </template>
+                <template>
+                    {{item.health}}%
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="50px">
+                <template class="header">
+                    <vaadin-grid-sorter path="coverage">Coverage</vaadin-grid-sorter>
+                </template>
+                <template>
+                    {{item.coverage}}%
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="30px">
+                <template class="header">
+                    <vaadin-grid-sorter path="owner">Owner</vaadin-grid-sorter>
+                </template>
+                <template>
+                    {{item.owner}}
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column>
+                <template class="header">
+                    <!--<vaadin-grid-sorter path="impactArea">Impact Area</vaadin-grid-sorter>-->
+                    Impact Area
+                </template>
+                <template>
+                    {{item.impactArea}}
+                </template>
+            </vaadin-grid-column>
+            <vaadin-grid-column width="300px">
+                <template class="header">
+                    Applications
+                </template>
+                <template>
+                    <template is="dom-repeat" items="{{item.applications}}">
+                        <span style="background-color:#eaeff3;margin-top:3px;margin-right:3px;padding-left: 5px;padding-right: 5px;border-radius: 10px;text-align: center;">{{item}}</span>
+                    </template>
+                </template>
+            </vaadin-grid-column>
+        </atom-table>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'concept-list',
+
+            properties: {
+                selectedTab: {
+                    type: Number,
+                    value: 0
+                },
+
+                items: {
+                    type: Array,
+                    value: [{
+                        "concept": "FICO-Score",
+                        "mappingCount": 5,
+                        "health": 10,
+                        "coverage": .001,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Date of Birth",
+                        "mappingCount": 8,
+                        "health": 5,
+                        "coverage": .03,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Customer-Code",
+                        "mappingCount": 2,
+                        "health": 28,
+                        "coverage": 0.7,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Customer-Type",
+                        "mappingCount": 6,
+                        "health": 31,
+                        "coverage": 0.2,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Product-Code",
+                        "mappingCount": 10,
+                        "health": 48,
+                        "coverage": 0.3,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Product-Name",
+                        "mappingCount": 15,
+                        "health": 50,
+                        "coverage": 0.8,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Market-Segment",
+                        "mappingCount": 3,
+                        "health": 50,
+                        "coverage": .001,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "CUSIP",
+                        "mappingCount": 8,
+                        "health": 5,
+                        "coverage": .001,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Instrument-ID",
+                        "mappingCount": 21,
+                        "health": 50,
+                        "coverage": .001,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Gender",
+                        "mappingCount": 5,
+                        "health": 50,
+                        "coverage": .001,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Sexual-Orientation",
+                        "mappingCount": "5",
+                        "health": "50%",
+                        "coverage": ".001%",
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Religion",
+                        "mappingCount": 5,
+                        "health": 50,
+                        "coverage": .001,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Salary",
+                        "mappingCount": 5,
+                        "health": 60,
+                        "coverage": .051,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Weight",
+                        "mappingCount": 5,
+                        "health": 50,
+                        "coverage": .001,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    },
+                    {
+                        "concept": "Photo",
+                        "mappingCount": 5,
+                        "health": 50,
+                        "coverage": .001,
+                        "owner": "Angela",
+                        "impactArea": [
+                            "GDPR",
+                            "Credit Risk"
+                        ],
+                        "applications": [
+                            "Credit Risk Assessment",
+                            "Sales Account Management",
+                            "Sales Campaign Management",
+                            "Enterprise Data Warehouse"
+                        ]
+                    }]
+                },
+
+                activeItem: {
+                    notify: true
+                }
+            }
+        });
+    </script>
+</dom-module>

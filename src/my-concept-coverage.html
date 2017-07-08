@@ -1,0 +1,764 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="styling-elements/class-elements.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/mdb-metric-display/mdb-metric-display.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
+<link rel="import" href="../bower_components/mdb-simple-list/mdb-simple-list.html">
+<link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
+<link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
+<link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="concept-coverage">
+  <template>
+    <style include="class-elements iron-flex iron-flex-alignment"></style>
+    <style include="shared-styles">
+       :host {
+        display: block;
+        height: 100%;
+        --mdb-recommended-concepts-property-name: {
+          color: #aaa;
+        }
+      }
+
+      [slot='body'] {
+        background: #fff;
+      }
+      /*Styling for concept list*/
+
+       :host .concept-list {
+        --mdb-simple-list-empty: {
+          border: 1px solid #ddd;
+          padding: var(--standard-padding, 20px);
+          margin-top: 0;
+        }
+        --mdb-simple-list: {
+          border: 1px solid #e1e6ed;
+          background: #fcfdff;
+          height: var(--concept-list-height, 180px);
+          padding-top: var(--standard-padding, 20px);
+          padding-bottom: var(--standard-padding, 20px);
+          color: #484848;
+          position: relative;
+          width: 100%;
+        }
+        --mdb-list-item: {
+          min-height: 15px;
+          height: auto;
+          padding-bottom: 0;
+          padding-top: 0;
+          margin-left: var(--standard-padding, 20px);
+          margin-top: 0.4em;
+          font-weight: 400;
+          font-size: 1.2em;
+          float: left;
+          width: 18%;
+        }
+        --mdb-list-item-focused: {
+          border-radius: 25px;
+        }
+        --mdb-list-item-selected: {
+          border-radius: 25px;
+          color: #fff;
+          background-color: #5caadb;
+        }
+      }
+      /*Recommended Concepts*/
+
+       :host mdb-recommended-concepts {
+        --mdb-recommended-concepts-title: {
+          color: #aaa;
+          display: block;
+        }
+        --mdb-search-box: {
+          font-size: 1em;
+          padding-left: 10px;
+        }
+      }
+
+       :host mdb-concept-recommendation {
+        margin-top: var(--standard-padding, 20px);
+        margin-bottom: var(--standard-padding, 20px);
+        border: 1px solid #e5edee;
+        background-color: #fcfdff;
+      }
+
+       :host .concept-identified {
+        text-align: center;
+        font-size: 1.6em;
+      }
+
+       :host .concept-identified iron-icon {
+        font-size: 2em;
+        background-color: #5bca52;
+        color: #fff;
+        border-radius: 50%;
+        --iron-icon-width: 55px;
+        --iron-icon-height: 55px;
+        --iron-icon-fill-color: #fff;
+      }
+
+       :host .concept-identification {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+      }
+
+       :host .concept-identified .success-message {
+        color: #aaa;
+      }
+
+       :host .concept-identified .success-message mdb-title {
+        color: #000;
+        display: block;
+        --mdb-title: {
+          margin: 0;
+          display: block;
+        }
+      }
+
+       :host .concept-identified .success-message p {
+        margin: 0;
+        font-weight: 300;
+      }
+
+       :host paper-button.undo {
+        padding-top: var(--standard-padding, 20px);
+        --paper-button: {
+          font-size: 0.6em;
+          vertical-align: text-bottom;
+          color: var(--mdb-link-font-color, #5caadb);
+          font-weight: 600;
+        }
+      }
+
+       :host mdb-coverage-table {
+        width: 60%;
+        margin-right: var(--standard-padding, 20px);
+        margin-top: var(--standard-padding, 20px);
+        --mdb-coverage-table: {
+          @apply(--app-table);
+          height: 511px;
+        }
+        --mdb-coverage-table-title: {
+          color: #aaa;
+          margin-top: 0;
+          margin-bottom: 20px;
+        }
+        --mdb-coverage-table-header-cell: {
+          @apply(--app-table-header-cell);
+          border-top: 0;
+        }
+        --mdb-coverage-table-options: {
+          color: #aaa;
+        }
+        --mdb-coverage-table-radio-list: {
+          font-size: 0.9em;
+          padding-left: 10px;
+        }
+      }
+
+       :host .recommended-concepts {
+        padding-top: 44px;
+        display: inline-block;
+        width: 40%;
+      }
+
+       :host .no-table {
+        background-color: #fcfdff;
+        height: 100px;
+        border: 1px solid #e1e6ed;
+        position: relative;
+        margin-top: var(--standard-padding, 20px);
+      }
+
+       :host .no-table p {
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        font-weight: 400;
+      }
+    </style>
+
+    <page-layout>
+      <div slot="header">
+        <mdb-title help-text="Your coverage for a concept increases as the number of unconfirmed columns decreases.  Unconfirmed columns are those which have been identified by the system as having some probability of  representing the concept you are reviewing. Your estimated ETA is based on your progress so far and the number of columns yet to be confirmed.">Concept Coverage</mdb-title>
+      </div>
+      <div slot="body">
+        <mdb-metric-display-container>
+          <mdb-metric-display stat-value="{{coverage}}" stat-description="Coverage"></mdb-metric-display>
+          <mdb-metric-display stat-value="{{eta}}" stat-description="ETA (based on yesterday)"></mdb-metric-display>
+          <mdb-metric-display stat-value="{{confirmedColumns}}" stat-description="Confirmed Columns"></mdb-metric-display>
+        </mdb-metric-display-container>
+
+        <!-- LOBs -->
+        <paper-tabs selected="{{_selectedTab}}">
+          <template is="dom-repeat" items="{{lobs}}">
+            <paper-tab>{{item}}</paper-tab>
+          </template>
+        </paper-tabs>
+        <template is="dom-if" if="{{lobs.length}}">
+          <!-- List of concetps -->
+          <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
+            <template>
+              <paper-item>{{item.name}}</paper-item>
+            </template>
+          </mdb-simple-list>
+
+          <div class="db-entities">
+
+            <!-- Applications -->
+            <mdb-dimension-finder class="applications" dimension="Application" all-dimensions-allowed allow-sorting show-system-recommendation
+              show-human-verification items="{{applications}}" help-text="This is a list of applications that are associated with the chosen concept, within the given Line of Business. A bulb icon indicates that the application contains some columns that the system thinks may represent the given concept. A face icon indicates that humans have verified all potential column matches corresponding to the given concept. The number to the right of certain applications indicates the number of potential columns representing the given concept within the application."
+              selected-dimension="{{selectedApplication}}">
+            </mdb-dimension-finder>
+
+            <!-- Databases -->
+            <mdb-dimension-finder class="databases" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Database" items="{{databases}}" help-text="This is a list of databases that are associated with the chosen concept, within the given application. A bulb icon indicates that the database contains some columns that the system thinks may represent the given concept. A face icon indicates that humans have verified all potential column matches corresponding to the given concept. The number to the right of certain databases indicates the number of potential columns representing the given concept within the database."
+              selected-dimension="{{selectedDatabase}}">
+            </mdb-dimension-finder>
+
+            <!-- Schemas -->
+            <mdb-dimension-finder class="schemas" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Schema" items="{{schemas}}" help-text="This is a list of schemas that are associated with the chosen concept, within the given database. A bulb icon indicates that the schema contains some columns that the system thinks may represent the given concept. A face icon indicates that humans have verified all potential column matches corresponding to the given concept. The number to the right of certain schemas indicates the number of potential columns representing the given concept within the schema."
+              selected-dimension="{{selectedSchema}}">
+            </mdb-dimension-finder>
+
+            <!-- Tables -->
+            <mdb-dimension-finder class="tables" all-dimensions-allowed allow-sorting show-system-recommendation show-human-verification
+              dimension="Table" items="{{tables}}" help-text="This is a list of tables that are associated with the chosen concept, within the given schema. A bulb icon indicates that the table contains some columns that the system thinks may represent the given concept. A face icon indicates that humans have verified all potential column matches corresponding to the given concept. The number to the right of certain tables indicates the number of potential columns representing the given concept within the table."
+              selected-dimension="{{selectedTable}}">
+            </mdb-dimension-finder>
+          </div>
+
+          <!-- Table data -->
+          <template is="dom-if" if="[[selectedTable]]">
+            <template is="dom-if" if="[[!loadingInProgress]]">
+              <template is="dom-if" if="[[tableColumns.length]]">
+                <div class="concept-identification">
+                  <mdb-coverage-table lobs="[[lobs]]" selected-column="{{selectedColumn}}" title-text="[[selectedTable.name]]" help-text="Select RECOMMENDED to show just the columns recommended by the system as potentially representing the concept you have chosen to review. You can sequence columns in the order of those most likely to represent the concept you are reviewing by selecting sort by RELEVANCE.  Sort by RECENCY to see the columns most recently identified by the system as potentially representing the concept you are reviewing. You may discover columns that represent key information, but have not yet been defined as concepts in the system. You can flag these columns for review and then review status on the ‘Requests and Status’ page."
+                    columns="[[tableColumns]]" items="[[tableData]]"></mdb-coverage-table>
+
+                  <div class="recommended-concepts">
+                    <!-- Recommended concepts -->
+                    <mdb-concept-recommendation property="[[selectedConcept.name]]" column="[[selectedColumn]]" recommendation-factor="{{selectedConceptRecommendation}}"
+                      recommended="{{isSelectedConceptRecommended}}"></mdb-concept-recommendation>
+                    <template is="dom-if" if="[[!isConceptIdentified]]">
+                      <mdb-recommended-concepts recommendations="{{recommendedConcepts}}" column="[[selectedColumn]]" search-source="[[recommendedConceptsSearchSource]]"
+                        help-text="You associate columns with concepts by selecting YES. Likewise you can also mark columns as NO. Your actions help train the system to find and classify other similar data."></mdb-recommended-concepts>
+                    </template>
+                    <template is="dom-if" if="[[isConceptIdentified]]">
+                      <div class="concept-identified">
+                        <div class="success-message">
+                          <iron-icon class="arrow" icon="icons:done"></iron-icon>
+                          <mdb-title>Hurray!</mdb-title>
+                          <p>Thanks for identifying [[selectedColumn]] as [[identifiedConcept]].</p>
+                          <p>You've helped make data better.</p>
+                          <p>
+                            <paper-button class="undo" on-click="_undoConceptIdentification">Not a match</paper-button>
+                          </p>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+              <template is="dom-if" if="[[!tableColumns.length]]">
+                <div class="no-table">
+                  <p>No table found.</p>
+                </div>
+              </template>
+            </template>
+          </template>
+        </template>
+      </div>
+    </page-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'concept-coverage',
+
+      properties: {
+        dataSource: String,
+
+        _dataSource: {
+          type: Object,
+          readOnly: true
+        },
+
+        dataSourceOptions: Object,
+
+        _selectedTab: {
+          type: Number,
+          value: 0,
+          notify: true,
+          observer: '_tabChanged'
+        },
+
+        selectedLob: {
+          type: String,
+          value: '',
+          notify: true,
+          reflectToAttribute: true,
+          observer: '_lobChanged'
+        },
+
+        lobs: {
+          type: Array,
+          value: []
+        },
+
+        concepts: {
+          type: Array,
+          value: []
+        },
+
+        selectedConcept: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_conceptChanged'
+        },
+
+        selectedConceptRecommendation: {
+          type: Number,
+          value: 0
+        },
+
+        isSelectedConceptRecommended: {
+          type: String,
+          value: 'maybe'
+        },
+
+        applications: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedApplication: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_applicationChanged'
+        },
+
+        databases: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedDatabase: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_databaseChanged'
+        },
+
+        schemas: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedSchema: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_schemaChanged'
+        },
+
+        tables: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedTable: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_tableChanged'
+        },
+
+        tableColumns: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        tableData: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedColumn: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_selectedColumnChanged'
+        },
+
+        recommendedConcepts: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        recommendedConceptsSearchSource: {
+          type: Array,
+          value: []
+        },
+
+        isConceptIdentified: {
+          type: Boolean,
+          value: false,
+          notify: true
+        },
+
+        identifiedConcept: String,
+
+        coverage: {
+          type: Number,
+          value: 0
+        },
+
+        eta: {
+          type: Number,
+          value: 0
+        },
+
+        confirmedColumns: {
+          type: Number,
+          value: 0
+        },
+
+        loadingInProgress: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      ready: function () {
+        var source = document.createElement(this.dataSource);
+        for (var i in this.dataSourceOptions) {
+          source[i] = this.dataSourceOptions[i];
+        }
+        this.appendChild(source);
+
+        //save reference of data adapter so that it can be used later on
+        this._set_dataSource(source);
+      },
+
+      attached: function () {
+        var that = this;
+        this._dataSource.getLOBs()
+          .then(function (lobs) {
+            that.set('lobs', lobs.map(function (e) { return e.toUpperCase() }));
+            that._setSelectedLob();
+          });
+
+
+        this._dataSource.getMetrics()
+          .then(function (data) {
+            that.coverage = data.coverage;
+            that.eta = data.eta;
+            that.confirmedColumns = data.confirmedColumns;
+          }).catch(function (error) {
+
+          });
+
+        this.addEventListener('recommendation-changed', function (e) {
+          that.isConceptIdentified = e.detail.recommended === 'yes';
+
+          if (that.isConceptIdentified) {
+            that.identifiedConcept = e.detail.property;
+          } else {
+            that.identifiedConcept = undefined;
+          }
+
+          //Update if selected concept recommendation changed
+          if (that.selectedConcept.name === e.detail.property) {
+            that.selectedConceptRecommendation = e.detail.recommendationFactor;
+            that.isSelectedConceptRecommended = e.detail.recommended;
+          } else {
+            //Update if an item from the list is changed
+            var updatedConcept = that.recommendedConcepts.find(function (i) { return i.property === e.detail.property; });
+            if (updatedConcept) updatedConcept.recommendationFactor = e.detail.recommendationFactor;
+          }
+
+          if (e.detail.column === that.selectedColumn) that._updateColumnIdentification(that.selectedColumn, that.isConceptIdentified);
+        });
+      },
+
+      _setSelectedLob: function () {
+        if (this.lobs) {
+          this.selectedLob = this.lobs[this._selectedTab];
+        }
+      },
+
+      //OBSERVERS
+      _tabChanged: function () {
+        this._setSelectedLob();
+      },
+
+      _lobChanged: function () {
+        var that = this;
+        this.set('concepts', []);
+
+        if (this.selectedLob) {
+          //Reset everything
+          this.set('concepts', []);
+          this.set('applications', []);
+          this.set('databases', []);
+          this.set('schemas', []);
+          this.set('tables', []);
+          this.set('tableColumns', []);
+          this.set('tableData', []);
+          this.selectedColumn = undefined;
+          this.set('recommendedConcepts', []);
+          this._resetEmptyMessage('mdb-simple-list.concept-list');
+
+          this.isConceptIdentified = false;
+          this.identifiedConcept = '';
+
+          this._dataSource.getLOBConcepts(this.selectedLob)
+            .then(function (concepts) {
+              var row_height = 30;
+              var max_item_count = 24,
+                extra_rows = concepts.length - max_item_count > 0 ? Math.ceil((concepts.length - max_item_count) / 4) : 0,
+                list = that.querySelector('mdb-simple-list.concept-list');
+
+              if (extra_rows > 0) {
+                list.customStyle['--concept-list-height'] = (180 + (extra_rows * row_height)) + 'px';
+              } else {
+                delete list.customStyle['--concept-list-height'];
+              }
+
+              that.set('concepts', concepts.map(function (e) { return { name: e }; }));
+              list.emptyMessage = !concepts.length ? 'No concepts found for selected LOB.' : '';
+              list.updateStyles();
+            });
+        }
+      },
+
+      _conceptChanged: function () {
+        this._resetEmptyMessage('mdb-dimension-finder.applications');
+        this.set('applications', []);
+
+        if (this.selectedConcept.name) {
+          var that = this;
+          //Get applications for the selected concept
+          this._dataSource.getConceptApplications(this.selectedLob, this.selectedConcept.name)
+            .then(function (applications) {
+              that.querySelector('mdb-dimension-finder.applications').dataLoaded = true;
+              that.set('applications', applications);
+            });
+        }
+      },
+
+      _applicationChanged: function () {
+        this._resetEmptyMessage('mdb-dimension-finder.databases');
+        this.set('databases', []);
+
+        if (this.selectedApplication) {
+          var that = this;
+          if (!this.selectedApplication.checked) {
+            this._dataSource.getApplicationDBs(this.selectedLob, this.selectedConcept.name, this.selectedApplication)
+              .then(function (dbs) {
+                that.querySelector('mdb-dimension-finder.databases').dataLoaded = true;
+                that.set('databases', dbs);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedApplication;
+            this._dataSource.getApplicationColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication)
+              .then(function (tableData) {
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
+        }
+      },
+
+      _databaseChanged: function () {
+        this._resetEmptyMessage('mdb-dimension-finder.schemas');
+        this.set('schemas', []);
+
+        if (this.selectedDatabase) {
+          var that = this;
+          if (!this.selectedDatabase.checked) {
+            this._dataSource.getDBSchemas(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase)
+              .then(function (schemas) {
+                that.querySelector('mdb-dimension-finder.schemas').dataLoaded = true;
+                that.set('schemas', schemas);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedDatabase;
+            this._dataSource.getApplicationColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase)
+              .then(function (tableData) {
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
+        }
+      },
+
+      _schemaChanged: function () {
+        this._resetEmptyMessage('mdb-dimension-finder.tables');
+        this.set('tables', []);
+
+        if (this.selectedSchema) {
+          var that = this;
+          if (!this.selectedSchema.checked) {
+            this._dataSource.getSchemaTables(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+              .then(function (tables) {
+                that.querySelector('mdb-dimension-finder.tables').dataLoaded = true;
+                that.set('tables', tables);
+              });
+          } else {
+            this.loadingInProgress = true;
+            this.selectedTable = this.selectedSchema;
+            this._dataSource.getSchemaColumns(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+              .then(function (tableData) {
+                that.set('tableColumns', tableData.columns);
+                that.set('tableData', tableData.rows);
+                that.selectedColumn = tableData.columns[0].name
+                that.loadingInProgress = false;
+              }).catch(function (error) {
+                that.set('tableColumns', []);
+                that.set('tableData', []);
+                that.loadingInProgress = false;
+              });
+          }
+        }
+      },
+
+      _tableChanged: function () {
+        this.set('tableColumns', []);
+        this.set('tableData', []);
+        this.isConceptIdentified = false;
+        this.identifiedConcept = undefined;
+
+        if (this.selectedTable) {
+          var that = this;
+          this.loadingInProgress = true;
+          this._dataSource.getTable(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
+            .then(function (tableData) {
+              that.set('tableColumns', tableData.columns);
+              that.set('tableData', tableData.rows);
+              that.selectedColumn = tableData.columns[0].name
+              that.loadingInProgress = false;
+            }).catch(function (error) {
+              that.set('tableColumns', []);
+              that.set('tableData', []);
+              that.loadingInProgress = false;
+            });
+        }
+      },
+
+      _selectedColumnChanged: function () {
+        this.set('recommendedConcepts', []);
+        this.isConceptIdentified = false;
+        this.identifiedConcept = undefined;
+
+        if (this.selectedColumn) {
+          var that = this;
+          this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept.name, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
+            .then(function (recommendations) {
+              var r = recommendations[0];
+              var rf = (r ? r.recommendationFactor : 0) + 3;
+              //Initial values for selected concept recommendation
+              that.isSelectedConceptRecommended = 'maybe';
+              that.selectedConceptRecommendation = rf < 100 ? rf : 99;
+
+              that.set('recommendedConcepts', recommendations);
+              that.set('recommendedConceptsSearchSource', that.concepts.map(function (e) { return { property: e, recommendationFactor: 50, recommended: 'maybe' } }));
+            });
+        }
+      },
+
+      _resetEmptyMessage: function (selector) {
+        var component = this.querySelector(selector);
+        if (component) {
+          component.emptyMessage = ''
+          component.dataLoaded = false;
+        };
+      },
+
+      _undoConceptIdentification: function () {
+        var concept = this.identifiedConcept,
+          recommendedConcepts = this.get('recommendedConcepts');
+
+        this.isConceptIdentified = false;
+        this.identifiedConcept = undefined;
+
+        if (concept.trim() === this.selectedConcept.name) {
+          this.isSelectedConceptRecommended = 'maybe';
+        }
+
+        this.set('recommendedConcepts', recommendedConcepts.map(function (e) {
+          if (e.property.trim() === concept.trim()) {
+            e.recommended = 'maybe';
+          }
+          return e;
+        }));
+      },
+
+      _showTable: function () {
+        return this.selectedTable && !this.loadingInProgress && this.tableColumns.length > 0;
+      },
+
+      _updateColumnIdentification: function (column, identified) {
+        var item = this.tableColumns.find(function (e) { return e.name === column; }),
+          index = this.tableColumns.indexOf(item);
+
+        if (index !== -1) {
+          var updated = JSON.parse(JSON.stringify(item))
+
+          updated.identified = identified;
+          this.splice('tableColumns', index, 1, updated);
+        }
+      }
+    });
+  </script>
+</dom-module>

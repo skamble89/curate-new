@@ -1,0 +1,97 @@
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+--><html><head></head><body><dom-module id="my-header">
+    <template>
+        <style>
+        :host,
+        .user-dropdown {
+            display: block;
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+            color: var(--app-border-color);
+            height: 100%;
+        }
+        .user-dropdown {
+        	font-size: var(--font-small,14px);
+        	border-left: 1px solid var(--app-border-color);
+        }
+
+        .user-dropdown iron-icon {
+        	margin: 0 10px;
+        }
+        .arrow {
+        	transform: rotate(90deg);
+        }
+        :host,
+        .flex {
+        	@apply(--layout-flex);
+        }
+        </style>
+        <paper-icon-button noink="" icon="[[_computeFullScreenIcon(_fullScreenActive)]]" title="Go full screen" on-tap="toggleFullscreen"></paper-icon-button>
+        <paper-icon-button noink="" icon="my-icons:magnify" title="Search"></paper-icon-button>
+        <span class="flex"></span>
+        <div class="user-dropdown">
+            <iron-icon icon="my-icons:account-circle"></iron-icon>
+            <span>Mr. John Smith</span>
+            <iron-icon class="arrow" icon="my-icons:chevron-right"></iron-icon>
+        </div>
+        <paper-toggle-button checked=""></paper-toggle-button>
+    </template>
+    <script>
+    Polymer({
+        is: 'my-header',
+
+
+        properties: {
+
+            //setting full screen to false
+            _fullScreenActive: {
+                type: Boolean,
+                value: false
+            }
+        },
+        //checkIcon of fullscreen
+        _computeFullScreenIcon: function(active) {
+            return active ? 'my-icons:close-screen' : 'my-icons:full-screen';
+        },
+
+        //toggle Fullscreen
+        toggleFullscreen: function() {
+            if ((document.fullScreenElement && document.fullScreenElement !== null) ||
+                (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+                //SETTING FLAG IF FULLSCREEN
+                this._fullScreenActive = true;
+                if (document.documentElement.requestFullScreen) {
+                    document.documentElement.requestFullScreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullScreen) {
+                    document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+            } else {
+                if (document.cancelFullScreen) {
+                    document.cancelFullScreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                }
+                this._fullScreenActive = false;
+            }
+        }
+    });
+    </script>
+</dom-module>
+</body></html>

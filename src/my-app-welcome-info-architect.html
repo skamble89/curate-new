@@ -1,0 +1,66 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/atom-feature/atom-feature.html">
+<dom-module id="app-welcome-info-architect">
+  <template>
+    <style include="shared-styles">
+       :host {
+        height: 100%;
+      }
+    </style>
+    <page-layout>
+      <div slot="header">
+        <mdb-title>Welcome</mdb-title>
+      </div>
+      <div slot="body" class="welcome-page">
+        <img src="../images/welcome_1.png" />
+        <div class="features">
+          <atom-feature id="add" title="Add Your Data" button-title="Add Your Data" icon="icons:add" description="Connect to databases so that data stewards in your line of business can begin improving coverage of concepts within. You and other information architects in your line of business can add or remove databases. Your credentials will be securely stored for access."></atom-feature>
+          <atom-feature id="curate" title="Curate Concepts" button-title="Curate Concepts" icon="icons:receipt" description="Train the system by identifying synonyms, patterns, related concepts, example values and columns for concepts under your care. Improve existing definitions to boost classification accuracy of concepts. Gauge your progress over time in making data better."></atom-feature>
+          <atom-feature id="review" title="Review and Classify" button-title="Review and Classify" icon="editor:mode-edit" description="Review columns that are suggested by data stewards as potential concepts or as having personal identifiable information. Enrich the data vocabulary of your organisation by confirming new concepts and help mitigate GDPR risk."></atom-feature>
+          <atom-feature id="goals" title="Know the goals " button-title="Know the goals " icon="icons:settings" description="Take a look at the various user roles involved with GDPR risk assessment and mitigation. Realise what all the software is designed to help you accomplish and provide feedback if you feel any of your key goals are currently not being met!"></atom-feature>
+        </div>
+      </div>
+    </page-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'app-welcome-info-architect',
+
+      listeners: {
+        'add.execute-action': '_gotoAddData',
+        'curate.execute-action': '_gotoCurateConcepts',
+        'review.execute-action': '_gotoReviewClassify',
+        'goals.execute-action': '_gotoGoalsVisualization'
+      },
+
+      _gotoAddData: function () {
+        window.location = '#/add-data'
+      },
+
+      _gotoCurateConcepts: function () {
+        window.location = '#/app-concepts'
+      },
+
+      _gotoReviewClassify: function () {
+        window.location = '#/review-classify'
+      },
+
+      _gotoGoalsVisualization: function () {
+        window.location = '#/goals-visualization'
+      }
+    });
+  </script>
+</dom-module>

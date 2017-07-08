@@ -1,0 +1,542 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/google-sheets/google-sheets.html">
+<link rel="import" href="mdb-utils.html">
+<dom-module id="mdb-gsheet-data-adapter">
+    <template>
+        <google-sheets key="[[key]]" tab-id="[[tabId]]" published></google-sheets>
+    </template>
+    <script>
+        Polymer({
+            is: 'mdb-gsheet-data-adapter',
+
+            behaviors: [Mdb.Utils],
+
+            properties: {
+                key: {
+                    type: String
+                },
+
+                tabId: {
+                    type: Number,
+                    value: 1
+                }
+            },
+
+            attached: function () {
+                this._coverageLoaded = false;
+                this.data = [];
+            },
+
+            getLOBs: function () {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            resolve(that._unique(that.data.map(function (e) { return e.lob; })));
+                        })
+                });
+            },
+
+            getLOBConcepts: function (lob) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var lobLower = lob.toLowerCase(),
+                                concepts = that.data.filter(function (e) {
+                                    return e.concept && e.lob.toLowerCase() === lobLower;
+                                }).map(function (e) {
+                                    return e.concept;
+                                })
+                            resolve(that._unique(concepts));
+                        })
+                });
+            },
+
+            getConceptApplications: function (lob, concept) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var lobLower = lob.toLowerCase(),
+                                conceptLower = concept.toLowerCase(),
+                                applications = that.data.filter(function (e) {
+                                    return e.application.name && e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower;
+                                }).map(function (e) {
+                                    return e.application;
+                                });
+
+                            resolve(that._uniqueDimension(applications));
+                        });
+                });
+            },
+
+            getApplicationDBs: function (lob, concept, application) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var lobLower = lob.toLowerCase(),
+                                conceptLower = concept.toLowerCase(),
+                                appLower = application.name.toLowerCase(),
+                                dbs = that.data.filter(function (e) {
+                                    return e.database.name && e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower;
+                                }).map(function (e) {
+                                    return e.database;
+                                });
+
+                            resolve(that._uniqueDimension(dbs));
+                        });
+                });
+            },
+
+            getApplicationColumns: function (lob, concept, application) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var lobLower = lob.toLowerCase(),
+                                conceptLower = concept.toLowerCase(),
+                                appLower = application.name.toLowerCase();
+
+                            //Get all table mappings for selected application
+                            var rows = that.data
+                                .filter(function (e) {
+                                    return e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower;
+                                });
+                            that.getAllTableData(rows)
+                                .then(function (data) {
+                                    that.selectedTable = appLower;
+                                    that.selectedTableData = data;
+                                    that.cache[application.name] = data;
+                                    resolve(data);
+                                }).catch(function (error) {
+                                    reject(error);
+                                });
+                        });
+                });
+            },
+
+            getDatabaseColumns: function (lob, concept, application, database) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var lobLower = lob.toLowerCase(),
+                                conceptLower = concept.toLowerCase(),
+                                appLower = application.name.toLowerCase(),
+                                dbLower = database.toLowerCase();
+
+                            //Get all table mappings for selected application
+                            var rows = that.data
+                                .filter(function (e) {
+                                    return e.lob.toLowerCase() === lobLower
+                                        && e.concept.toLowerCase() === conceptLower
+                                        && e.application.name.toLowerCase() === appLower
+                                        && e.database.name.toLowerCase() === dbLower;
+                                });
+                            that.getAllTableData(rows)
+                                .then(function (data) {
+                                    that.selectedTable = appLower;
+                                    that.selectedTableData = data;
+                                    that.cache[database.name] = data;
+                                    resolve(data);
+                                }).catch(function (error) {
+                                    reject(error);
+                                });
+                        });
+                });
+            },
+
+            getSchemaColumns: function (lob, concept, application, database, schema) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var lobLower = lob.toLowerCase(),
+                                conceptLower = concept.toLowerCase(),
+                                appLower = application.name.toLowerCase(),
+                                dbLower = database.name.toLowerCase(),
+                                schemaLower = schema.name.toLowerCase();
+
+                            //Get all table mappings for selected application
+                            var rows = that.data
+                                .filter(function (e) {
+                                    return e.lob.toLowerCase() === lobLower
+                                        && e.concept.toLowerCase() === conceptLower
+                                        && e.application.name.toLowerCase() === appLower
+                                        && e.database.name.toLowerCase() === dbLower
+                                        && e.schema.name.toLowerCase() === schemaLower;
+                                });
+                            that.getAllTableData(rows)
+                                .then(function (data) {
+                                    that.selectedTable = appLower;
+                                    that.selectedTableData = data;
+                                    that.cache[schema.name] = data;
+                                    resolve(data);
+                                }).catch(function (error) {
+                                    reject(error);
+                                });
+                        });
+                });
+            },
+
+            getAllTableData: function (rows) {
+                var that = this;
+                //Consider only those rows which have table mappings
+                var tables = {};
+                var tablemappings = rows.filter(function (e) {
+                    //Filter out if no mapping
+                    var hasMapping = !!e.table.mapping;
+
+                    //If table already added to list, dont add it again
+                    if (tables[e.table.mapping]) return false;
+
+                    if (hasMapping) tables[e.table.mapping] = true;
+                    return hasMapping;
+                });
+                return new Promise(function (resolve, reject) {
+                    var promises = [];
+
+                    var i = 0;
+                    var cols = [];
+                    var datarows = [];
+                    var recommended;
+
+                    (function _load(row) {
+                        that.getTableData(row.lob, row.concept, row.application, row.database, row.schema, row.table)
+                            .then(function (data) {
+                                cols = cols.concat(data.columns);
+                                datarows = datarows.length ? datarows.map(function (e, index) {
+                                    for (var col in data.rows[index]) {
+                                        e[col] = data.rows[index][col];
+                                    }
+                                    return e;
+                                }) : data.rows;
+                                recommended = recommended ? (function (er, r) {
+                                    for (var i in r) {
+                                        er[i] = r[i];
+                                    }
+                                    return er;
+                                })(recommended, data.recommendedConcepts) : data.recommendedConcepts;
+
+                                ++i;
+                                if (tablemappings[i]) {
+                                    _load(tablemappings[i])
+                                } else {
+                                    resolve({
+                                        columns: cols,
+                                        rows: datarows,
+                                        recommendedConcepts: recommended
+                                    });
+                                }
+                            }).catch(function (error) {
+                                reject(error);
+                            });
+                    })(tablemappings[i]);
+                });
+            },
+
+            getDBSchemas: function (lob, concept, application, db) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var lobLower = lob.toLowerCase(),
+                                conceptLower = concept.toLowerCase(),
+                                appLower = application.name.toLowerCase(),
+                                dbLower = db.name.toLowerCase(),
+                                schemas = that.data.filter(function (e) {
+                                    return e.schema.name && e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower && e.database.name.toLowerCase() === dbLower;
+                                }).map(function (e) {
+                                    return e.schema;
+                                });
+
+                            resolve(that._uniqueDimension(schemas));
+                        });
+                });
+            },
+
+            getSchemaTables: function (lob, concept, application, db, schema) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var lobLower = lob.toLowerCase(),
+                                conceptLower = concept.toLowerCase(),
+                                appLower = application.name.toLowerCase(),
+                                dbLower = db.name.toLowerCase(),
+                                schemaLower = schema.name.toLowerCase(),
+                                tables = that.data.filter(function (e) {
+                                    return e.table.name && e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower && e.database.name.toLowerCase() === dbLower && e.schema.name.toLowerCase() === schemaLower;
+                                }).map(function (e) {
+                                    return e.table;
+                                });
+
+                            resolve(that._uniqueDimension(tables));
+                        });
+                });
+            },
+
+            getTable: function (lob, concept, application, db, schema, table) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that.getTableData(lob, concept, application, db, schema, table)
+                        .then(function (data) {
+                            that.selectedTable = table.mapping;
+                            that.selectedTableData = data;
+                            resolve(data);
+                        }).catch(function (error) {
+                            reject(error);
+                        });
+                });
+            },
+
+            getTableData: function (lob, concept, application, db, schema, table) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that.cache = that.cache || {};
+                    var cached = that.cache[table.mapping] || that.cache[table.name];
+                    if (!cached) {
+                        var tabIndex = that._getTabIndex(table.mapping);
+
+                        if (tabIndex !== null && tabIndex !== undefined) {
+                            that._loadSheetTab(tabIndex, function (e) {
+                                var data = that._parseTable(this.rows);
+                                that.cache[table.mapping] = data;
+                                resolve(data);
+                            });
+                        } else {
+                            reject('Table not found.');
+                        }
+                    } else {
+                        resolve(cached);
+                    }
+                });
+            },
+
+            getRecommendedConcepts: function (lob, concept, application, db, schema, table, column) {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that.getTableData(lob, concept, application, db, schema, table)
+                        .then(function (data) {
+                            resolve((data.recommendedConcepts[column] || []).map(function (e) {
+                                //Create a copy of the object
+                                return JSON.parse(JSON.stringify(e));
+                            }).sort(function (a, b) {
+                                return b.recommendationFactor - a.recommendationFactor;
+                            }));
+                        });
+                });
+            },
+
+            getMetrics: function () {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._ensureCoverageLoaded()
+                        .then(function () {
+                            var tabIndex = that._getTabIndex('metric-strip');
+                            if (tabIndex !== null && tabIndex !== undefined) {
+                                that._loadSheetTab(tabIndex, function (e) {
+                                    var data = that._parseMetrics(this.rows);
+                                    resolve(data);
+                                });
+                            } else {
+                                reject('Table not found.');
+                            }
+                        });
+                });
+            },
+
+            _parseMetrics: function (rows) {
+                var result = {},
+                    row = rows[0];
+
+                result.coverage = row['gsx$coverage'].$t;
+                result.eta = row['gsx$eta'].$t;
+                result.confirmedColumns = row['gsx$confirmedcolumns'].$t;
+
+                return result;
+            },
+
+            _ensureCoverageLoaded: function () {
+                var that = this;
+
+                return new Promise(function (resolve, reject) {
+                    that._getSpreadsheetMetadata()
+                        .then(function () {
+                            if (!that._coverageLoaded) {
+                                that._loadSheetTab(that._getTabIndex('mdb-data'), function (e) {
+                                    that.data = that._parseSheet(this.rows);
+                                    that._coverageLoaded = true;
+                                    resolve();
+                                });
+                            } else {
+                                resolve();
+                            }
+                        }).catch(function (error) {
+                            reject(error);
+                        });
+                });
+            },
+
+            _getTabIndex: function (name) {
+                return (this.tabMapping
+                    .find(function (e) {
+                        return e.name.toLowerCase() === name.toString().toLowerCase();
+                    }) || {}).index;
+            },
+
+            _getSpreadsheetMetadata: function () {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    if (!that.tabMapping) {
+                        that._makeRequest({
+                            url: 'https://spreadsheets.google.com/feeds/worksheets/' + that.key + '/public/full?alt=json'
+                        }).then(function (e) {
+                            that.tabMapping = JSON.parse(e.response).feed.entry
+                                .map(function (e, i) {
+                                    return {
+                                        index: i + 1,
+                                        name: e.title.$t
+                                    };
+                                });
+                            resolve();
+                        }).catch(function (error) {
+                            reject(error);
+                        });
+                    } else {
+                        resolve();
+                    }
+                });
+            },
+
+            _loadSheetTab: function (tabId, callback) {
+                var sheet = this.querySelector('google-sheets');
+                sheet.addEventListener('google-sheet-data', _dataLoaded);
+                sheet.tabId = tabId;
+
+                function _dataLoaded(e) {
+                    callback.apply(this, arguments);
+                    this.removeEventListener('google-sheet-data', _dataLoaded);
+                }
+
+                function _error(e) {
+                    callback.apply(this, arguments);
+                    this.removeEventListener('google-sheet-data', _error);
+                }
+            },
+
+            _parseSheet: function (rawData) {
+                var rows = [];
+                for (var i = 0; i < rawData.length; i++) {
+                    var item = rawData[i];
+                    rows.push({
+                        lob: item['gsx$lob']["$t"],
+                        concept: item['gsx$concept']["$t"],
+                        application: {
+                            name: item['gsx$application']["$t"],
+                            systemRecommended: item['gsx$sr']["$t"].toLowerCase() === 'y',
+                            humanVerified: item['gsx$hv']["$t"].toLowerCase() === 'y',
+                            recommendation: parseFloat(item['gsx$pc']["$t"]),
+                        },
+                        database: {
+                            name: item['gsx$database']["$t"],
+                            systemRecommended: item['gsx$sr_2']["$t"].toLowerCase() === 'y',
+                            humanVerified: item['gsx$hv_2']["$t"].toLowerCase() === 'y',
+                            recommendation: parseFloat(item['gsx$pc_2']["$t"]),
+                        },
+                        schema: {
+                            name: item['gsx$schema']["$t"],
+                            systemRecommended: item['gsx$sr_3']["$t"].toLowerCase() === 'y',
+                            humanVerified: item['gsx$hv_3']["$t"].toLowerCase() === 'y',
+                            recommendation: parseFloat(item['gsx$pc_3']["$t"]),
+                        },
+                        table: {
+                            name: item['gsx$table']["$t"],
+                            systemRecommended: item['gsx$sr_4']["$t"].toLowerCase() === 'y',
+                            humanVerified: item['gsx$hv_4']["$t"].toLowerCase() === 'y',
+                            recommendation: parseFloat(item['gsx$pc_4']["$t"]),
+                            mapping: item['gsx$tablemapping']['$t'],
+                            relevance: parseFloat(item['gsx$gr_4']['$t']) || 0,
+                            sensitivity: parseFloat(item['gsx$gs_4']['$t']) || 0,
+                            assessmentStage: parseFloat(item['gsx$as_4']['$t']) || 0,
+                            completion: parseFloat(item['gsx$sc_4']['$t']) || 0,
+                        },
+                    })
+                }
+                return rows;
+            },
+
+            _parseTable: function (rowData) {
+                //Parse columns                
+                var cols = rowData && rowData.length ? ((((rowData[1] || {}).content || {}).$t || '').match(/[a-zA-Z]+:/g) || [])
+                    .map(function (e) {
+                        var col = e.replace(':', '')
+                        return {
+                            name: col,
+                            property: col,
+                            width: 150
+                        };
+                    }) : [];
+
+                //parse column recommendations
+                var recommendedConcepts = {};
+                var row = rowData[0] || {};
+                var regex = /\(([^)]+)\)/;
+                for (var j in row) {
+                    var val = row[j]['$t'];
+                    if (j.indexOf('gsx$') === 0 && val) {
+                        recommendedConcepts[j.replace('gsx$', '')] = val.split(',').map(function (e) {
+                            return {
+                                property: e.replace(regex, '').trim(),
+                                recommendationFactor: parseFloat((e.match(regex) || [])[1] || 0),
+                                recommended: 'maybe'
+                            }
+                        });
+                    }
+                }
+
+                //Parse rows
+                var rows = [];
+                for (var i = 1; i < rowData.length; i++) {
+                    var o = {};
+                    var item = rowData[i];
+
+                    for (var j in item) {
+                        if (j.indexOf('gsx$') === 0) {
+                            o[j.replace('gsx$', '')] = item[j]['$t'];
+                        }
+                    }
+                    rows.push(o);
+                }
+
+                return {
+                    columns: cols,
+                    rows: rows,
+                    recommendedConcepts: recommendedConcepts
+                };
+            },
+
+            _uniqueDimension: function (arr) {
+                var o = {},
+                    result = [];
+
+                for (var i = 0; i < arr.length; i++) {
+                    var item = arr[i];
+                    if (!o[item.name]) {
+                        result.push(item);
+                        o[item.name] = true;
+                    }
+                }
+                return result;
+            },
+
+            _unique: function (arr) {
+                return arr.filter(function (value, index, self) {
+                    return self.indexOf(value) === index;
+                });
+            }
+        });
+    </script>
+</dom-module>

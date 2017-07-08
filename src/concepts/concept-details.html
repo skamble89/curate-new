@@ -1,0 +1,147 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="./concept-details-health.html">
+<link rel="import" href="./concept-details-curate.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/atom-table/atom-table.html">
+
+<dom-module id="concept-details">
+    <template>
+        <style include="shared-styles">
+             :host {
+                display: block;
+            }
+
+             :host atom-table {
+                overflow: hidden;
+                margin-top: var(--standard-padding, 20px);
+                --atom-table-header-cell: {
+                    @apply(--app-table-header-cell);
+                    white-space: normal;
+                }
+            }
+
+             :host paper-tabs {
+                margin-top: 10px;
+            }
+        </style>
+
+        <div>
+            <paper-icon-button id="back" icon="icons:arrow-back" on-tap="_goBack" title="Back"></paper-icon-button>
+            <atom-table items="[[_getTableItem(item)]]">
+                <vaadin-grid-column>
+                    <template class="header">
+                        Concept Name
+                    </template>
+                    <template>
+                        {{item.concept}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column width="30px">
+                    <template class="header">
+                        Predicted Columns
+                    </template>
+                    <template>
+                        {{item.mappingCount}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column width="100px">
+                    <template class="header">
+                        Classification Accuracy
+                    </template>
+                    <template>
+                        {{item.health}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column width="30px">
+                    <template class="header">
+                        Coverage
+                    </template>
+                    <template>
+                        {{item.coverage}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column width="30px">
+                    <template class="header">
+                        Owner
+                    </template>
+                    <template>
+                        {{item.owner}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column>
+                    <template class="header">
+                        Impact Area
+                    </template>
+                    <template>
+                        {{item.impactArea}}
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column width="300px">
+                    <template class="header">
+                        Applications
+                    </template>
+                    <template>
+                        <template is="dom-repeat" items="{{item.applications}}">
+                            <span style="background-color:#eaeff3;margin-top:3px;margin-right:3px;padding-left: 5px;padding-right: 5px;border-radius: 10px;text-align: center;">{{item}}</span>
+                        </template>
+                    </template>
+                </vaadin-grid-column>
+            </atom-table>
+            <paper-tabs selected="{{selectedTab}}">
+                <paper-tab>CURATE</paper-tab>
+                <paper-tab>HEALTH</paper-tab>
+            </paper-tabs>
+            <iron-pages selected="{{selectedTab}}">
+                <div>
+                    <concept-details-curate></concept-details-curate>
+                </div>
+                <div>
+                    <concept-details-health></concept-details-health>
+                </div>
+            </iron-pages>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'concept-details',
+
+            properties: {
+                selectedTab: {
+                    type: Number,
+                    value: 0
+                },
+
+                item: {
+                    type: Object,
+                    value: {}
+                }
+            },
+
+            _getTableItem: function () {
+                return [this.item];
+            },
+
+            _goBack: function () {
+                this.fire('show-list');
+            }
+        });
+    </script>
+</dom-module>

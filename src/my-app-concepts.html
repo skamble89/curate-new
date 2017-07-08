@@ -1,0 +1,89 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="./concepts/concept-list.html">
+<link rel="import" href="./concepts/concept-details.html">
+<link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../bower_components/mdb-status-chip/mdb-status-chip.html">
+
+<dom-module id="app-concepts">
+  <template>
+    <style include="shared-styles">
+       :host {
+        display: block;
+        overflow: auto;
+        --iron-icon-fill-color: #aaa;
+        --paper-tabs: {
+          padding-top: 0;
+          border-bottom: 1px solid #ddd;
+        }
+      }
+
+       :host [slot="header"] {
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+
+    <page-layout>
+      <div slot="header">
+        <mdb-title help-text="Concepts">Concepts</mdb-title>
+        <mdb-status-chip icon="image:landscape" status-label="Landscape scanned" status-value="38%"></mdb-status-chip>
+      </div>
+      <div class="banner" slot="body">
+        <template is="dom-if" if="[[_showList(view)]]">
+          <concept-list on-active-item-changed="_activeItemChanged"></concept-list>
+        </template>
+        <template is="dom-if" if="[[!_showList(view)]]">
+          <concept-details item="{{selectedItem}}"></concept-details>
+        </template>
+      </div>
+    </page-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'app-concepts',
+
+      properties: {
+        view: {
+          type: String,
+          value: 'list'
+        },
+
+        selectedItem: {
+          type: Object
+        }
+      },
+
+      attached: function () {
+        var that = this;
+        this.addEventListener('show-list', function () {
+          that.set('selectedItem', undefined);
+          that.view = 'list';
+        });
+      },
+
+      _activeItemChanged: function (e) {
+        if (e && e.detail && e.detail.value) {
+          this.set('selectedItem', e.detail.value);
+          this.view = 'detail';
+        }
+      },
+
+      _showList: function () {
+        return this.view === 'list';
+      }
+    });
+  </script>
+</dom-module>

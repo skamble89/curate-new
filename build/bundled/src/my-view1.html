@@ -1,0 +1,22 @@
+<html><head><meta charset="UTF-8"><link rel="import" href="my-app.html"></head><body><dom-module id="my-view1">
+    <template>
+        <style include="shared-styles">
+        :host ,
+        .banner {
+            height: 100%;
+        }
+        
+        .banner {
+            background: url('../images/ecosystem.png') no-repeat center center #000;
+            -webkit-background-size: contain;
+            background-size: contain;
+        }
+        </style>
+        <page-layout heading="LOB Ecosystem">
+            <div class="banner" slot="body">
+            </div>
+        </page-layout>
+    </template>
+    <script>Polymer({is:"my-view1"});</script>
+</dom-module>
+</body></html>

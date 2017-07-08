@@ -1,0 +1,280 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/side-menu/side-menu.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/side-menu/side-submenu.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="my-icons.html">
+<link rel="import" href="my-header.html">
+<link rel="import" href="mdb-gsheet-data-adapter.html">
+
+<dom-module id="my-app">
+  <template>
+    <style include="iron-flex">
+       :host {
+        --app-primary-color: #5da9dd;
+        --app-secondary-color: black;
+        --app-border-color: #e1e6ed;
+        display: block;
+        --paper-item-min-height: 62px;
+        --paper-item: {
+          font-size: 14px;
+        }
+        ;
+        --app-menu-item-bg:#fff;
+        --app-menu-color: var(--app-primary-color);
+      }
+
+      app-header-layout {
+        /*Added to fix horizontal scrollbar in Edge*/
+        --layout-fit: {
+          overflow-x: hidden;
+        }
+      }
+
+      app-header {
+        color: #fff;
+        /*background-color: var(--app-primary-color);*/
+      }
+
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      .menu-header-toolbar {
+        @apply(--layout-center-justified);
+      }
+
+      app-drawer-layout {
+        min-height: 100%;
+        background: var(--app-bg-color, #f0f4f9);
+      }
+
+      app-toolbar {
+        background-color: var(--app-header-bg, #fff);
+        color: var(--app-header-color, #ddd);
+        height: var(--app-header-height, 80px);
+      }
+
+      .flex {
+        @apply(--layout-flex);
+      }
+
+      #pages {
+        height: 100%;
+      }
+    </style>
+
+    <iron-media-query query="(min-width: 1024px) and (max-width: 1279px)" query-matches="{{w-1024}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1280px) and (max-width: 1359px)" query-matches="{{w-1280}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1360px) and (max-width: 1365px)" query-matches="{{w-1360}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1366px) and (max-width: 1439px)" query-matches="{{w-1366}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1440px) and (max-width: 1599px)" query-matches="{{w-1440}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1600px) and (max-width: 1679px)" query-matches="{{w-1600}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1680px) and (max-width: 1919px)" query-matches="{{w-1680}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 1920px) and (max-width: 2559px)" query-matches="{{w-1920}}" on-query-matches-changed="_updateStyles"></iron-media-query>
+    <iron-media-query query="(min-width: 2560px)" query-matches="{{w-2560}}"></iron-media-query>
+
+    <app-location use-hash-as-path route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed responsive-width="1366px">
+      <!-- Drawer content -->
+      <app-drawer id="drawer">
+        <app-toolbar class="menu-header-toolbar">
+          <img src="../images/Logo.png" alt="">
+        </app-toolbar>
+        <side-menu selected="[[page]]" attr-for-selected="name" role="navigation">
+          <template is="dom-repeat" items="{{_getPageList(role)}}" as="page">
+            <paper-item name$="[[page.name]]" on-click="_routeToPage">
+              <span class="flex">{{page.title}}</span>
+              <iron-icon icon="my-icons:chevron-right"></iron-icon>
+            </paper-item>
+          </template>
+        </side-menu>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+            <my-header profile-picture="./images/img.jpg" role="{{role}}"></my-header>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+          <app-welcome-data-steward name="app-welcome-data-steward"></app-welcome-data-steward>
+          <app-welcome-cdo name="app-welcome-cdo"></app-welcome-cdo>
+          <app-welcome-info-architect name="app-welcome-info-architect"></app-welcome-info-architect>
+          <app-welcome-citizen name="app-welcome-citizen"></app-welcome-citizen>
+          <concept-coverage name="concept-coverage" data-source="mdb-gsheet-data-adapter" data-source-options='{"key":"1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"}'
+            w-1024$="[[w-1024]]" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]" w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]"
+            w-1680$="[[w-1680]]" w-1920$="[[w-1920]]" w-2560$="[[w-2560]]"></concept-coverage>
+          <request-status name="request-status"></request-status>
+          <lob-ecosystem name="lob-ecosystem"></lob-ecosystem>
+          <app-concepts name="app-concepts"></app-concepts>
+          <review-classify name="review-classify"></review-classify>
+          <risk-assessment-data-steward name="risk-assessment-data-steward" w-1024$="[[w-1024]]" w-1280$="[[w-1280]]" w-1360$="[[w-1360]]"
+            w-1366$="[[w-1366]]" w-1440$="[[w-1440]]" w-1600$="[[w-1600]]" w-1680$="[[w-1680]]" w-1920$="[[w-1920]]" w-2560$="[[w-2560]]"
+            data-source="mdb-gsheet-data-adapter" data-source-options='{"key":"1ytcM-WdkP4orU4HdwpgX62MQELCdhWlbaTci-IZhmsQ"}'></risk-assessment-data-steward>
+          <risk-assessment-cdo name="risk-assessment-cdo"></risk-assessment-cdo>
+          <app-user-goals-visualization name="goals-visualization"></app-user-goals-visualization>
+          <citizen-data name="citizen-data"></citizen-data>
+          <add-data name="add-data"></add-data>
+          <legal-compliance-details name="legal-compliance-details"></legal-compliance-details>
+          <my-view404 name="view404"></my-view404>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-app',
+
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged',
+        },
+
+        role: {
+          type: String,
+          observer: '_roleChanged'
+        },
+
+        pageList: {
+          type: Array,
+          value: [{
+            name: 'app-welcome-data-steward',
+            title: 'WELCOME',
+            role: 'Data Steward'
+          }, {
+            name: 'concept-coverage',
+            title: 'CONCEPT COVERAGE',
+            role: 'Data Steward'
+          }, {
+            name: 'request-status',
+            title: 'REQUESTS & STATUS',
+            role: 'Data Steward'
+          }, {
+            name: 'risk-assessment-data-steward',
+            title: 'GDPR Risk Assessment',
+            role: 'Data Steward'
+          }, {
+            name: 'app-welcome-info-architect',
+            title: 'WELCOME',
+            role: 'Information Architect'
+          }, {
+            name: 'lob-ecosystem',
+            title: 'LOB ECOSYSTEM',
+            role: 'Information Architect'
+          }, {
+            name: 'app-concepts',
+            title: 'CONCEPTS',
+            role: 'Information Architect'
+          }, {
+            name: 'add-data',
+            title: 'ADD YOUR DATA',
+            role: 'Information Architect'
+          }, {
+            name: 'review-classify',
+            title: 'REVIEW & CLASSIFY',
+            role: 'Information Architect'
+          }, {
+            name: 'app-welcome-cdo',
+            title: 'WELCOME',
+            role: 'Chief Data Officer'
+          }, {
+            name: 'risk-assessment-cdo',
+            title: 'GDPR Risk Assessment',
+            role: 'Chief Data Officer'
+          }, {
+            name: 'legal-compliance-details',
+            title: 'LEGAL COMPLIANCE DETAILS',
+            role: 'Chief Data Officer'
+          }, {
+            name: 'app-welcome-citizen',
+            title: 'WELCOME',
+            role: 'Citizen'
+          }, {
+            name: 'citizen-data',
+            title: 'MY DATA',
+            role: 'Citizen'
+          }],
+          readonly: true
+        }
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+      ],
+
+      _routePageChanged: function (page) {
+        this.page = page || 'app-welcome';
+
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      },
+
+      _pageChanged: function (page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      },
+
+      _routeToPage: function (e) {
+        var pg = e.currentTarget.getAttribute('name');
+        this.set('route.path', '/' + pg);
+      },
+
+      _showPage404: function () {
+        this.page = 'view404';
+      },
+
+      _updateStyles: function () {
+        Polymer.updateStyles();
+      },
+
+      _getPageList(role) {
+        return this.pageList.filter(function (e) {
+          return e.role.toLowerCase() === role.toLowerCase();
+        });
+      },
+
+      _roleChanged: function () {
+        var that = this;
+        var pages = this._getPageList(this.role);
+        if (!pages.find(function (e) { return that.page === e.name; })) {
+          this.page = pages.find(function (e) { return e.name.indexOf('app-welcome') > -1 }).name || 'view404';
+          this.set('route.path', '/' + this.page);
+        }
+      }
+    });
+  </script>
+</dom-module>

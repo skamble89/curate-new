@@ -1,0 +1,60 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-layout.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/atom-feature/atom-feature.html">
+<dom-module id="app-welcome-cdo">
+  <template>
+    <style include="shared-styles">
+       :host {
+        height: 100%;
+      }
+    </style>
+    <page-layout>
+      <div slot="header">
+        <mdb-title>Welcome</mdb-title>
+      </div>
+      <div slot="body" class="welcome-page">
+        <img src="../images/welcome_1.png" />
+        <div class="features">
+          <atom-feature id="gdpr" title="Assess GDPR Risk" button-title="Assess GDPR Risk" icon="icons:add" description="Get an overview of GDPR risk assessment for your organisation’s data landscape. Dive deeper and see how the level of risk is reducing with time at granular levels like application, database, schema, table level. Similar insights are available at line of business and process levels."></atom-feature>
+          <atom-feature id="legal" title="Legal Compliance Details" button-title="Legal Compliance Details" icon="icons:receipt" description="Train the system by identifying synonyms, patterns, related concepts, example values and columns for concepts under your care. Improve existing definitions to boost classification accuracy of concepts. Gauge your progress over time in making data better."></atom-feature>
+          <atom-feature id="goals" title="Know the goals " button-title="Know the goals " icon="icons:settings" description="Take a look at the various user roles involved with GDPR risk assessment and mitigation. Realise what all the software is designed to help you accomplish and provide feedback if you feel any of your key goals are currently not being met!"></atom-feature>
+        </div>
+      </div>
+    </page-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'app-welcome-cdo',
+
+      listeners: {
+        'gdpr.execute-action': '_gotoGDPR',
+        'legal.execute-action': '_gotoLegal',
+        'goals.execute-action': '_gotoGoalsVisualization'
+      },
+
+      _gotoGDPR: function () {
+        window.location = '#/risk-assessment-cdo'
+      },
+
+      _gotoLegal: function () {
+        window.location = '#/legal-compliance-details'
+      },
+
+      _gotoGoalsVisualization: function () {
+        window.location = '#/goals-visualization'
+      }
+    });
+  </script>
+</dom-module>
