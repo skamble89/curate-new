@@ -5,8 +5,7 @@ os:
   - linux
 install:
   - npm install -g bower
-before_deploy:
-  - bower install
+  - bower install  
 deploy:
   provider: pages
   skip_cleanup: true
